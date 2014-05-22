@@ -10,7 +10,7 @@ var ChatApp = React.createClass({
     console.log(chanUpdates);
     return (
       <div className="commentBox">
-        <Toolbar channels={this.props.data.chanList}></Toolbar>
+        <Toolbar data={this.props.data} channel={this.state.channel}></Toolbar>
         <Chat events={chanUpdates}></Chat>
       </div>
     );
