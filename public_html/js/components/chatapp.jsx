@@ -12,6 +12,7 @@ var ChatApp = React.createClass({
       <div className="commentBox">
         <Toolbar data={this.props.data} channel={this.state.channel}></Toolbar>
         <Chat events={chanUpdates}></Chat>
+        <LineInput></LineInput>
       </div>
     );
   }
