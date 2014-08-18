@@ -19,6 +19,8 @@
         <script type="text/jsx" src="js/components/line/renderer/devicerenderer.jsx"></script>
         <script type="text/jsx" src="js/components/line/renderer/daterenderer.jsx"></script>
         <script type="text/jsx" src="js/components/line/line.jsx"></script>
+        <script type="text/jsx" src="js/components/line/joinleaveline.jsx"></script>
+        <script type="text/jsx" src="js/components/line/sessioneventline.jsx"></script>
         <script type="text/jsx" src="js/components/chat.jsx"></script>
         <script type="text/jsx" src="js/components/lineinput.jsx"></script>
         <script type="text/jsx" src="js/components/chatapp.jsx"></script>
@@ -828,7 +830,7 @@
              
             React.renderComponent(
               <ChatApp data={data}></ChatApp>,
-              document.getElementById('example')
+              document.body
             );
         </script>
     </body>

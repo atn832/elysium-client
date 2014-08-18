@@ -2,14 +2,10 @@
 var ChanList = React.createClass({
   render: function() {
     var channels = this.props.channels.map(function(channel) {
-        var style = {
-            border: "1px solid blue",
-            margin: "5px"
-        };
-        return <span style={style}>{channel.name}</span>
+        return <a className="tab tab-selected">{channel.name}</a>
     });
     return (
-      <span>
+      <span id="chanList">
         {channels}
       </span>
     );
