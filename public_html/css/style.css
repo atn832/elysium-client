@@ -109,7 +109,7 @@ span {
 }
 
 .line {
-    display: block;
+    /*display: block;*/
 }
 
 .clickable {

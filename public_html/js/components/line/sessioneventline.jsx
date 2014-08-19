@@ -20,8 +20,10 @@ var SessionEventLine = React.createClass({
                 break;
         }
         return (
-            <div className="line clickable event">
-                {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
+            <div>
+                <span className="line clickable event">
+                    {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
+                </span>
             </div>
         );
     }

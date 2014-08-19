@@ -1,6 +1,16 @@
 /** @jsx React.DOM */
 
-var EventTypes = {Join:1, Leave: 2, Message:3, SessionStart:4, SessionStop: 5, SessionPause:6, SessionResume:7 }
+var EventTypes = {
+    Join:1,
+    Leave: 2,
+    Message: 3,
+    SessionStart: 4,
+    SessionStop: 5,
+    SessionPause: 6,
+    SessionResume: 7,
+    LostConnection: 10,
+    FoundConnection: 11
+}
 
 function getEventTypeID(event) {
     var typeID = event.eventType.ID;
@@ -20,6 +30,8 @@ function getEventRenderer(event) {
       return Line;
     else if (typeID === EventTypes.Join || typeID === EventTypes.Leave)
       return JoinLeaveLine;
+    else if (typeID === EventTypes.LostConnection || typeID === EventTypes.FoundConnection)
+      return ConnectionLine;
     return SessionEventLine;
 }
 
