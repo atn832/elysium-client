@@ -9,4 +9,6 @@ Setup
 Run
 ===
 
-`npm start`
+`reload` from public_html
+
+//`npm start`
