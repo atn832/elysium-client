@@ -5,6 +5,7 @@ Setup
 =====
 
 `npm install`
+`npm install -g reload`
 
 Run
 ===

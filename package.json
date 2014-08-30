@@ -1,8 +1,8 @@
 {
-    "name": "Elysium",
-    "description": "A web client for Elysium",
-    "author": "Anh Tuan <atn832@gmail.com>",
-    "dependencies": {
-        "express": "*"
-    }
+  "name": "Elysium",
+  "description": "A web client for Elysium",
+  "author": "Anh Tuan <atn832@gmail.com>",
+  "dependencies": {
+    "express": "*",
+  }
 }
