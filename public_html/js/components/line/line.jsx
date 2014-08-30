@@ -9,7 +9,8 @@ var Line = React.createClass({
     },
     render: function() {
         var event = this.props.event;
-        var expandedInfo = this.state && this.state.expanded?"expanded": ConnectionRenderer.render(event.source);
+        var expanded = this.state && this.state.expanded;
+        var expandedInfo = expanded? <span>{ConnectionRenderer.render(event.source)} <MapRenderer source={event.source} /></span>: "";
         var status = "";
         switch (event.status) {
             case "sending":
