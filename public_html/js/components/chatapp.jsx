@@ -7,7 +7,6 @@ var ChatApp = React.createClass({
   },
   render: function() {
     var chanUpdates = this.props.data.chanUpdates[0].events;
-    console.log(chanUpdates);
     return (
       <div id="chatclient" className="container">
         <div id="header" className="header">
