@@ -12,7 +12,7 @@ var DeviceRenderer = {
         var device = "";
         if (userAgent && (userAgent.indexOf("Android") >= 0 || userAgent.indexOf("iPhone") >= 0))
             device = Device.Mobile;
-        else if (userAgent && userAgent.indexOf("Macintosh") >= 0)
+        else if (userAgent && (userAgent.indexOf("Macintosh") >= 0 || userAgent.indexOf("Windows") >= 0))
             device = Device.Laptop;
         else
             device = Device.Unknown;
