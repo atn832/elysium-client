@@ -9,8 +9,14 @@ var Device = {
 var DeviceRenderer = {
     render: function(source) {
         var userAgent = source && source.userAgent && source.userAgent.userAgent ||"";
-        var device = userAgent? userAgent.indexOf("Android") >= 0 ||
-            userAgent.indexOf("iPhone")? Device.Mobile: Device.Laptop : Device.Unknown;
+        var device = "";
+        if (userAgent && (userAgent.indexOf("Android") >= 0 || userAgent.indexOf("iPhone") >= 0))
+            device = Device.Mobile;
+        else if (userAgent && userAgent.indexOf("Macintosh") >= 0)
+            device = Device.Laptop;
+        else
+            device = Device.Unknown;
+        
         if (device === Device.Unknown)
             return <span></span>
         
