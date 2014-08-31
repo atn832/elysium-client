@@ -12,6 +12,9 @@ function formatTime(wt) {
 
 var DateRenderer = {
     render: function(source) {
+        if (!source.datetime)
+            return "xx:xx";
+        
         var someUTCDate = new Date(source.datetime);
         var localTime = WallTime.UTCToWallTime(someUTCDate, timeZone);
         var remoteTime = !source.timeZone || !source.timeZone.timeZone? null: WallTime.UTCToWallTime(someUTCDate, source.timeZone.timeZone);
