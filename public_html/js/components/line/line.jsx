@@ -24,7 +24,7 @@ var Line = React.createClass({
         return (
             <div>
                 <span className={classes} onClick={this.onClick}>
-                    {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {event.content} {expandedInfo}
+                    {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; <Content content={event.content} /> {expandedInfo}
                 </span>
             </div>
         );
