@@ -37,10 +37,6 @@
     flex-grow: 1;
 }
 
-.sendButton {
-/*    position:absolute; right:0px; width:50px;*/
-}
-
 .footer {
     -webkit-flex: none;
     flex: none;
