@@ -2,7 +2,6 @@
 
 var Line = React.createClass({
     onClick: function() {
-        console.log("clicked");
         // only if event is from server
         if (!this.props.event.status)
             this.setState({expanded: !(this.state && this.state.expanded)});
