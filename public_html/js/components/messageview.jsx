@@ -35,7 +35,7 @@ function getEventRenderer(event) {
     return SessionEventLine;
 }
 
-var Chat = React.createClass({
+var MessageView = React.createClass({
   render: function() {
     var lines = this.props.events.filter(isNotPauseResumeEvent).map(function(event) {
         var renderer = getEventRenderer(event);

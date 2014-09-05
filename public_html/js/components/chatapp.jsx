@@ -12,7 +12,7 @@ var ChatApp = React.createClass({
         <div id="header" className="header">
           <Toolbar data={this.props.data} channel={this.state.channel}></Toolbar>
         </div>
-        <Chat events={chanUpdates}></Chat>
+        <MessageView events={chanUpdates} />
         <div className="footer">
           <LineInput></LineInput>
         </div>
