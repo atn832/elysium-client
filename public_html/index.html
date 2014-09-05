@@ -12,8 +12,8 @@
         <link rel="stylesheet" type="text/css" href="css/style_full.css" />
         <link rel="icon" type="image/png" href="favicon.png" />
 
-        <script src="http://fb.me/react-0.10.0.js"></script>
-        <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
+        <script src="js/lib/react.js"></script>
+        <script src="js/lib/JSXTransformer.js"></script>
         <script type="text/jsx" src="js/components/loginform.jsx"></script>
         <script type="text/jsx" src="js/components/chanlist.jsx"></script>
         <script type="text/jsx" src="js/components/userlist.jsx"></script>
@@ -1178,6 +1178,10 @@
                 </div>,
               document.body
             );
+
+            $.getJSON("https://m.wafrat.com/E/login.action?sid=0.5324193357955664&token=&userID=&timeZone=America%2FLos_Angeles&userAgent=Mozilla%2F5.0+(Macintosh%3B+Intel+Mac+OS+X+10_9_4)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F37.0.2062.94+Safari%2F537.36&location.accuracy=53&location.latitude=37.4175286&location.longitude=-122.02531750000001&channel.name=Elysium&channel.password=&user.name=atn")
+              .success(function(data, textStatus, jqXHR) { console.log("success", data); })
+              .error(function(jqXHR, status, error) { console.log("failure", status, error); });
         </script>
     </body>
 </html>
