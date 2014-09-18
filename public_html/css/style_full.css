@@ -42,7 +42,7 @@
     flex: none;
  }
 
-.footer div {
+.footer form {
     display: -webkit-flex;
     -webkit-flex-direction: row;
     display: flex;

@@ -14,6 +14,29 @@
 
         <script src="js/lib/react.js"></script>
         <script src="js/lib/JSXTransformer.js"></script>
+        <script>
+            "use strict";
+            
+            var loggedin = false;
+            var nick = null;
+            var userid = null;
+            var chanID = null;
+            var token = null;
+            
+// for logs (get more button)
+var oldestEventID = -1;
+var newestEventID = -1;
+var numMessagesToRetrieve = 100;
+
+var sidToIsLog = {};
+
+var messageBuffer = [];
+var bufferedMessageSent = null;
+
+var isGettingNonLogMessage = false;
+        </script>
+        <script type="text/jsx" src="js/io/source.js"></script>
+        <script type="text/jsx" src="js/io/io.js"></script>
         <script type="text/jsx" src="js/components/loginform.js"></script>
         <script type="text/jsx" src="js/components/chanlist.js"></script>
         <script type="text/jsx" src="js/components/userlist.js"></script>
@@ -36,7 +59,6 @@
         <div id="example"></div>
         <script type="text/jsx">
             /** @jsx React.DOM */
-            
             var data = {
                 "chanList":[
                    {
@@ -1179,9 +1201,9 @@
               document.body
             );
 
-            $.getJSON("https://m.wafrat.com/E/login.action?sid=0.5324193357955664&token=&userID=&timeZone=America%2FLos_Angeles&userAgent=Mozilla%2F5.0+(Macintosh%3B+Intel+Mac+OS+X+10_9_4)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F37.0.2062.94+Safari%2F537.36&location.accuracy=53&location.latitude=37.4175286&location.longitude=-122.02531750000001&channel.name=Elysium&channel.password=&user.name=atn")
-              .success(function(data, textStatus, jqXHR) { console.log("success", data); })
-              .error(function(jqXHR, status, error) { console.log("failure", status, error); });
+            // $.getJSON("https://m.wafrat.com/E/login.action?sid=0.5324193357955664&token=&userID=&timeZone=America%2FLos_Angeles&userAgent=Mozilla%2F5.0+(Macintosh%3B+Intel+Mac+OS+X+10_9_4)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F37.0.2062.94+Safari%2F537.36&location.accuracy=53&location.latitude=37.4175286&location.longitude=-122.02531750000001&channel.name=Elysium&channel.password=&user.name=atn")
+            //   .success(function(data, textStatus, jqXHR) { console.log("success", data); })
+            //   .error(function(jqXHR, status, error) { console.log("failure", status, error); });
         </script>
     </body>
 </html>
