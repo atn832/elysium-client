@@ -24,7 +24,7 @@ function sendOneMessage(message) {
     data.destinationID = chanID;
     data.clientMessageID = sendOwnMessageID;
     data.content = message.text;
-    $.ajax({
+    /*$.ajax({
         url: "say.action",
         data: data,
         timeout: 10000
@@ -34,7 +34,10 @@ function sendOneMessage(message) {
     })
     .fail(function() {
         enqueueOneMessageDone(sendOwnMessageID, false, null);
-    });
+    });*/
+	
+	// test error
+	enqueueOneMessageDone(sendOwnMessageID, false, null);
 }
 
 function enqueueOneMessageDone(clientEventID, success, data) {
@@ -74,8 +77,6 @@ function checkLoginState(data) {
         getMessageTimerID = null;
         serverTimeoutTimerID = null;
         sendMessageTimerID = null;
-        
-        $("link[href^='style_']").remove();
         
         $(chatclient).hide();
         $(conversationLinesDiv).empty();

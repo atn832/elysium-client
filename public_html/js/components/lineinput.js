@@ -30,14 +30,8 @@ var LineInput = React.createClass({
                 text: prevMessage,
                 ownMessageID: ownMessageID++
             };
-            // enqueueOneMessage(message);
+            this.props.app.enqueueOneMessage(message);
 
-            // Append temporary line. Will be updated by server reception confirmation
-			// var elysiumIndex;
-			// data.chanList.forEach(function(chan, idx) {
-			// 	if (chan.name === "Elysium")
-			// 		elysiumIndex = idx;
-			// })
 			this.props.app.state.chanUpdates.push({
                 "status": "sending",
                 "content": message.text,
@@ -57,17 +51,8 @@ var LineInput = React.createClass({
                    }
                }
 			});
-			this.props.app.setState({
-				chanUpdates: this.props.app.state.chanUpdates
-			});
-
-            // var div = $("<div></div>");
-            // var newSpan = $("<span class='line self unverified' id='own" + message.ownMessageID + "'></span>");
-            // newSpan.text("xx:xx <" + nick + "> " + message.text);
-            // div.append(newSpan);
-            // $(conversationLinesDiv).append(div);
-
             this.props.app.scrollToBottom(true);
+			this.props.app.forceUpdate();
         }
         this.setState({message: ""});
         // this is not enough to show the software keyboard in Android
