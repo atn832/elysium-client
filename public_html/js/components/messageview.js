@@ -42,9 +42,27 @@ var MessageView = React.createClass({
         return <renderer event={event}></renderer>;
     });
     return (
-      <div id="conversationdiv" className="conversationDiv">
+      <div id="conversationdiv" className="conversationDiv" ref="conversationElement">
         {lines}
       </div>
     );
-  }
+  },
+    componentDidUpdate: function(prevProps, prevState) {
+        if (this.scrollAtNextUpdate) {
+            this.scrollAtNextUpdate = false;
+            this.scrollToBottom();
+        }
+    },
+    scrollToBottom: function(atNextUpdate) {
+        if (atNextUpdate) {
+            this.scrollAtNextUpdate = true;
+            return;
+        }
+        var scrollObj = this.refs.conversationElement.getDOMNode();
+        scrollObj.scrollTop = scrollObj.scrollHeight;
+    },
+    isScrolledToBottom: function() {
+        var scrollObj = this.refs.conversationElement.getDOMNode();
+        return (scrollObj.scrollHeight - scrollObj.scrollTop) === scrollObj.clientHeight;
+    }
 });

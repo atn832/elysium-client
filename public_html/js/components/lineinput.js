@@ -67,7 +67,7 @@ var LineInput = React.createClass({
             // div.append(newSpan);
             // $(conversationLinesDiv).append(div);
 
-            // scrollToBottom();
+            this.props.app.scrollToBottom(true);
         }
         this.setState({message: ""});
         // this is not enough to show the software keyboard in Android

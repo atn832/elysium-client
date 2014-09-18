@@ -13,11 +13,17 @@ var ChatApp = React.createClass({
         <div id="header" className="header">
           <Toolbar data={this.props.data} channel={this.state.channel}></Toolbar>
         </div>
-        <MessageView events={this.state.chanUpdates} />
+        <MessageView events={this.state.chanUpdates} ref="messages"/>
         <div className="footer">
           <LineInput app={this}></LineInput>
         </div>
       </div>
     );
-  }
+  },
+    scrollToBottom: function(atNextUpdate) {
+      this.refs.messages.scrollToBottom(atNextUpdate);
+    },
+    isScrolledToBottom: function() {
+      return this.refs.messages.isScrolledToBottom();
+    }
 });
