@@ -9,7 +9,5 @@ Setup
 
 Run
 ===
-
-`reload` from public_html
-
-//`npm start`
+`./build.sh` to build
+`reload` from build

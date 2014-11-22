@@ -67,3 +67,5 @@ var LineInput = React.createClass({
     );
   }
 });
+
+export default LineInput;
