@@ -25,3 +25,5 @@ var DeviceRenderer = {
         return deviceIcon;
     }
 }
+
+export default DeviceRenderer;

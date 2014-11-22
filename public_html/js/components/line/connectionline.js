@@ -1,4 +1,7 @@
 /** @jsx React.DOM */
+import DateRenderer from "./renderer/daterenderer";
+import DeviceRenderer from "./renderer/devicerenderer";
+import EventTypes from "../../data/eventtype";
 
 var ConnectionLine = React.createClass({
     render: function() {
@@ -22,3 +25,5 @@ var ConnectionLine = React.createClass({
         );
     }
 });
+
+export default ConnectionLine;

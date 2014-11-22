@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Image = React.createClass({
+var ImageRenderer = React.createClass({
     onClick: function() {
         this.setState({expanded: !(this.state && this.state.expanded)});
     },
@@ -17,3 +17,5 @@ var Image = React.createClass({
         return <span><button onClick={this.onClick}>{this.state && this.state.expanded?"Hide": "Show " + url }</button>{image}</span>;
     }
 });
+
+export default ImageRenderer;

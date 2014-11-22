@@ -11,3 +11,5 @@ var ChanList = React.createClass({
     );
   }
 });
+
+export default ChanList;

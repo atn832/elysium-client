@@ -40,3 +40,5 @@ var MapRenderer = React.createClass({
         return source.location && source.location.latitude && source.location.longitude;
     }
 });
+
+export default MapRenderer;

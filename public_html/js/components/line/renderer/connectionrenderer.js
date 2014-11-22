@@ -1,7 +1,4 @@
 var UserAgentPlatformRegex = /[(]([^)]*)[)]/;
-function htmlentities(text) {
-    return $('<div/>').text(text).html()
-}
 
 var ConnectionRenderer = {
     render: function(source) {
@@ -29,3 +26,5 @@ var ConnectionRenderer = {
         return info;
     }
 };
+
+export default ConnectionRenderer;

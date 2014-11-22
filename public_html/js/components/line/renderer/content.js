@@ -1,5 +1,8 @@
 /** @jsx React.DOM */
 
+import Image from "./image";
+import { htmlentities } from "../../../util";
+
 var imageExtensions = ["jpg", "jpeg", "gif", "png"];
 var linkRegex = /(https?:\/\/[^ ,)]*)/g;
 
@@ -72,7 +75,8 @@ var Content = React.createClass({
     render: function() {
         var processedText = processLinks(htmlentities(this.props.content));
         var textWithHTMLLinks = processedText.text;
-        containsLinks = processedText.containsLinks;
         return <span>{textWithHTMLLinks}</span>;
     }
 });
+
+export default Content;

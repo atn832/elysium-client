@@ -1,4 +1,7 @@
 /** @jsx React.DOM */
+import ChanList from './chanlist';
+import UserList from './userlist';
+
 var Toolbar = React.createClass({
   render: function() {
     return (

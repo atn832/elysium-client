@@ -1,22 +1,12 @@
 /** @jsx React.DOM */
+import Line from "./line/line";
+import JoinLeaveLine from "./line/joinleaveline";
+import ConnectionLine from "./line/connectionline";
+import SessionEventLine from "./line/sessioneventline";
+import { getEventTypeID } from "../data/eventtype";
+import EventTypes from "../data/eventtype";
 
-var EventTypes = {
-    Join:1,
-    Leave: 2,
-    Message: 3,
-    SessionStart: 4,
-    SessionStop: 5,
-    SessionPause: 6,
-    SessionResume: 7,
-    LostConnection: 10,
-    FoundConnection: 11
-}
-
-function getEventTypeID(event) {
-    var typeID = event.eventType.ID;
-    return typeID;
-}
-isNotPauseResumeEvent = function(event) {
+function isNotPauseResumeEvent(event) {
     var typeID = getEventTypeID(event);
     return typeID != EventTypes.SessionPause  && typeID != EventTypes.SessionResume;
 }
@@ -66,3 +56,5 @@ var MessageView = React.createClass({
         return (scrollObj.scrollHeight - scrollObj.scrollTop) === scrollObj.clientHeight;
     }
 });
+
+export default MessageView;

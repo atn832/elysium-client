@@ -11,3 +11,5 @@ var UserList = React.createClass({
     );
   }
 });
+
+export default UserList;

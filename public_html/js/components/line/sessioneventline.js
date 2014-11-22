@@ -1,4 +1,7 @@
 /** @jsx React.DOM */
+import DateRenderer from "./renderer/daterenderer";
+import DeviceRenderer from "./renderer/devicerenderer";
+import EventTypes from "../../data/eventtype";
 
 var SessionEventLine = React.createClass({
     render: function() {
@@ -28,3 +31,5 @@ var SessionEventLine = React.createClass({
         );
     }
 });
+
+export default SessionEventLine;

@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 import Toolbar from "./toolbar";
+import MessageView from "./messageview";
 
 var ChatApp = React.createClass({
     getInitialState: function() {

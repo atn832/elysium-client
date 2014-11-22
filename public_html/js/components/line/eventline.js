@@ -1,4 +1,6 @@
 /** @jsx React.DOM */
+import DateRenderer from "./renderer/daterenderer";
+import DeviceRenderer from "./renderer/devicerenderer";
 
 var EventLine = React.createClass({
     render: function() {
@@ -10,3 +12,5 @@ var EventLine = React.createClass({
         );
     }
 });
+
+export default EventLine;

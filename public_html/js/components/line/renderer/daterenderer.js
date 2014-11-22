@@ -24,3 +24,5 @@ var DateRenderer = {
 //        return source && source.datetime && source.datetime.substring(11) || "xx:xx";
     }
 };
+
+export default DateRenderer;
