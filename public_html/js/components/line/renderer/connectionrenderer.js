@@ -1,4 +1,5 @@
 var UserAgentPlatformRegex = /[(]([^)]*)[)]/;
+import { htmlentities } from "../../../util";
 
 var ConnectionRenderer = {
     render: function(source) {

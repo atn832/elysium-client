@@ -6,9 +6,9 @@ function initializeMaps(lat, lng, element) {
         center: latlng,
         mapTypeId: 'roadmap'
     }
-    map = new google.maps.Map(element, mapOptions);
+    var map = new google.maps.Map(element, mapOptions);
 
-    marker = new google.maps.Marker({
+    new google.maps.Marker({
         position: latlng,
         map: map
     });
