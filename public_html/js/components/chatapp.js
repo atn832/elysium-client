@@ -1,4 +1,6 @@
 /** @jsx React.DOM */
+import Toolbar from "./toolbar";
+
 var ChatApp = React.createClass({
     getInitialState: function() {
         return {
@@ -243,3 +245,5 @@ var ChatApp = React.createClass({
         };
     }
 });
+
+export default ChatApp;

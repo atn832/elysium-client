@@ -9,3 +9,5 @@ var Toolbar = React.createClass({
     );
   }
 });
+
+export default Toolbar;
