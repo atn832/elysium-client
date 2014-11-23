@@ -7,7 +7,6 @@
   },
   "devDependencies": {
     "es6-loader": "^0.2.0",
-    "jsx-loader": "^0.12.2",
     "webpack": "^1.4.13"
   }
 }
