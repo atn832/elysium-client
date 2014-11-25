@@ -3,6 +3,7 @@ import Toolbar from "./toolbar";
 import MessageView from "./messageview";
 import LineInput from "./lineinput";
 import Status from "./status";
+import setSourceInformation from "../io/source";
 
 var ChatApp = React.createClass({
     getInitialState: function() {
@@ -92,7 +93,13 @@ var ChatApp = React.createClass({
         var r = Math.random();              //for IE to prevent caching.
         this.sidToIsLog[r] = isLog;
 
-        var data = getSourceInformation();
+        var data = {
+            sid: Math.random(), // for IE
+            token: token,
+            userID: userid
+        }
+        setSourceInformation(data);
+        
         data.log = isLog;
         data.lastEventID = vLastEventID;
         data.numMessages = vNumMessages;
@@ -188,7 +195,13 @@ var ChatApp = React.createClass({
     },
     sendOneMessage: function(message) {
         var sendOwnMessageID = message.ownMessageID;
-        var data = getSourceInformation();
+        var data = {
+            sid: Math.random(), // for IE
+            token: token,
+            userID: userid
+        }
+        setSourceInformation(data);
+        
         data.destinationID = chanID;
         data.clientMessageID = sendOwnMessageID;
         data.content = message.text;

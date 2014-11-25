@@ -10,14 +10,10 @@ if (navigator.geolocation) {
     var wpid = navigator.geolocation.watchPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
 
-function getSourceInformation() {
-    var data = {
-        sid: Math.random(), // for IE
-        token: token,
-        userID: userid,
-        timeZone: timeZone,
-        userAgent: userAgent
-    };
+function setSourceInformation(data) {
+    data.timeZone = jstz.determine().name();
+    data.userAgent = navigator.userAgent;
+
     function storeIfNumeric(data, property, value) {
         if (value !== null && !isNaN(value))
             data[property] = value;
@@ -33,3 +29,5 @@ function getSourceInformation() {
     }
     return data;
 }
+
+export default setSourceInformation;
