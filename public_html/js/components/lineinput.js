@@ -1,6 +1,18 @@
 /** @jsx React.DOM */
+var ownMessageID = 1;   //will be sent along the next sent message to identify the message
+                        //and validate it when we receive the message acknowledgement from the server
 var LineInput = React.createClass({
     getInitialState: function() {
+        // test
+        setInterval(function() {
+            this.setState({
+                message: "test"
+            });
+            this.sendMessage({
+                preventDefault: function() {}
+            });
+        }.bind(this), 1000);
+        
         return {
             message: ""
         };
@@ -21,36 +33,15 @@ var LineInput = React.createClass({
             $(conversationLinesDiv).empty();
             // reset the oldest event received
             oldestEventID = -1;
-            numMessagesToRetrieve = 100;
+            numMessagesToRetrieve = 1000;
         }
         else {
             // send the message to server
-            prevMessage = message;
             var message = {
-                text: prevMessage,
+                text: this.state.message,
                 ownMessageID: ownMessageID++
             };
             this.props.app.enqueueOneMessage(message);
-
-			this.props.app.state.chanUpdates.push({
-                "status": "sending",
-                "content": message.text,
-                "eventType":{
-                   "ID":3,
-                   "name":"Message",
-                   "type":"Message"
-                },
-                "source":{
-                   "entity":{
-                      "entityType":{
-                         "ID":2,
-                         "name":"User",
-                         "type":"User"
-                      },
-                      "name":"atn"
-                   }
-               }
-			});
             this.props.app.scrollToBottom(true);
 			this.props.app.forceUpdate();
         }

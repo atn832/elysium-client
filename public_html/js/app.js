@@ -4,26 +4,6 @@
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
 
-var loggedin = false;
-var nick = null;
-var userid = null;
-var chanID = null;
-var token = null;
-
-// for logs (get more button)
-var oldestEventID = -1;
-var newestEventID = -1;
-var numMessagesToRetrieve = 100;
-
-var sidToIsLog = {};
-
-var messageBuffer = [];
-var bufferedMessageSent = null;
-
-var isGettingNonLogMessage = false;
-
-var scrollObj;
-
 var data = {
     "chanList":[
        {

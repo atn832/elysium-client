@@ -5,6 +5,7 @@ import DeviceRenderer from "./renderer/devicerenderer";
 import ConnectionRenderer from "./renderer/connectionrenderer";
 import MapRenderer from "./renderer/maprenderer";
 import Content from "./renderer/content";
+import IO from "../../io/io.js";
 
 var Line = React.createClass({
     onClick: function() {

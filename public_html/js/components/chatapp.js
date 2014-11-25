@@ -2,9 +2,11 @@
 import Toolbar from "./toolbar";
 import MessageView from "./messageview";
 import LineInput from "./lineinput";
+import Status from "./status";
 
 var ChatApp = React.createClass({
     getInitialState: function() {
+        this.loadChatClient();
         return {
             channel: 1,
             chanUpdates: this.props.data.chanUpdates[0].events
@@ -15,9 +17,10 @@ var ChatApp = React.createClass({
         return (
             <div id="chatclient" className="container">
                 <div id="header" className="header">
-                    <Toolbar data={this.props.data} channel={this.state.channel}></Toolbar>
+                    <Toolbar data={this.props.data} channel={this.state.channel} />
+                    <Status status={this.state.logStatus} />
                 </div>
-                <MessageView events={this.state.chanUpdates} ref="messages"/>
+                <MessageView events={this.state.chanUpdates} ref="messages" />
                 <div className="footer">
                     <LineInput app={this}></LineInput>
                 </div>
@@ -25,19 +28,31 @@ var ChatApp = React.createClass({
         );
     },
     loadChatClient: function() {
-        $(chatclient).show();
+        this.isGettingNonLogMessage = false;
+        
+        this.oldestEventID = -1;
+        this.newestEventID = -1;
+        this.numMessagesToRetrieve = 1000;
+        
+        this.messageBuffer = [];
+        this.bufferedMessageSent = null;
 
-        oldestEventID = -1;
-        newestEventID = -1;
-        numMessagesToRetrieve = 100;
-        messageBuffer = [];
-        bufferedMessageSent = null;
-        
-        $(conversationLinesDiv).empty();
-        
+//        var loggedin = false;
+//        var nick = null;
+//        var userid = null;
+//        var chanID = null;
+//        var token = null;
+
+        // for logs (get more button)
+//        var oldestEventID = -1;
+//        var newestEventID = -1;
+//        var numMessagesToRetrieve = 100;
+
+        this.sidToIsLog = {};
+
         this.getMissedMessages();
 
-        $(textBox).focus();
+//        $(textBox).focus();
     },
     reduceTimeout: function() {
         serverTimeout--;
@@ -53,37 +68,37 @@ var ChatApp = React.createClass({
         }
     },
     getMissedMessages: function() {
-        setGetLogStatus("getting missed logs");
-        getMessages(true, oldestEventID, -1);
+        this.setState({ logStatus: "getting missed logs" });
+        this.getMessages(true, this.oldestEventID, -1);
     },
     getLogs: function() {
-        setGetLogStatus("getting " + numMessagesToRetrieve + " messages");
-        getMessages(true, oldestEventID, numMessagesToRetrieve);
-        numMessagesToRetrieve *= 4;
-        if (numMessagesToRetrieve > MaxMessageToRetrieveCount)
-            numMessagesToRetrieve = MaxMessageToRetrieveCount;
+        this.setState({ logStatus: "getting " + this.numMessagesToRetrieve + " messages" });
+        this.getMessages(true, this.oldestEventID, this.numMessagesToRetrieve);
+        this.numMessagesToRetrieve *= 4;
+        if (this.numMessagesToRetrieve > MaxMessageToRetrieveCount)
+            this.numMessagesToRetrieve = MaxMessageToRetrieveCount;
     },
     //checks for new messages regularly
     getLatestMessages: function(isLog) {
-        getMessages(isLog, newestEventID, -1);
+        this.getMessages(isLog, this.newestEventID, -1);
     },
     getMessages: function(isLog, vLastEventID, vNumMessages) {
         // do not try several getLatestMessages at once
-        if (isGettingNonLogMessage && !isLog)
+        if (this.isGettingNonLogMessage && !isLog)
             return;
         
         if (!isLog)
-            isGettingNonLogMessage = true;
+            this.isGettingNonLogMessage = true;
         var r = Math.random();              //for IE to prevent caching.
-        sidToIsLog[r] = isLog;
+        this.sidToIsLog[r] = isLog;
 
         var data = getSourceInformation();
         data.log = isLog;
         data.lastEventID = vLastEventID;
         data.numMessages = vNumMessages;
         $.getJSON("getmessages.action", data)
-            .success(function(data, textStatus, jqXHR) { getMessagesSuccess(data, r); })
-            .error(function(jqXHR, status, error) { getMessagesError(jqXHR, r); });
+            .success(function(data, textStatus, jqXHR) { this.getMessagesSuccess(data, r); }.bind(this))
+            .error(function(jqXHR, status, error) { this.getMessagesError(jqXHR, r); }.bind(this));
     },
     getMessagesSuccess: function(data, sid) {
         if (!logInterface && !getMessageTimerID) {
@@ -94,19 +109,19 @@ var ChatApp = React.createClass({
             serverTimeout = serverTimeoutMaxValue;
         }
         
-        var isLog = sidToIsLog[sid];
-        delete sidToIsLog[sid];
+        var isLog = this.sidToIsLog[sid];
+        delete this.sidToIsLog[sid];
         if (isLog) {
             if (!data.chanUpdates) {
-                setGetLogStatus("No more logs");
+                this.setState({ logStatus: "No more logs" });
             }
             else {
                 $(getMoreButton).attr("disabled", false);      //enable get more button
-                setGetLogStatus("");
+                this.setState({ logStatus: "" });
             }
         }
         else
-            isGettingNonLogMessage = false;
+            this.isGettingNonLogMessage = false;
 
         resetTimeout(data);
         checkLoginState(data); // updates loggedin flag
@@ -142,15 +157,15 @@ var ChatApp = React.createClass({
         };
     },
     getMessagesError: function(jqXHR, sid) {
-        var isLog = sidToIsLog[sid];
-        delete sidToIsLog[sid];
+        var isLog = this.sidToIsLog[sid];
+        delete this.sidToIsLog[sid];
         if (isLog) {
-            setGetLogStatus("Error retrieving logs");
+            this.setState({ logStatus: "Error retrieving logs" });
             $(getMoreButton).attr("disabled", false);      //enable get more button
         }
         else {
             // enable getMessage again
-            isGettingNonLogMessage = null;
+            this.isGettingNonLogMessage = null;
         }
     },
     scrollToBottom: function(atNextUpdate) {
@@ -160,14 +175,14 @@ var ChatApp = React.createClass({
       return this.refs.messages.isScrolledToBottom();
     },
     enqueueOneMessage: function(message) {
-        messageBuffer.push(message);
+        this.messageBuffer.push(message);
     },
     dequeueMessageBuffer: function() {
-        if (!bufferedMessageSent) {
-            if (messageBuffer.length > 0) {
+        if (!this.bufferedMessageSent) {
+            if (this.messageBuffer.length > 0) {
                 // send the first message in the queue
-                bufferedMessageSent = messageBuffer.shift();
-                this.sendOneMessage(bufferedMessageSent);
+                this.bufferedMessageSent = this.messageBuffer.shift();
+                this.sendOneMessage(this.bufferedMessageSent);
             }
         }
     },
@@ -177,6 +192,27 @@ var ChatApp = React.createClass({
         data.destinationID = chanID;
         data.clientMessageID = sendOwnMessageID;
         data.content = message.text;
+
+        this.state.chanUpdates.push({
+            "status": "sending",
+            "content": message.text,
+            "eventType":{
+               "ID":3,
+               "name":"Message",
+               "type":"Message"
+            },
+            "source":{
+               "entity":{
+                  "entityType":{
+                     "ID":2,
+                     "name":"User",
+                     "type":"User"
+                  },
+                  "name":"atn"
+               }
+           }
+        });
+
         /*$.ajax({
             url: "say.action",
             data: data,
@@ -210,10 +246,10 @@ var ChatApp = React.createClass({
             else {
                 span.addClass("failed");
                 // resend. put it back, at the beginning of the list
-                messageBuffer.unshift(bufferedMessageSent);
+                this.messageBuffer.unshift(this.bufferedMessageSent);
             }
             // mark as ready for next message in queue
-            bufferedMessageSent = null;
+            this.bufferedMessageSent = null;
         }
     },
     // Goes back to login page if the  server sent a not_logged_in message
@@ -235,9 +271,9 @@ var ChatApp = React.createClass({
             $(txtLogin).focus();
 
             // reset initial values
-            oldestEventID = -1;
-            newestEventID = -1;
-            numMessagesToRetrieve = 100;
+            this.oldestEventID = -1;
+            this.newestEventID = -1;
+            this.numMessagesToRetrieve = 100;
 
             loggedin = false;
             nick = null;
