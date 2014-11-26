@@ -4,6 +4,9 @@ import MessageView from "./messageview";
 import LineInput from "./lineinput";
 import Status from "./status";
 import setSourceInformation from "../io/source";
+import GetMoreButton from "./getmorebutton";
+
+var MaxMessageToRetrieveCount = 1000;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
@@ -19,7 +22,7 @@ var ChatApp = React.createClass({
             <div id="chatclient" className="container">
                 <div id="header" className="header">
                     <Toolbar data={this.props.data} channel={this.state.channel} />
-                    <Status status={this.state.logStatus} />
+                    <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.logStatus} />
                 </div>
                 <MessageView events={this.state.chanUpdates} ref="messages" />
                 <div className="footer">
@@ -40,9 +43,9 @@ var ChatApp = React.createClass({
 
 //        var loggedin = false;
 //        var nick = null;
-//        var userid = null;
+        this.userid = null;
 //        var chanID = null;
-//        var token = null;
+        this.token = null;
 
         // for logs (get more button)
 //        var oldestEventID = -1;
@@ -69,11 +72,17 @@ var ChatApp = React.createClass({
         }
     },
     getMissedMessages: function() {
-        this.setState({ logStatus: "getting missed logs" });
+        this.setState({
+            isGettingLogs: true,
+            logStatus: "getting missed logs"
+        });
         this.getMessages(true, this.oldestEventID, -1);
     },
     getLogs: function() {
-        this.setState({ logStatus: "getting " + this.numMessagesToRetrieve + " messages" });
+        this.setState({
+            isGettingLogs: true,
+            logStatus: "getting " + this.numMessagesToRetrieve + " messages"
+        });
         this.getMessages(true, this.oldestEventID, this.numMessagesToRetrieve);
         this.numMessagesToRetrieve *= 4;
         if (this.numMessagesToRetrieve > MaxMessageToRetrieveCount)
@@ -95,8 +104,8 @@ var ChatApp = React.createClass({
 
         var data = {
             sid: Math.random(), // for IE
-            token: token,
-            userID: userid
+            token: this.token,
+            userID: this.userid
         }
         setSourceInformation(data);
         
@@ -123,8 +132,10 @@ var ChatApp = React.createClass({
                 this.setState({ logStatus: "No more logs" });
             }
             else {
-                $(getMoreButton).attr("disabled", false);      //enable get more button
-                this.setState({ logStatus: "" });
+                this.setState({
+                    isGettingLogs: false,
+                    logStatus: ""
+                });
             }
         }
         else
@@ -167,8 +178,10 @@ var ChatApp = React.createClass({
         var isLog = this.sidToIsLog[sid];
         delete this.sidToIsLog[sid];
         if (isLog) {
-            this.setState({ logStatus: "Error retrieving logs" });
-            $(getMoreButton).attr("disabled", false);      //enable get more button
+            this.setState({
+                isGettingLogs: false,
+                logStatus: "Error retrieving logs"
+            });
         }
         else {
             // enable getMessage again
@@ -197,8 +210,8 @@ var ChatApp = React.createClass({
         var sendOwnMessageID = message.ownMessageID;
         var data = {
             sid: Math.random(), // for IE
-            token: token,
-            userID: userid
+            token: this.token,
+            userID: this.userid
         }
         setSourceInformation(data);
         
@@ -290,9 +303,9 @@ var ChatApp = React.createClass({
 
             loggedin = false;
             nick = null;
-            userid = -1;
+            this.userid = -1;
             chanID = -1;
-            token = -1;
+            this.token = -1;
         };
     }
 });
