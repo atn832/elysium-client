@@ -16,7 +16,6 @@ body {
 
 iframe {
     width: 100%;
-    height: 800px;
 }
 
 /* full chat interface */
@@ -45,6 +44,7 @@ iframe {
 
 .item {
     flex: 1 0 0px;
+    border-right: 1px solid darkgray;
 }
 
 .link {
@@ -87,6 +87,62 @@ form input[type="text"] {
 
 .d-b {
     display: block;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.conversationDiv {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    /*background:#F0F7FF;*/
+    width:100%;
+    overflow-x:hidden;
+    overflow-y: scroll;
+}
+
+.header {
+    -webkit-flex: none;
+}
+
+.container {
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    width:100%;
+    position:relative;
+}
+
+.pageLoadTime{
+    display: none;
+}
+
+.topic {
+    background-color:#F0F7FF;
+    border-bottom:1px dashed #C8D1DB;
+    cursor:default;
+}
+
+.txtBox {
+    border: 1px solid rgb(195,210,224);
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
+
+.footer {
+    -webkit-flex: none;
+    flex: none;
+ }
+
+.footer form {
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
 /* misc */

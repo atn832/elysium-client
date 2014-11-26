@@ -22,7 +22,7 @@ var ChatApp = React.createClass({
             <div id="chatclient" className="container">
                 <div id="header" className="header">
                     <Toolbar data={this.props.data} channel={this.state.channel} />
-                    <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.logStatus} />
+                    <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
                 <MessageView events={this.state.chanUpdates} ref="messages" />
                 <div className="footer">
@@ -74,14 +74,14 @@ var ChatApp = React.createClass({
     getMissedMessages: function() {
         this.setState({
             isGettingLogs: true,
-            logStatus: "getting missed logs"
+            status: "getting missed logs"
         });
         this.getMessages(true, this.oldestEventID, -1);
     },
     getLogs: function() {
         this.setState({
             isGettingLogs: true,
-            logStatus: "getting " + this.numMessagesToRetrieve + " messages"
+            status: "getting " + this.numMessagesToRetrieve + " messages"
         });
         this.getMessages(true, this.oldestEventID, this.numMessagesToRetrieve);
         this.numMessagesToRetrieve *= 4;
@@ -129,12 +129,12 @@ var ChatApp = React.createClass({
         delete this.sidToIsLog[sid];
         if (isLog) {
             if (!data.chanUpdates) {
-                this.setState({ logStatus: "No more logs" });
+                this.setState({ status: "No more logs" });
             }
             else {
                 this.setState({
                     isGettingLogs: false,
-                    logStatus: ""
+                    status: ""
                 });
             }
         }
@@ -180,7 +180,7 @@ var ChatApp = React.createClass({
         if (isLog) {
             this.setState({
                 isGettingLogs: false,
-                logStatus: "Error retrieving logs"
+                status: "Error retrieving logs"
             });
         }
         else {

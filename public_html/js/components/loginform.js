@@ -23,6 +23,7 @@ var LoginForm = React.createClass({
           return;
         }
         console.log("Logging in with info", this.state);
+        this.props.onLogin(channel, password, login);
     },
     render: function() {
         return (
@@ -35,6 +36,8 @@ var LoginForm = React.createClass({
         <input type="submit" className="button as-c" value="login" onClick={this.onSubmit}/>
         <a href={"?chanName=" + this.state.channel + "&nick=" + this.state.login} className="d-b as-c link">bookmark this link for direct login</a>
     </form>
+    {this.props.status? <div className="mt-30">{this.props.status}</div>: null}
+    {this.props.error? <iframe srcDoc={this.props.error} />: null }
 </div>
         );
     }
