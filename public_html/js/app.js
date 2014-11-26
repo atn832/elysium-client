@@ -1138,12 +1138,13 @@ var data = {
 
 React.renderComponent(
     <div className="row">
-        <div className="column1">
+        <div className="item">
             <div className="container" style={{"justify-content": "center"}}>
                 <LoginForm />
             </div>
         </div>
-        <div className="column2"><ChatApp data={data}></ChatApp></div>
+        <div className="item"><ChatApp data={data}></ChatApp></div>
+        <div className="item"><ChatApp></ChatApp></div>
     </div>,
   document.body
 );

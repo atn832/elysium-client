@@ -13,7 +13,7 @@ var ChatApp = React.createClass({
         this.loadChatClient();
         return {
             channel: 1,
-            chanUpdates: this.props.data.chanUpdates[0].events
+            chanUpdates: this.props.data && this.props.data.chanUpdates && this.props.data.chanUpdates[0].events || []
         };
     },
     render: function() {

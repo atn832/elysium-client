@@ -46,7 +46,6 @@ function processLinks(text) {
     var lastIndex = 0;
     while (matches = linkRegex.exec(text)) {
         containsLinks = true;
-        console.log(matches);
         var unescapedMatch = matches[0];
         var match = htmlentities(unescapedMatch);
         var link;

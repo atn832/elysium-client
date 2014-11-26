@@ -43,13 +43,8 @@ iframe {
     height: 100%;
 }
 
-.column1 {
-    width: 25%;
-}
-
-.column2 {
-    border-left: 1px solid gray;
-    width: 75%;
+.item {
+    flex: 1 0 0px;
 }
 
 .link {
