@@ -28,8 +28,8 @@ function getEventRenderer(event) {
 var MessageView = React.createClass({
   render: function() {
     var lines = this.props.events.filter(isNotPauseResumeEvent).map(function(event) {
-        var renderer = getEventRenderer(event);
-        return <renderer event={event}></renderer>;
+        var Renderer = getEventRenderer(event);
+        return <Renderer event={event} />;
     });
     return (
       <div id="conversationdiv" className="conversationDiv" ref="conversationElement">
