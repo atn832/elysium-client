@@ -7,6 +7,8 @@ import setSourceInformation from "../io/source";
 import GetMoreButton from "./getmorebutton";
 
 var MaxMessageToRetrieveCount = 1000;
+var ServerTimeoutDuration = 60; // seconds
+var PollInterval = 2000;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
@@ -55,8 +57,8 @@ var ChatApp = React.createClass({
 //        $(textBox).focus();
     },
     reduceTimeout: function() {
-        serverTimeout--;
-        if (serverTimeout <= 0 && serverDown == false) {
+        this.serverTimeout--;
+        if (this.serverTimeout <= 0 && serverDown == false) {
             serverDown = true;
 
             var currentTime = new Date();
@@ -113,12 +115,18 @@ var ChatApp = React.createClass({
             .error(function(jqXHR, status, error) { this.getMessagesError(jqXHR, r); }.bind(this));
     },
     getMessagesSuccess: function(data, sid) {
-        if (!logInterface && !getMessageTimerID) {
+        if (!this.getMessageTimerID) {
             // initialize timers when logs have been received for the first time
-            getMessageTimerID = setInterval("getLatestMessages(false);", getmessageinterval);
-            serverTimeoutTimerID = setInterval("reduceTimeout();", 1000)
-            sendMessageTimerID = setInterval("dequeueMessageBuffer();", 300);
-            serverTimeout = serverTimeoutMaxValue;
+            this.getMessageTimerID = setInterval(function() {
+                this.getLatestMessages(false);
+            }.bind(this), PollInterval);
+            this.serverTimeoutTimerID = setInterval(function() {
+                this.reduceTimeout();
+            }.bind(this), 1000);
+            this.sendMessageTimerID = setInterval(function() {
+                this.dequeueMessageBuffer();
+            }.bind(this), 300);
+            this.serverTimeout = ServerTimeoutDuration;
         }
         
         var isLog = this.sidToIsLog[sid];
@@ -137,16 +145,16 @@ var ChatApp = React.createClass({
         else
             this.isGettingNonLogMessage = false;
 
-        resetTimeout(data);
-        checkLoginState(data); // updates loggedin flag
+        this.resetTimeout(data);
+        this.checkLoginState(data); // updates loggedin flag
         if (loggedin) {
-            updateChanListDiv(data);
+            this.updateChanListDiv(data);
             if (data.chanUpdates) {
                 data.chanUpdates.forEach(function(singleChanUpdates) {
                     if (fullInterface) updateUserDiv(singleChanUpdates);
                     var updatedChanID = singleChanUpdates.chanID;
                     if (updatedChanID == chanID) {
-                        updateChatDiv(updatedChanID, singleChanUpdates, isLog);
+                        this.updateChatDiv(updatedChanID, singleChanUpdates, isLog);
                     }
                 });
             }
@@ -156,7 +164,7 @@ var ChatApp = React.createClass({
     resetTimeout: function(data) {
         // this tag is included at the end of the resonse xml to getmessages
         if (data.validResponse) {
-            serverTimeout = serverTimeoutMaxValue;
+            this.serverTimeout = ServerTimeoutDuration;
             if (serverDown) {
                 serverDown = false;
 
@@ -280,12 +288,12 @@ var ChatApp = React.createClass({
             setChatStatus(new Date() + ": disconnected by server")
             $('title').text(new Date() + ": disconnected by server");
             
-            clearInterval(getMessageTimerID);
-            clearInterval(serverTimeoutTimerID);
-            clearInterval(sendMessageTimerID);
-            getMessageTimerID = null;
-            serverTimeoutTimerID = null;
-            sendMessageTimerID = null;
+            clearInterval(this.getMessageTimerID);
+            clearInterval(this.serverTimeoutTimerID);
+            clearInterval(this.sendMessageTimerID);
+            this.getMessageTimerID = null;
+            this.serverTimeoutTimerID = null;
+            this.sendMessageTimerID = null;
             
             $(chatclient).hide();
             $(conversationLinesDiv).empty();

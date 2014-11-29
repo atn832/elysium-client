@@ -15,14 +15,12 @@ var LoginForm = React.createClass({
     },
     handleSubmit: function(e) {
         e.preventDefault();
-        console.log("handleSubmit");
         var channel = this.state.channel;
         var password = this.state.password;
         var login = this.state.login;
         if (!channel || !login) {
           return;
         }
-        console.log("Logging in with info", this.state);
         this.props.onLogin(channel, password, login);
     },
     render: function() {
