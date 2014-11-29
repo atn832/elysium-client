@@ -6,27 +6,11 @@ html {
 }
 
 body {
-    /*background-color: #EEEEEE;*/
     margin: 0;
     padding: 0;
     border: 0;
     height: 100%;
     font-family: arial, sans-serif;
-}
-
-iframe {
-    width: 100%;
-}
-
-/* full chat interface */
-.body {
-    /*background:#F0F7FF;*/
-    width:100%;
-    position: absolute;
-    top:30px;
-    bottom:26px;
-    overflow-x:hidden;
-    overflow-y: scroll;
 }
 
 .item {
@@ -63,25 +47,6 @@ form input[type="text"] {
     background-image: -ms-linear-gradient(top,#4d90fe,#4787ed);
     background-image: -o-linear-gradient(top,#4d90fe,#4787ed);
     background-image: linear-gradient(top,#4d90fe,#4787ed);
-}
-
-.conversationDiv {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
-    /*background:#F0F7FF;*/
-    width:100%;
-    overflow-x:hidden;
-    overflow-y: scroll;
-}
-
-.container {
-    display: -webkit-flex;
-    -webkit-flex-direction: column;
-    display: flex;
-    flex-direction: column;
-    height:100%;
-    width:100%;
-    position:relative;
 }
 
 .pageLoadTime{

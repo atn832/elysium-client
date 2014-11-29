@@ -1,3 +1,7 @@
+.p-r {
+    position: relative;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -22,6 +26,13 @@
     margin-top: 30px;
 }
 
+.ov-x-h {
+    overflow-x:hidden;
+}
+.ov-y-s {
+    overflow-y: scroll;
+}
+
 /* flex */
 .d-f {
     display: -webkit-flex;
@@ -31,6 +42,11 @@
 .fd-r {
     -webkit-flex-direction: row;
     flex-direction: row;
+}
+
+.fd-c {
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 
 .fg-1 {

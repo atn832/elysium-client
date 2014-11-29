@@ -28,7 +28,7 @@ var LoginForm = React.createClass({
     render: function() {
         return (
 <div id="formFrame">
-    <form id="loginform" onSubmit={this.handleSubmit} className="container" style={{"justify-content": "center"}}>
+    <form id="loginform" onSubmit={this.handleSubmit} className="d-f fd-c" style={{"justify-content": "center"}}>
         <h1 className="as-c">Elysium</h1>
         <input type="hidden" className="d-b as-c" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
         <input type="hidden" className="d-b as-c" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>
@@ -37,7 +37,7 @@ var LoginForm = React.createClass({
         <a href={"?chanName=" + this.state.channel + "&nick=" + this.state.login} className="d-b as-c link">bookmark this link for direct login</a>
     </form>
     {this.props.status? <div className="mt-30">{this.props.status}</div>: null}
-    {this.props.error? <iframe srcDoc={this.props.error} />: null }
+    {this.props.error? <iframe className="w-100" srcDoc={this.props.error} />: null }
 </div>
         );
     }
