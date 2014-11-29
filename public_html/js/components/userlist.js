@@ -5,7 +5,7 @@ var UserList = React.createClass({
         return <a className="tab tab-unselected">{user.name}</a>
     });
     return (
-      <span id="usermenu" className="tabbar">
+      <span className="tabbar">
         {users}
       </span>
     );

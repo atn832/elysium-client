@@ -71,7 +71,7 @@ form input[type="text"] {
 
 /* chan and user list */
 
-#topmenu {
+.topmenu {
     background-color: #F0F7FF;
     border-bottom:1px solid #C3D2E0;
     cursor:default;

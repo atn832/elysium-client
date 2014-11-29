@@ -5,7 +5,7 @@ var ChanList = React.createClass({
         return <a className="tab tab-selected">{channel.name}</a>
     });
     return (
-      <span id="chanList">
+      <span>
         {channels}
       </span>
     );

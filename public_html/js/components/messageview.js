@@ -32,9 +32,9 @@ var MessageView = React.createClass({
         return <Renderer event={event} />;
     });
     return (
-      <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement">
-        {lines}
-      </div>
+        <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement">
+            {lines}
+        </div>
     );
   },
     componentDidUpdate: function(prevProps, prevState) {
