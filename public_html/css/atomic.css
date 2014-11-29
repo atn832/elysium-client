@@ -22,6 +22,10 @@
     align-self: center;
 }
 
+.jc-c {
+    justify-content: center;
+}
+
 .d-b {
     display: block;
 }

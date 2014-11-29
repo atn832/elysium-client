@@ -1142,7 +1142,7 @@ var App = React.createClass({
         return (
             <div className="d-f fd-r w-100 h-100">
                 <div className="item">
-                    <div className="d-f fd-c h-100 w-100 p-r" style={{"justify-content": "center"}}>
+                    <div className="d-f fd-c h-100 w-100 p-r" style={{"justifyContent": "center"}}>
                         <LoginForm onLogin={this.submitLoginInfo} status="Could not login" error="some html error"/>
                     </div>
                 </div>

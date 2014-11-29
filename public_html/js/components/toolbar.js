@@ -6,8 +6,8 @@ var Toolbar = React.createClass({
   render: function() {
     return (
       <div className="tabbar topmenu">
-        <ChanList channels={this.props.data && this.props.data.chanList || []} channel={this.props.channel} />
-        - <UserList users={this.props.data && this.props.data.chanUpdates[this.props.channel].userList || []} />
+        <ChanList channels={this.props.chanList || []} channel={this.props.channel} />
+        - <UserList users={this.props.userList || []} />
       </div>
     );
   }

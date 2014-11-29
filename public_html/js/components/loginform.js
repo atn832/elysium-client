@@ -25,8 +25,8 @@ var LoginForm = React.createClass({
     },
     render: function() {
         return (
-            <div className="d-f fd-c h-100 w-100 p-r" style={{"justify-content": "center"}}>
-                <form className="login d-f fd-c" onSubmit={this.handleSubmit} style={{"justify-content": "center"}}>
+            <div className="d-f fd-c h-100 w-100 p-r jc-c">
+                <form className="login d-f fd-c jc-c" onSubmit={this.handleSubmit}>
                     <h1 className="as-c">Elysium</h1>
                     <input type="hidden" className="d-b as-c w-75" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
                     <input type="hidden" className="d-b as-c w-75" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>

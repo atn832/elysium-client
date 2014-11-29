@@ -92,13 +92,19 @@ var App = React.createClass({
                 nick: data.user.name,
                 loggedin: true
             });
+            this.refs.chat.loadChatClient();
         }
+    },
+    onLogOut: function() {
+        this.setState({
+            loggedin: false
+        });
     },
     render: function() {
         return (
             <div className="w-100 h-100">
             {this.state.loggedin?
-                <ChatApp host={this.props.host} userid={this.state.userid} token={this.state.token} ref="chat" /> : 
+                <ChatApp host={this.props.host} userid={this.state.userid} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
                 <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} />
             }
             </div>

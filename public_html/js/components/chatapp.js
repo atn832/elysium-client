@@ -12,7 +12,6 @@ var PollInterval = 2000;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
-        this.loadChatClient();
         return {
             channel: 1,
             chanUpdates: this.props.data && this.props.data.chanUpdates && this.props.data.chanUpdates[0].events || []
@@ -23,7 +22,7 @@ var ChatApp = React.createClass({
         return (
             <div className="d-f fd-c h-100 w-100 p-r">
                 <div>
-                    <Toolbar data={this.props.data} channel={this.state.channel} />
+                    <Toolbar chanList={this.state.chanList} userList={this.state.userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
                 <MessageView events={this.state.chanUpdates} ref="messages" />
@@ -44,6 +43,10 @@ var ChatApp = React.createClass({
 //        var loggedin = false;
 //        var nick = null;
 //        var chanID = null;
+        this.setState({
+            loggedin: true,
+            chanID: this.props.chanID
+        });
 
         // for logs (get more button)
 //        var oldestEventID = -1;
@@ -58,8 +61,8 @@ var ChatApp = React.createClass({
     },
     reduceTimeout: function() {
         this.serverTimeout--;
-        if (this.serverTimeout <= 0 && serverDown == false) {
-            serverDown = true;
+        if (this.serverTimeout <= 0 && this.serverDown == false) {
+            this.serverDown = true;
 
             var currentTime = new Date();
             var hours = currentTime.getHours();
@@ -147,17 +150,22 @@ var ChatApp = React.createClass({
 
         this.resetTimeout(data);
         this.checkLoginState(data); // updates loggedin flag
-        if (loggedin) {
-            this.updateChanListDiv(data);
-            if (data.chanUpdates) {
-                data.chanUpdates.forEach(function(singleChanUpdates) {
-                    if (fullInterface) updateUserDiv(singleChanUpdates);
-                    var updatedChanID = singleChanUpdates.chanID;
-                    if (updatedChanID == chanID) {
-                        this.updateChatDiv(updatedChanID, singleChanUpdates, isLog);
-                    }
-                });
-            }
+        if (this.state.loggedin) {
+            this.setState({
+                chanList: data.chanList,
+                userList: data.chanUpdates[this.state.channel].userList,
+                data: data
+            });
+//            this.updateChanListDiv(data);
+//            if (data.chanUpdates) {
+//                data.chanUpdates.forEach(function(singleChanUpdates) {
+//                    if (fullInterface) updateUserDiv(singleChanUpdates);
+//                    var updatedChanID = singleChanUpdates.chanID;
+//                    if (updatedChanID == this.state.chanID) {
+//                        this.updateChatDiv(updatedChanID, singleChanUpdates, isLog);
+//                    }
+//                });
+//            }
         }
     },
     // Resets server timeout, if the server sent a valid response
@@ -165,8 +173,8 @@ var ChatApp = React.createClass({
         // this tag is included at the end of the resonse xml to getmessages
         if (data.validResponse) {
             this.serverTimeout = ServerTimeoutDuration;
-            if (serverDown) {
-                serverDown = false;
+            if (this.serverDown) {
+                this.serverDown = false;
 
                 var currentTime = new Date();
                 var hours = currentTime.getHours();
@@ -219,7 +227,7 @@ var ChatApp = React.createClass({
         }
         setSourceInformation(data);
         
-        data.destinationID = chanID;
+        data.destinationID = this.state.chanID;
         data.clientMessageID = sendOwnMessageID;
         data.content = message.text;
 
@@ -243,27 +251,27 @@ var ChatApp = React.createClass({
            }
         });
 
-        /*$.ajax({
+        $.ajax({
             url: this.props.host + "say.action",
             data: data,
             timeout: 10000
         })
         .success(function(data, textStatus, jqXHR) {
-            enqueueOneMessageDone(sendOwnMessageID, true, data);
-        })
+            this.enqueueOneMessageDone(sendOwnMessageID, true, data);
+        }.bind(this))
         .fail(function() {
-            enqueueOneMessageDone(sendOwnMessageID, false, null);
-        });*/
+            this.enqueueOneMessageDone(sendOwnMessageID, false, null);
+        }.bind(this));
       
         // test error
-        enqueueOneMessageDone(sendOwnMessageID, false, null);
+//        this.enqueueOneMessageDone(sendOwnMessageID, false, null);
     },
     enqueueOneMessageDone: function(clientEventID, success, data) {
         // will disable loggedin if the user is not logged in
         if (data)
             this.checkLoginState(data);
         
-        if (loggedin) {
+        if (this.state.loggedin) {
             // if still logged in, it passed!
             var span = $("#own" + clientEventID);
             // the line is now marked as verified
@@ -305,9 +313,13 @@ var ChatApp = React.createClass({
             this.newestEventID = -1;
             this.numMessagesToRetrieve = 100;
 
-            loggedin = false;
             nick = null;
-            chanID = -1;
+            this.setState({
+                chanID: -1,
+                loggedin: false
+            });
+            if (this.props.onLogOut)
+                this.props.onLogOut();
         };
     }
 });
