@@ -51,8 +51,8 @@ var LineInput = React.createClass({
 	},
   render: function() {
     return (
-    	<form onSubmit={this.sendMessage}>
-	      	<input type="text" id="txtBox" className="txtBox" ref="message" value={this.state.message} onChange={this.handleChange} />
+    	<form className="d-f fd-r w-100" onSubmit={this.sendMessage}>
+	      	<input type="text" id="txtBox" className="txtBox fg-1" ref="message" value={this.state.message} onChange={this.handleChange} />
 	      	<input className="sendButton" type="submit" onClick={this.sendMessage} value="send" />
       	</form>
     );

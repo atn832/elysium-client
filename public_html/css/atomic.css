@@ -1,0 +1,39 @@
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.ta-c {
+    text-align: center;
+}
+
+.as-c {
+    align-self: center;
+}
+
+.d-b {
+    display: block;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+/* flex */
+.d-f {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.fd-r {
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.fg-1 {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}

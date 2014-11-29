@@ -1227,7 +1227,7 @@ var App = React.createClass({
     },
     render: function() {
         return (
-            <div className="row">
+            <div className="d-f fd-r w-100 h-100">
                 <div className="item">
                     <div className="container" style={{"justify-content": "center"}}>
                         <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error}/>
