@@ -25,7 +25,9 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.state.userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
-                <MessageView events={this.state.chanUpdates} ref="messages" />
+                <MessageView events={
+                        this.state.chanUpdates[this.state.channel] && this.state.chanUpdates[this.state.channel].events
+                    } ref="messages" />
                 <LineInput app={this} />
             </div>
         );
@@ -106,7 +108,7 @@ var ChatApp = React.createClass({
         var data = {
             sid: Math.random(), // for IE
             token: this.props.token,
-            userID: this.props.userid
+            userID: this.props.userID
         }
         setSourceInformation(data);
         
@@ -154,7 +156,7 @@ var ChatApp = React.createClass({
             this.setState({
                 chanList: data.chanList,
                 userList: data.chanUpdates[this.state.channel].userList,
-                data: data
+                chanUpdates: data.chanUpdates
             });
 //            this.updateChanListDiv(data);
 //            if (data.chanUpdates) {
@@ -219,11 +221,12 @@ var ChatApp = React.createClass({
         }
     },
     sendOneMessage: function(message) {
+        message.status = "sending";
         var sendOwnMessageID = message.ownMessageID;
         var data = {
             sid: Math.random(), // for IE
             token: this.props.token,
-            userID: this.props.userid
+            userID: this.props.userID
         }
         setSourceInformation(data);
         
@@ -276,13 +279,8 @@ var ChatApp = React.createClass({
             var span = $("#own" + clientEventID);
             // the line is now marked as verified
             span.removeClass("unverified");
-            if (success) {
-                eventIDToOwnEventID[data.eventID] = clientEventID;
-                // may have failed in a previous attempt
-                span.removeClass("failed");
-            }
-            else {
-                span.addClass("failed");
+            if (!success) {
+                this.bufferedMessageSent.status = "error";
                 // resend. put it back, at the beginning of the list
                 this.messageBuffer.unshift(this.bufferedMessageSent);
             }

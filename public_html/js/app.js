@@ -86,7 +86,7 @@ var App = React.createClass({
         else {
             this.setState({
                 status: "",
-                userid: data.user.ID,
+                userID: data.user.ID,
                 token: data.token,
                 chanID: data.channel.ID,
                 nick: data.user.name,
@@ -104,7 +104,7 @@ var App = React.createClass({
         return (
             <div className="w-100 h-100">
             {this.state.loggedin?
-                <ChatApp host={this.props.host} userid={this.state.userid} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
+                <ChatApp host={this.props.host} chanID={this.state.chanID} userID={this.state.userID} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
                 <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} />
             }
             </div>

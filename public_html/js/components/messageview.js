@@ -27,10 +27,10 @@ function getEventRenderer(event) {
 
 var MessageView = React.createClass({
   render: function() {
-    var lines = this.props.events.filter(isNotPauseResumeEvent).map(function(event) {
+    var lines = this.props.events && this.props.events.filter(isNotPauseResumeEvent).map(function(event) {
         var Renderer = getEventRenderer(event);
         return <Renderer event={event} />;
-    });
+    }) || "";
     return (
         <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement">
             {lines}
