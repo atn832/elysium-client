@@ -1185,7 +1185,7 @@ var App = React.createClass({
         
         setSourceInformation(data);
 
-        $.getJSON("login.action", data)
+        $.getJSON(this.props.host + "login.action", data)
             .success(function(data, textStatus, jqXHR) { this.submitLoginInfoSuccess(data); }.bind(this))
             .error(function(jqXHR, status, error) { this.submitLoginInfoError(jqXHR); }.bind(this));
 
@@ -1202,9 +1202,7 @@ var App = React.createClass({
 //        });
     },
     submitLoginInfoError: function(jqxhr) {
-        this.setState({
-            status: "Could not login. Request failed"
-        });
+        this.setState({ status: "Could not login. Request failed" });
         this.setState({
             error: jqxhr.responseText
         });
@@ -1212,11 +1210,11 @@ var App = React.createClass({
     },
     submitLoginInfoSuccess: function(data) {
         if (data.invalidLoginMessage) {
-            setChatStatus("Could not login: " + $(this).attr("reason"));
-            $(formFrame).show();
+            this.setState({ status: "Could not login: " + $(this).attr("reason") });
+//            $(formFrame).show();
         }
         else {
-            setChatStatus("");
+            this.setState({ status: "" });
             nick = data.user.name;
             userid = data.user.ID;
             chanID = data.channel.ID;
@@ -1241,7 +1239,7 @@ var App = React.createClass({
 });
 
 React.renderComponent(
-    <App />,
+    <App host="http://localhost:8084/Elysium/" />,
     document.body
 );
 
