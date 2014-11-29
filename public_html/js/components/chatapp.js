@@ -41,9 +41,7 @@ var ChatApp = React.createClass({
 
 //        var loggedin = false;
 //        var nick = null;
-        this.userid = null;
 //        var chanID = null;
-        this.token = null;
 
         // for logs (get more button)
 //        var oldestEventID = -1;
@@ -102,15 +100,15 @@ var ChatApp = React.createClass({
 
         var data = {
             sid: Math.random(), // for IE
-            token: this.token,
-            userID: this.userid
+            token: this.props.token,
+            userID: this.props.userid
         }
         setSourceInformation(data);
         
         data.log = isLog;
         data.lastEventID = vLastEventID;
         data.numMessages = vNumMessages;
-        $.getJSON("getmessages.action", data)
+        $.getJSON(this.props.host + "getmessages.action", data)
             .success(function(data, textStatus, jqXHR) { this.getMessagesSuccess(data, r); }.bind(this))
             .error(function(jqXHR, status, error) { this.getMessagesError(jqXHR, r); }.bind(this));
     },
@@ -208,8 +206,8 @@ var ChatApp = React.createClass({
         var sendOwnMessageID = message.ownMessageID;
         var data = {
             sid: Math.random(), // for IE
-            token: this.token,
-            userID: this.userid
+            token: this.props.token,
+            userID: this.props.userid
         }
         setSourceInformation(data);
         
@@ -238,7 +236,7 @@ var ChatApp = React.createClass({
         });
 
         /*$.ajax({
-            url: "say.action",
+            url: this.props.host + "say.action",
             data: data,
             timeout: 10000
         })
@@ -301,9 +299,7 @@ var ChatApp = React.createClass({
 
             loggedin = false;
             nick = null;
-            this.userid = -1;
             chanID = -1;
-            this.token = -1;
         };
     }
 });

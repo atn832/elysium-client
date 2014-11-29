@@ -1138,97 +1138,12 @@ var data = {
 var LastUserNickKey = "lastUserNick";
 
 var App = React.createClass({
-    getInitialState: function() {
-        return {
-        };
-    },
-    setCookie: function(c_name, value, exdays) {
-        var exdate = new Date();
-        exdate.setDate(exdate.getDate() + exdays);
-        var c_value = escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-        document.cookie = c_name + "=" + c_value;
-    },
-    getCookie: function(c_name) {
-        var i, x, y, ARRcookies = document.cookie.split(";");
-        for (i = 0; i < ARRcookies.length; i++) {
-            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
-            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
-            x = x.replace(/^\s+|\s+$/g,"");
-            if (x == c_name) {
-                return unescape(y);
-            }
-        }
-    },
-    exitFunction: function() {
-        var data = getSourceInformation();
-        $.ajax({
-            url:"logout.action",
-            data: data,
-            async: false
-        });
-    },
-    submitLoginInfo: function(channel, password, login) {
-        this.setState({
-            status: "logging in"
-        });
-//        $(formFrame).hide();
-//        $("#errordiv").text("");
-
-        this.setCookie(LastUserNickKey, login, 365);
-
-        var data = {
-            sid: Math.random(), // for IE
-            "channel.name": channel,
-            "channel.password": password,
-            "user.name": login
-        };
-        
-        setSourceInformation(data);
-
-        $.getJSON(this.props.host + "login.action", data)
-            .success(function(data, textStatus, jqXHR) { this.submitLoginInfoSuccess(data); }.bind(this))
-            .error(function(jqXHR, status, error) { this.submitLoginInfoError(jqXHR); }.bind(this));
-
-        // put the focus to the text box by default.
-        // useful when clicking somewhere on the window to put focus on the Elysium window
-//        $(window).mouseup(function() {
-//            $(textBox).focus();
-//        });
-
-//        $(textBox).keydown(function(event) {
-//            if (event.keyCode == VK_RETURN) {
-//                sendMessage();
-//            }
-//        });
-    },
-    submitLoginInfoError: function(jqxhr) {
-        this.setState({ status: "Could not login. Request failed" });
-        this.setState({
-            error: jqxhr.responseText
-        });
-//        $(txtLogin).focus();
-    },
-    submitLoginInfoSuccess: function(data) {
-        if (data.invalidLoginMessage) {
-            this.setState({ status: "Could not login: " + $(this).attr("reason") });
-//            $(formFrame).show();
-        }
-        else {
-            this.setState({ status: "" });
-            nick = data.user.name;
-            userid = data.user.ID;
-            chanID = data.channel.ID;
-            token = data.token;
-            loggedin = true;
-            loadChatClient();
-        }
-    },
     render: function() {
         return (
             <div className="d-f fd-r w-100 h-100">
                 <div className="item">
                     <div className="d-f fd-c h-100 w-100 p-r" style={{"justify-content": "center"}}>
-                        <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error}/>
+                        <LoginForm onLogin={this.submitLoginInfo} status="Could not login" error="some html error"/>
                     </div>
                 </div>
                 <div className="item"><ChatApp data={data} ref="chat"></ChatApp></div>
@@ -1239,10 +1154,6 @@ var App = React.createClass({
 });
 
 React.renderComponent(
-    <App host="http://localhost:8084/Elysium/" />,
+    <App />,
     document.body
 );
-
-// $.getJSON("https://m.wafrat.com/E/login.action?sid=0.5324193357955664&token=&userID=&timeZone=America%2FLos_Angeles&userAgent=Mozilla%2F5.0+(Macintosh%3B+Intel+Mac+OS+X+10_9_4)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F37.0.2062.94+Safari%2F537.36&location.accuracy=53&location.latitude=37.4175286&location.longitude=-122.02531750000001&channel.name=Elysium&channel.password=&user.name=atn")
-//   .success(function(data, textStatus, jqXHR) { console.log("success", data); })
-//   .error(function(jqXHR, status, error) { console.log("failure", status, error); });

@@ -24,8 +24,8 @@ body {
     font-weight: bold;
 }
 
-form input[type="text"] {
-    width: 75%;
+.login input {
+    max-width: 400px;
 }
 
 /* login */
