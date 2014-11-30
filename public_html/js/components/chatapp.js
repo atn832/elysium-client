@@ -153,10 +153,24 @@ var ChatApp = React.createClass({
         this.resetTimeout(data);
         this.checkLoginState(data); // updates loggedin flag
         if (this.state.loggedin) {
+            data.chanUpdates.forEach(function(oneChanUpdate) {
+                if (!this.state.chanUpdates[oneChanUpdate.chanID]) {
+                    // set
+                    this.state.chanUpdates[oneChanUpdate.chanID] = oneChanUpdate;
+                }
+                else {
+                    //merge
+                    var currOneChanUpdate = this.state.chanUpdates[oneChanUpdate.chanID];
+                    // add events
+                    Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
+                    // update userlist
+                    if (oneChanUpdate.userListUpdated) {
+                        currOneChanUpdate.userList = oneChanUpdate.userList;
+                    }
+                }
+            }.bind(this));
             this.setState({
-                chanList: data.chanList,
-                userList: data.chanUpdates[this.state.channel].userList,
-                chanUpdates: data.chanUpdates
+                chanList: data.chanList
             });
 //            this.updateChanListDiv(data);
 //            if (data.chanUpdates) {
@@ -234,7 +248,7 @@ var ChatApp = React.createClass({
         data.clientMessageID = sendOwnMessageID;
         data.content = message.text;
 
-        this.state.chanUpdates.push({
+        this.state.chanUpdates[this.state.channel].events.push({
             "status": "sending",
             "content": message.text,
             "eventType":{
