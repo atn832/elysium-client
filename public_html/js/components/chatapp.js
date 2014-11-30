@@ -12,6 +12,7 @@ var PollInterval = 2000;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
+        this.sentMessageIDToEventIndex = [];
         return {
             channel: 1,
             chanUpdates: this.props.data && this.props.data.chanUpdates && this.props.data.chanUpdates[0].events || []
@@ -164,6 +165,15 @@ var ChatApp = React.createClass({
                     //merge
                     var currOneChanUpdate = this.state.chanUpdates[oneChanUpdate.chanID];
                     // add events
+                    oneChanUpdate.events.forEach(function(event, index) {
+                        if (this.sentMessageIDToEventIndex[event.ID]) {
+                            // replace the old one by the new one
+                            currOneChanUpdate.events.splice(this.sentMessageIDToEventIndex[event.ID], 1, event);
+                        }
+                        else {
+                            currOneChanUpdate.events.push(event);
+                        }
+                    }.bind(this));
                     Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
                     // update userlist
                     if (oneChanUpdate.userListUpdated) {
@@ -250,7 +260,7 @@ var ChatApp = React.createClass({
         data.clientMessageID = sendOwnMessageID;
         data.content = message.text;
 
-        this.state.chanUpdates[this.state.channel].events.push({
+        var sayEvent = {
             "status": "sending",
             "content": message.text,
             "eventType":{
@@ -267,8 +277,10 @@ var ChatApp = React.createClass({
                   },
                   "name":"atn"
                }
-           }
-        });
+           },
+            eventIndex: this.state.chanUpdates[this.state.channel].events.length
+        };
+        this.state.chanUpdates[this.state.channel].events.push(sayEvent);
 
         $.ajax({
             url: this.props.host + "say.action",
@@ -276,26 +288,30 @@ var ChatApp = React.createClass({
             timeout: 10000
         })
         .success(function(data, textStatus, jqXHR) {
-            this.enqueueOneMessageDone(sendOwnMessageID, true, data);
+            this.enqueueOneMessageDone(sayEvent, true, data);
         }.bind(this))
         .fail(function() {
-            this.enqueueOneMessageDone(sendOwnMessageID, false, null);
+            this.enqueueOneMessageDone(sayEvent, false, null);
         }.bind(this));
       
         // test error
 //        this.enqueueOneMessageDone(sendOwnMessageID, false, null);
     },
-    enqueueOneMessageDone: function(clientEventID, success, data) {
+    enqueueOneMessageDone: function(sayEvent, success, data) {
         // will disable loggedin if the user is not logged in
         if (data)
             this.checkLoginState(data);
         
         if (this.state.loggedin) {
             // if still logged in, it passed!
-            var span = $("#own" + clientEventID);
             // the line is now marked as verified
-            span.removeClass("unverified");
-            if (!success) {
+            if (success) {
+                //record eventid
+                sayEvent.status = ""; // not sending nor error
+                sayEvent.ID = data.eventID;
+                this.sentMessageIDToEventIndex[sayEvent.ID] = sayEvent.eventIndex;
+            }
+            else {
                 this.bufferedMessageSent.status = "error";
                 // resend. put it back, at the beginning of the list
                 this.messageBuffer.unshift(this.bufferedMessageSent);
