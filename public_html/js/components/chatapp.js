@@ -45,9 +45,6 @@ var ChatApp = React.createClass({
         this.messageBuffer = [];
         this.bufferedMessageSent = null;
 
-//        var loggedin = false;
-//        var nick = null;
-//        var chanID = null;
         this.setState({
             loggedin: true,
             chanID: this.props.chanID
@@ -61,8 +58,6 @@ var ChatApp = React.createClass({
         this.sidToIsLog = {};
 
         this.getMissedMessages();
-
-//        $(textBox).focus();
     },
     reduceTimeout: function() {
         this.serverTimeout--;
@@ -155,11 +150,17 @@ var ChatApp = React.createClass({
 
         this.resetTimeout(data);
         this.checkLoginState(data); // updates loggedin flag
-        if (this.state.loggedin) {
+        if (this.state.loggedin && data.chanUpdates) {
             data.chanUpdates.forEach(function(oneChanUpdate) {
                 if (!this.state.chanUpdates[oneChanUpdate.chanID]) {
                     // set
                     this.state.chanUpdates[oneChanUpdate.chanID] = oneChanUpdate;
+                    oneChanUpdate.events.forEach(function(event) {
+                        if (event.ID > this.newestEventID)
+                            this.newestEventID = event.ID;
+                        if (event.ID < this.oldestEventID)
+                            this.oldestEventID = event.ID;
+                    }.bind(this));
                 }
                 else {
                     //merge
@@ -173,6 +174,10 @@ var ChatApp = React.createClass({
                         else {
                             currOneChanUpdate.events.push(event);
                         }
+                        if (event.ID > this.newestEventID)
+                            this.newestEventID = event.ID;
+                        if (event.ID < this.oldestEventID)
+                            this.oldestEventID = event.ID;
                     }.bind(this));
                     Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
                     // update userlist
@@ -184,16 +189,6 @@ var ChatApp = React.createClass({
             this.setState({
                 chanList: data.chanList
             });
-//            this.updateChanListDiv(data);
-//            if (data.chanUpdates) {
-//                data.chanUpdates.forEach(function(singleChanUpdates) {
-//                    if (fullInterface) updateUserDiv(singleChanUpdates);
-//                    var updatedChanID = singleChanUpdates.chanID;
-//                    if (updatedChanID == this.state.chanID) {
-//                        this.updateChatDiv(updatedChanID, singleChanUpdates, isLog);
-//                    }
-//                });
-//            }
         }
     },
     // Resets server timeout, if the server sent a valid response
@@ -236,6 +231,27 @@ var ChatApp = React.createClass({
     },
     enqueueOneMessage: function(message) {
         this.messageBuffer.push(message);
+        var sayEvent = {
+            "status": "sending",
+            "content": message,
+            "eventType":{
+               "ID":3,
+               "name":"Message",
+               "type":"Message"
+            },
+            "source":{
+               "entity":{
+                  "entityType":{
+                     "ID": this.props.userID,
+                     "name":"User",
+                     "type":"User"
+                  },
+                  "name": this.props.nick
+               }
+           },
+            eventIndex: this.state.chanUpdates[this.state.channel].events.length
+        };
+        this.state.chanUpdates[this.state.channel].events.push(sayEvent);
     },
     dequeueMessageBuffer: function() {
         if (!this.bufferedMessageSent) {
@@ -247,7 +263,6 @@ var ChatApp = React.createClass({
         }
     },
     sendOneMessage: function(message) {
-        message.status = "sending";
         var sendOwnMessageID = message.ownMessageID;
         var data = {
             sid: Math.random(), // for IE
@@ -258,29 +273,7 @@ var ChatApp = React.createClass({
         
         data.destinationID = this.state.chanID;
         data.clientMessageID = sendOwnMessageID;
-        data.content = message.text;
-
-        var sayEvent = {
-            "status": "sending",
-            "content": message.text,
-            "eventType":{
-               "ID":3,
-               "name":"Message",
-               "type":"Message"
-            },
-            "source":{
-               "entity":{
-                  "entityType":{
-                     "ID":2,
-                     "name":"User",
-                     "type":"User"
-                  },
-                  "name":"atn"
-               }
-           },
-            eventIndex: this.state.chanUpdates[this.state.channel].events.length
-        };
-        this.state.chanUpdates[this.state.channel].events.push(sayEvent);
+        data.content = message;
 
         $.ajax({
             url: this.props.host + "say.action",
@@ -339,7 +332,7 @@ var ChatApp = React.createClass({
             $(txtLogin).focus();
 
             // reset initial values
-            this.oldestEventID = -1;
+            this.oldestEventID = Number.POSITIVE_INFINITY;
             this.newestEventID = -1;
             this.numMessagesToRetrieve = 100;
 
