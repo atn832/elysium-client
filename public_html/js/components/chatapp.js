@@ -21,14 +21,16 @@ var ChatApp = React.createClass({
         // var chanUpdates = this.props.data.chanUpdates[0].events;
         return (
             <div className="d-f fd-c h-100 w-100 p-r">
-                <div>
+                <div className="f-n">
                     <Toolbar chanList={this.state.chanList} userList={this.state.userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
                 <MessageView events={
                         this.state.chanUpdates[this.state.channel] && this.state.chanUpdates[this.state.channel].events
                     } ref="messages" />
-                <LineInput app={this} />
+                <div className="f-n">    
+                    <LineInput app={this} />
+                </div>
             </div>
         );
     },

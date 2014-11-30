@@ -11,7 +11,7 @@ var LineInput = React.createClass({
             this.sendMessage({
                 preventDefault: function() {}
             });
-        }.bind(this), 1000);
+        }.bind(this), 3000);
         
         return {
             message: ""
