@@ -3,9 +3,7 @@
 
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
-import setSourceInformation from "./io/source";
-
-var LastUserNickKey = "lastUserNick";
+import IO from "./io/io";
 
 var App = React.createClass({
     getInitialState: function() {
@@ -25,53 +23,27 @@ var App = React.createClass({
             status: "logging in"
         });
 
-        var data = {
-            sid: Math.random(), // for IE
-            "channel.name": channel,
-            "channel.password": password,
-            "user.name": login
-        };
-        
-        setSourceInformation(data);
-
-        $.getJSON(this.props.host + "login.action", data)
-            .success(function(data, textStatus, jqXHR) { this.submitLoginInfoSuccess(data); }.bind(this))
-            .error(function(jqXHR, status, error) { this.submitLoginInfoError(jqXHR); }.bind(this));
-
-        // put the focus to the text box by default.
-        // useful when clicking somewhere on the window to put focus on the Elysium window
-//        $(window).mouseup(function() {
-//            $(textBox).focus();
-//        });
-
-//        $(textBox).keydown(function(event) {
-//            if (event.keyCode == VK_RETURN) {
-//                sendMessage();
-//            }
-//        });
+        IO.login(channel, password, login,
+                this.submitLoginInfoCallback.bind(this),
+                this.submitLoginInfoError.bind(this));
     },
-    submitLoginInfoError: function(jqxhr) {
-        this.setState({ status: "Could not login. Request failed" });
-        this.setState({
-            error: jqxhr.responseText
-        });
-//        $(txtLogin).focus();
-    },
-    submitLoginInfoSuccess: function(data) {
-        if (data.invalidLoginMessage) {
-            this.setState({ status: "Could not login: " + $(this).attr("reason") });
-//            $(formFrame).show();
-        }
-        else {
+    submitLoginInfoCallback: function(data) {
+        if (data.loggedin) {
             this.setState({
                 status: "",
-                userID: data.user.ID,
+                userID: data.userID,
                 token: data.token,
-                chanID: data.channel.ID,
-                nick: data.user.name,
+                chanID: data.chanID,
+                nick: data.nick,
                 loggedin: true
             });
             this.refs.chat.loadChatClient();
+        }
+        else {
+            this.setState({
+                status: "Could not login:" + data.reason,
+                error: data.error
+            });
         }
     },
     onLogOut: function() {

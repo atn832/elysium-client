@@ -1135,8 +1135,6 @@ var data = {
     "validResponse":true
 };
 
-var LastUserNickKey = "lastUserNick";
-
 var App = React.createClass({
     render: function() {
         return (
