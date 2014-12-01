@@ -1,11 +1,15 @@
 /** @jsx React.DOM */
+import Cookie from "../io/cookie";
+var LastUserNickKey = "lastUserNick";
 
 var LoginForm = React.createClass({
     getInitialState: function() {
+        // restore last user nick
+        var lastUserNick = Cookie.getCookie(LastUserNickKey);
         return {
             channel: "Elysium",
             password: "",
-            login: "atn"
+            login: lastUserNick
         };
     },
     handleChange: function() {
@@ -21,6 +25,10 @@ var LoginForm = React.createClass({
         if (!channel || !login) {
           return;
         }
+
+        var typedUserNick = login;
+        Cookie.setCookie(LastUserNickKey, login, 365);
+        
         this.props.onLogin(channel, password, login);
     },
     render: function() {
