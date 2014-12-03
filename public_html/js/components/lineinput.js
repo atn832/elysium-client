@@ -32,14 +32,17 @@ var LineInput = React.createClass({
         // this is not enough to show the software keyboard in Android
         // $(textBox).focus();
 	},
-  render: function() {
-    return (
-    	<form className="d-f fd-r w-100" onSubmit={this.sendMessage}>
-	      	<input type="text" className="txtBox fg-1" ref="message" value={this.state.message} onChange={this.handleChange} />
-	      	<input className="sendButton" type="submit" onClick={this.sendMessage} value="send" />
-      	</form>
-    );
-  }
+    focus: function() {
+        this.refs.message.getDOMNode().focus();
+    },
+    render: function() {
+        return (
+            <form className="d-f fd-r w-100" onSubmit={this.sendMessage}>
+                <input type="text" className="txtBox fg-1" ref="message" value={this.state.message} onChange={this.handleChange} />
+                <input className="sendButton" type="submit" onClick={this.sendMessage} value="send" />
+            </form>
+        );
+    }
 });
 
 export default LineInput;

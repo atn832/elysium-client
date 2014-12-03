@@ -18,7 +18,7 @@ var ChatApp = React.createClass({
         this.sentMessageIDToEventIndex = [];
         return {
             channel: 1,
-            chanUpdates: this.props.data && this.props.data.chanUpdates && this.props.data.chanUpdates[0].events || []
+            chanUpdates: this.props.data && this.props.data.chanUpdates && this.props.data.chanUpdates[0].events || {}
         };
     },
     render: function() {
@@ -29,11 +29,9 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.state.userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
-                <MessageView events={
-                        this.state.chanUpdates[this.state.channel] && this.state.chanUpdates[this.state.channel].events
-                    } ref="messages" />
+                <MessageView events={this.getChanUpdates().events} ref="messages" />
                 <div className="f-n">    
-                    <LineInput app={this} />
+                    <LineInput app={this} ref="input" />
                 </div>
             </div>
         );
@@ -61,6 +59,7 @@ var ChatApp = React.createClass({
         this.sidToIsLog = {};
 
         this.getMissedMessages();
+        this.refs.input.focus();
     },
     reduceTimeout: function() {
         this.serverTimeout--;
@@ -155,9 +154,9 @@ var ChatApp = React.createClass({
         this.checkLoginState(data); // updates loggedin flag
         if (this.state.loggedin && data.chanUpdates) {
             data.chanUpdates.forEach(function(oneChanUpdate) {
-                if (!this.state.chanUpdates[oneChanUpdate.chanID]) {
-                    // set
-                    this.state.chanUpdates[oneChanUpdate.chanID] = oneChanUpdate;
+                if (this.getChanUpdates(oneChanUpdate.chanID).events.length === 0) {
+                    // set. it should be merge or we could lose sent messages before the initial getMessages()
+                    this.setChanUpdates(oneChanUpdate.chanID, oneChanUpdate);
                     oneChanUpdate.events.forEach(function(event) {
                         if (event.ID > this.newestEventID)
                             this.newestEventID = event.ID;
@@ -167,7 +166,7 @@ var ChatApp = React.createClass({
                 }
                 else {
                     //merge
-                    var currOneChanUpdate = this.state.chanUpdates[oneChanUpdate.chanID];
+                    var currOneChanUpdate = this.getChanUpdates(oneChanUpdate.chanID);
                     // add events
                     oneChanUpdate.events.forEach(function(event, index) {
                         if (this.sentMessageIDToEventIndex[event.ID]) {
@@ -182,13 +181,15 @@ var ChatApp = React.createClass({
                         if (event.ID < this.oldestEventID)
                             this.oldestEventID = event.ID;
                     }.bind(this));
-                    Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
                     // update userlist
                     if (oneChanUpdate.userListUpdated) {
                         currOneChanUpdate.userList = oneChanUpdate.userList;
                     }
                 }
             }.bind(this));
+            if (this.isScrolledToBottom())
+                this.scrollToBottom(true);
+            
             this.setState({
                 chanList: data.chanList
             });
@@ -251,9 +252,9 @@ var ChatApp = React.createClass({
                   "name": this.props.nick
                }
            },
-            eventIndex: this.state.chanUpdates[this.state.channel].events.length
+            eventIndex: this.getChanUpdates().events.length
         };
-        this.state.chanUpdates[this.state.channel].events.push(sayEvent);
+        this.getChanUpdates().events.push(sayEvent);
         this.messageBuffer.push({
             text: message,
             event: sayEvent
@@ -349,6 +350,20 @@ var ChatApp = React.createClass({
             if (this.props.onLogOut)
                 this.props.onLogOut();
         };
+    },
+    getChanUpdates: function(chanID) {
+        if (chanID === undefined)
+            chanID = this.state.chanID;
+
+        if (!this.state.chanUpdates[chanID]) {
+            this.state.chanUpdates[chanID] = {
+                events: []
+            };
+        }
+        return this.state.chanUpdates[chanID];
+    },
+    setChanUpdates: function(chanID, updates) {
+        this.state.chanUpdates[chanID] = updates;
     }
 });
 
