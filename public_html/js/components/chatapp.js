@@ -10,6 +10,9 @@ var MaxMessageToRetrieveCount = 1000;
 var ServerTimeoutDuration = 60; // seconds
 var PollInterval = 2000;
 
+// used to prevent duplicates from being stored in the db
+var clientMessageID = 0;
+
 var ChatApp = React.createClass({
     getInitialState: function() {
         this.sentMessageIDToEventIndex = [];
@@ -230,7 +233,6 @@ var ChatApp = React.createClass({
       return this.refs.messages.isScrolledToBottom();
     },
     enqueueOneMessage: function(message) {
-        this.messageBuffer.push(message);
         var sayEvent = {
             "status": "sending",
             "content": message,
@@ -252,6 +254,10 @@ var ChatApp = React.createClass({
             eventIndex: this.state.chanUpdates[this.state.channel].events.length
         };
         this.state.chanUpdates[this.state.channel].events.push(sayEvent);
+        this.messageBuffer.push({
+            text: message,
+            event: sayEvent
+        });
     },
     dequeueMessageBuffer: function() {
         if (!this.bufferedMessageSent) {
@@ -263,17 +269,16 @@ var ChatApp = React.createClass({
         }
     },
     sendOneMessage: function(message) {
-        var sendOwnMessageID = message.ownMessageID;
         var data = {
             sid: Math.random(), // for IE
             token: this.props.token,
-            userID: this.props.userID
+            userID: this.props.userID,
+            clientMessageID: clientMessageID++
         }
         setSourceInformation(data);
         
         data.destinationID = this.state.chanID;
-        data.clientMessageID = sendOwnMessageID;
-        data.content = message;
+        data.content = message.text;
 
         $.ajax({
             url: this.props.host + "say.action",
@@ -281,10 +286,10 @@ var ChatApp = React.createClass({
             timeout: 10000
         })
         .success(function(data, textStatus, jqXHR) {
-            this.enqueueOneMessageDone(sayEvent, true, data);
+            this.enqueueOneMessageDone(message.event, true, data);
         }.bind(this))
         .fail(function() {
-            this.enqueueOneMessageDone(sayEvent, false, null);
+            this.enqueueOneMessageDone(message.event, false, null);
         }.bind(this));
       
         // test error
