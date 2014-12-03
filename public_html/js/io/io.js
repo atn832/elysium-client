@@ -1,10 +1,10 @@
 import setSourceInformation from "./source";
 
-function submitLoginInfoError(jqxhr) {
+function submitLoginInfoError(jqXHR) {
     return {
         loggedin: false,
         reason: "Request failed",
-        error: jqxhr.responseText
+        error: jqXHR.responseText
     };
 }
 
@@ -16,14 +16,14 @@ function submitLoginInfoSuccess(data) {
         };
     }
     else {
-        this.setState({
+        return {
             status: "",
             userID: data.user.ID,
             token: data.token,
             chanID: data.channel.ID,
             nick: data.user.name,
             loggedin: true
-        });
+        };
     }
 }
 
@@ -38,9 +38,9 @@ var IO = {
         
         setSourceInformation(data);
 
-        $.getJSON(this.props.host + "login.action", data)
-                .success(function(data, textStatus, jqXHR) { callback(this.submitLoginInfoSuccess(data)); }.bind(this))
-                .error(function(jqXHR, status, error) { callback(this.submitLoginInfoError(jqXHR)); }.bind(this));
+        $.getJSON(IO.host + "login.action", data)
+                .success(function(data, textStatus, jqXHR) { callback(submitLoginInfoSuccess(data)); })
+                .error(function(jqXHR, status, error) { callback(submitLoginInfoError(jqXHR)); });
     }
 };
 

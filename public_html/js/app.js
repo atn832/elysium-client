@@ -7,6 +7,7 @@ import IO from "./io/io";
 
 var App = React.createClass({
     getInitialState: function() {
+        IO.host = this.props.host;
         return {
         };
     },
@@ -24,8 +25,7 @@ var App = React.createClass({
         });
 
         IO.login(channel, password, login,
-                this.submitLoginInfoCallback.bind(this),
-                this.submitLoginInfoError.bind(this));
+                this.submitLoginInfoCallback.bind(this));
     },
     submitLoginInfoCallback: function(data) {
         if (data.loggedin) {
@@ -64,6 +64,6 @@ var App = React.createClass({
 });
 
 React.renderComponent(
-    <App host="http://localhost:8084/Elysium/" />,
+    <App host="http://localhost:8080/Elysium/" />,
     document.body
 );
