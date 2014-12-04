@@ -49,7 +49,7 @@ var MessageView = React.createClass({
             return;
         }
         var scrollObj = this.refs.conversationElement.getDOMNode();
-        scrollObj.scrollTop = scrollObj.scrollHeight;
+        $(scrollObj).animate({ scrollTop: scrollObj.scrollHeight }, 500);
     },
     isScrolledToBottom: function() {
         var scrollObj = this.refs.conversationElement.getDOMNode();
