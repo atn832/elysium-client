@@ -5,6 +5,7 @@ import ConnectionLine from "./line/connectionline";
 import SessionEventLine from "./line/sessioneventline";
 import { getEventTypeID } from "../data/eventtype";
 import EventTypes from "../data/eventtype";
+import formatTitle from "./line/formattitle";
 
 function isNotPauseResumeEvent(event) {
     var typeID = getEventTypeID(event);
@@ -26,17 +27,22 @@ function getEventRenderer(event) {
 }
 
 var MessageView = React.createClass({
-  render: function() {
-    var lines = this.props.events && this.props.events.filter(isNotPauseResumeEvent).map(function(event) {
-        var Renderer = getEventRenderer(event);
-        return <Renderer event={event} />;
-    }) || "";
-    return (
-        <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement">
-            {lines}
-        </div>
-    );
-  },
+    render: function() {
+        var displayedEvents = this.props.events && this.props.events.filter(isNotPauseResumeEvent) || [];
+        var lines = displayedEvents.map(function(event) {
+            var Renderer = getEventRenderer(event);
+            return <Renderer event={event} />;
+        }) || "";
+        if (displayedEvents.length > 0) {
+            var lastEvent = displayedEvents[displayedEvents.length - 1];
+            $('title').text(formatTitle(lastEvent));
+        }
+        return (
+            <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement">
+                {lines}
+            </div>
+        );
+    },
     componentDidUpdate: function(prevProps, prevState) {
         if (this.scrollAtNextUpdate) {
             this.scrollAtNextUpdate = false;
