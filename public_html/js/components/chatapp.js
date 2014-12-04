@@ -15,7 +15,7 @@ var clientMessageID = 0;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
-        this.sentMessageIDToEventIndex = [];
+        this.sentMessageIDToEvent = [];
         var initialState = {
             channel: this.props.chanID,
             chanList: [{ name: this.props.chanName }], // show at start up time before getting the real data
@@ -176,9 +176,9 @@ var ChatApp = React.createClass({
                     var currOneChanUpdate = this.getChanUpdates(oneChanUpdate.chanID);
                     // add events
                     oneChanUpdate.events.forEach(function(event, index) {
-                        if (this.sentMessageIDToEventIndex[event.ID]) {
+                        if (this.sentMessageIDToEvent[event.ID]) {
                             // replace the old one by the new one
-                            currOneChanUpdate.events.splice(this.sentMessageIDToEventIndex[event.ID], 1, event);
+                            currOneChanUpdate.events.splice(currOneChanUpdate.events.indexOf(this.sentMessageIDToEvent[event.ID]), 1, event);
                         }
                         else {
                             currOneChanUpdate.events.push(event);
@@ -261,8 +261,7 @@ var ChatApp = React.createClass({
                   },
                   "name": this.props.nick
                }
-           },
-            eventIndex: this.getChanUpdates().events.length
+           }
         };
         this.getChanUpdates().events.push(sayEvent);
         this.messageBuffer.push({
@@ -315,10 +314,17 @@ var ChatApp = React.createClass({
             // if still logged in, it passed!
             // the line is now marked as verified
             if (success) {
+                if (this.getChanUpdates().events.some(function(event) {
+                    return event.ID === data.eventID;
+                })) {
+                    // remove sayEvent
+                    this.getChanUpdates().events.splice(this.getChanUpdates().events.indexOf(sayEvent), 1);
+                }
+
                 //record eventid
                 sayEvent.status = ""; // not sending nor error
                 sayEvent.ID = data.eventID;
-                this.sentMessageIDToEventIndex[sayEvent.ID] = sayEvent.eventIndex;
+                this.sentMessageIDToEvent[sayEvent.ID] = sayEvent;
             }
             else {
                 this.bufferedMessageSent.status = "error";
@@ -327,6 +333,7 @@ var ChatApp = React.createClass({
             }
             // mark as ready for next message in queue
             this.bufferedMessageSent = null;
+            this.forceUpdate();
         }
     },
     // Goes back to login page if the  server sent a not_logged_in message
