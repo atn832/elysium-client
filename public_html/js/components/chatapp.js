@@ -46,7 +46,7 @@ var ChatApp = React.createClass({
     loadChatClient: function() {
         this.isGettingNonLogMessage = false;
         
-        this.oldestEventID = -1;
+        this.oldestEventID = -1; // should really be infinity, but BE does not support it yet
         this.newestEventID = -1;
         this.numMessagesToRetrieve = 1000;
         
@@ -167,7 +167,7 @@ var ChatApp = React.createClass({
                     oneChanUpdate.events.forEach(function(event) {
                         if (event.ID > this.newestEventID)
                             this.newestEventID = event.ID;
-                        if (event.ID < this.oldestEventID)
+                        if (this.oldestEventID === -1 || event.ID < this.oldestEventID)
                             this.oldestEventID = event.ID;
                     }.bind(this));
                 }
@@ -185,8 +185,11 @@ var ChatApp = React.createClass({
                         }
                         if (event.ID > this.newestEventID)
                             this.newestEventID = event.ID;
-                        if (event.ID < this.oldestEventID)
+                        if (this.oldestEventID === -1 || event.ID < this.oldestEventID)
                             this.oldestEventID = event.ID;
+                        currOneChanUpdate.events.sort(function(e1, e2) {
+                            return Math.sign(e1.ID - e2.ID);
+                        });
                     }.bind(this));
                     // update userlist
                     if (oneChanUpdate.userListUpdated) {
@@ -345,7 +348,7 @@ var ChatApp = React.createClass({
             $(txtLogin).focus();
 
             // reset initial values
-            this.oldestEventID = Number.POSITIVE_INFINITY;
+            this.oldestEventID = -1;
             this.newestEventID = -1;
             this.numMessagesToRetrieve = 100;
 
