@@ -4,12 +4,24 @@
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
 import IO from "./io/io";
+import { getURLParameter } from "./util";
 
 var App = React.createClass({
     getInitialState: function() {
         IO.host = this.props.host;
-        return {
-        };
+        
+        this.attemptAutoLogin();
+
+        return {};
+    },
+    attemptAutoLogin: function() {
+        var chanName = getURLParameter("chanName");
+        var chanPass = getURLParameter("chanPass");
+        var nick = getURLParameter("nick");
+        if (!nick)
+            return;
+
+        this.submitLoginInfo(chanName, chanPass, nick);
     },
     exitFunction: function() {
         var data = getSourceInformation();
