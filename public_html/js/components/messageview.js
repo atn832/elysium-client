@@ -35,7 +35,8 @@ var MessageView = React.createClass({
         }) || "";
         if (displayedEvents.length > 0) {
             var lastEvent = displayedEvents[displayedEvents.length - 1];
-            $('title').text(formatTitle(lastEvent));
+//            $('title').text(formatTitle(lastEvent));
+            document.title = formatTitle(lastEvent);
         }
         return (
             <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement">
