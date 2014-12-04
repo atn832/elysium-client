@@ -187,14 +187,14 @@ var ChatApp = React.createClass({
                             this.newestEventID = event.ID;
                         if (this.oldestEventID === -1 || event.ID < this.oldestEventID)
                             this.oldestEventID = event.ID;
-                        currOneChanUpdate.events.sort(function(e1, e2) {
-                            return Math.sign(e1.ID - e2.ID);
-                        });
                     }.bind(this));
                     // update userlist
                     if (oneChanUpdate.userListUpdated) {
                         currOneChanUpdate.userList = oneChanUpdate.userList;
                     }
+                    currOneChanUpdate.events.sort(function(e1, e2) {
+                        return Math.sign(e1.ID - e2.ID);
+                    });
                 }
             }.bind(this));
             if (this.isScrolledToBottom())
