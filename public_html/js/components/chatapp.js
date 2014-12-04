@@ -26,7 +26,7 @@ var ChatApp = React.createClass({
         return (
             <div className="d-f fd-c h-100 w-100 p-r">
                 <div className="f-n">
-                    <Toolbar chanList={this.state.chanList} userList={this.state.userList} channel={this.state.channel} />
+                    <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
                 <MessageView events={this.getChanUpdates().events} ref="messages" />
