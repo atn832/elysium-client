@@ -1,5 +1,16 @@
-.p-r {
+.pos-a {
+    position: absolute;
+}
+.pos-r {
     position: relative;
+}
+
+.v-h {
+    visibility: hidden;
+}
+
+.t-0 {
+    top: 0;
 }
 
 .w-75 {

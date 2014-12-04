@@ -21,7 +21,7 @@ var DeviceRenderer = {
             return <span></span>
         
         var deviceClassName = device === Device.Mobile? "fa-mobile": "fa-laptop";
-        var deviceIcon = <i className={"fa " + deviceClassName}></i>;
+        var deviceIcon = <i className={"fa " + deviceClassName} />;
         return deviceIcon;
     }
 }

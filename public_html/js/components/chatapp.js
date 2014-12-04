@@ -31,7 +31,7 @@ var ChatApp = React.createClass({
     render: function() {
         // var chanUpdates = this.props.data.chanUpdates[0].events;
         return (
-            <div className="d-f fd-c h-100 w-100 p-r">
+            <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />

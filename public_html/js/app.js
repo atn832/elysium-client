@@ -70,7 +70,7 @@ var App = React.createClass({
             {this.state.loggedin?
                 <ChatApp host={this.props.host} chanName={this.state.chanName} chanID={this.state.chanID} userID={this.state.userID} nick={this.state.nick} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
                 <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} />
-            }
+            }<i className="fa fa-mobile pos-a v-h t-0"/>{/* preload icon font */}
             </div>
         );
     }
