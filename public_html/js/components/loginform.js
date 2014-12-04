@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 import Cookie from "../io/cookie";
+
 var LastUserNickKey = "lastUserNick";
 
 var LoginForm = React.createClass({

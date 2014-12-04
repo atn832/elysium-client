@@ -16,10 +16,17 @@ var clientMessageID = 0;
 var ChatApp = React.createClass({
     getInitialState: function() {
         this.sentMessageIDToEventIndex = [];
-        return {
-            channel: 1,
-            chanUpdates: this.props.data && this.props.data.chanUpdates && this.props.data.chanUpdates[0].events || {}
+        var initialState = {
+            channel: this.props.chanID,
+            chanList: [{ name: this.props.chanName }], // show at start up time before getting the real data
+            chanUpdates: {}
         };
+        // show at start up time before getting the real data
+        initialState.chanUpdates[this.props.chanID] = {
+            events: [],
+            userList: [{ name: this.props.nick }]
+        };
+        return initialState;
     },
     render: function() {
         // var chanUpdates = this.props.data.chanUpdates[0].events;
