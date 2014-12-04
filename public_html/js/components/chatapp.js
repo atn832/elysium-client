@@ -36,12 +36,15 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList} channel={this.state.channel} />
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
-                <MessageView events={this.getChanUpdates().events} ref="messages" />
+                <MessageView events={this.getChanUpdates().events} onClick={this.onMessageViewClick} ref="messages" />
                 <div className="f-n">    
                     <LineInput app={this} ref="input" />
                 </div>
             </div>
         );
+    },
+    onMessageViewClick: function() {
+        this.refs.input.focus();
     },
     loadChatClient: function() {
         this.isGettingNonLogMessage = false;
