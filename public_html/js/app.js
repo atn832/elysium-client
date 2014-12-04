@@ -78,5 +78,6 @@ var App = React.createClass({
 
 React.renderComponent(
     <App host="http://localhost:8080/Elysium/" />,
+//    <App host="/E/" />,
     document.body
 );
