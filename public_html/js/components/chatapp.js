@@ -247,6 +247,16 @@ var ChatApp = React.createClass({
       return this.refs.messages.isScrolledToBottom();
     },
     enqueueOneMessage: function(message) {
+        if (message === "/clear") {
+            // clear the conversation div
+            this.getChanUpdates().events = [];
+            // reset the oldest event received
+            this.oldestEventID = -1;
+            this.numMessagesToRetrieve = 1000;
+            
+            this.forceUpdate();
+            return;
+        }
         var sayEvent = {
             "status": "sending",
             "content": message,
@@ -360,7 +370,7 @@ var ChatApp = React.createClass({
             // reset initial values
             this.oldestEventID = -1;
             this.newestEventID = -1;
-            this.numMessagesToRetrieve = 100;
+            this.numMessagesToRetrieve = 1000;
 
             nick = null;
             this.setState({

@@ -16,18 +16,9 @@ var LineInput = React.createClass({
 	    if (message === "")
 	    	return;
 
-        if (message === "/clear") {
-            // clear the conversation div
-            $(conversationLinesDiv).empty();
-            // reset the oldest event received
-            oldestEventID = -1;
-            numMessagesToRetrieve = 1000;
-        }
-        else {
-            this.props.app.enqueueOneMessage(this.state.message);
-            this.props.app.scrollToBottom(true);
-			this.props.app.forceUpdate();
-        }
+        this.props.app.enqueueOneMessage(this.state.message);
+        this.props.app.scrollToBottom(true);
+        this.props.app.forceUpdate();
         this.setState({message: ""});
         // this is not enough to show the software keyboard in Android
         // $(textBox).focus();
