@@ -53,7 +53,7 @@ function processLinks(text) {
         else {
             var youtubeID = getYouTubeId(unescapedMatch);
             if (youtubeID)
-                link = '<iframe type="text/html" width="640" height="390" src="http://www.youtube.com/embed/' + youtubeID + '?origin=http://www.wafrat.com frameborder="0"/><br/>$1';
+                link = <span><iframe type="text/html" width="640" height="390" src={"http://www.youtube.com/embed/" + youtubeID + "?origin=http://www.wafrat.com"} frameborder="0"/><br/><a href={match} target="_blank">{match}</a></span>;
             else
                 link = <a href={match} target="_blank">{match}</a>;
         }
