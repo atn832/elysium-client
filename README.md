@@ -16,6 +16,6 @@ Then from public_html:
 Run
 ===
 
-`./build.sh` to build
+`./build.sh [prod]` to build
 
-`reload` from build
+`reload -p 8081` from build
