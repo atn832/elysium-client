@@ -1,5 +1,4 @@
 var UserAgentPlatformRegex = /[(]([^)]*)[)]/;
-import { htmlentities } from "../../../util";
 
 var ConnectionRenderer = {
     render: function(source) {
@@ -23,7 +22,7 @@ var ConnectionRenderer = {
             additionalInfo.push(source.timeZone.timeZone);
         
         // var canvasID = "map" + event.ID;
-        var info = " [" + htmlentities(additionalInfo.join(", ")) + "]";
+        var info = " [" + additionalInfo.join(", ") + "]";
         return info;
     }
 };

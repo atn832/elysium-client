@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 import Image from "./image";
-import { htmlentities } from "../../../util";
 
 var imageExtensions = ["jpg", "jpeg", "gif", "png"];
 var linkRegex = /(https?:\/\/[^ ,)]*)/g;
@@ -47,7 +46,7 @@ function processLinks(text) {
     while (matches = linkRegex.exec(text)) {
         containsLinks = true;
         var unescapedMatch = matches[0];
-        var match = htmlentities(unescapedMatch);
+        var match = unescapedMatch;
         var link;
         if (isImageURL(match))
             link = <Image src={match} />
@@ -72,7 +71,7 @@ function processLinks(text) {
 
 var Content = React.createClass({
     render: function() {
-        var processedText = processLinks(htmlentities(this.props.content));
+        var processedText = processLinks(this.props.content);
         var textWithHTMLLinks = processedText.text;
         return <span>{textWithHTMLLinks}</span>;
     }

@@ -4,8 +4,4 @@ function getURLParameter(name) {
     return unescape(decodeURI(arg));
 }
 
-function htmlentities(text) {
-    return $('<div/>').text(text).html()
-}
-
-export { htmlentities, getURLParameter };
+export { getURLParameter };

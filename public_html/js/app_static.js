@@ -26,7 +26,7 @@ var data = {
             "events": [
                 {
                     "ID": 451068,
-                    "content": "mais ce soir c'est la misère, http://fc04.deviantart.net/fs70/f/2013/314/d/e/banner_website_v03_by_davedonut-d6tpi0q.swf",
+                    "content": "mais ce soir ==> c'est la misère, http://fc04.deviantart.net/fs70/f/2013/314/d/e/banner_website_v03_by_davedonut-d6tpi0q.swf",
                     "eventType": {
                         "ID": 3,
                         "name": "Message",
