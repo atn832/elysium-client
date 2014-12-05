@@ -257,6 +257,9 @@ var ChatApp = React.createClass({
             this.forceUpdate();
             return;
         }
+        var data = {};
+        setSourceInformation(data);
+
         var sayEvent = {
             "status": "sending",
             "content": message,
@@ -266,15 +269,19 @@ var ChatApp = React.createClass({
                "type":"Message"
             },
             "source":{
-               "entity":{
-                  "entityType":{
-                     "ID": this.props.userID,
-                     "name":"User",
-                     "type":"User"
-                  },
+                "datetime": moment.utc().format(),
+                "entity":{
+                    "entityType": {
+                        "ID": this.props.userID,
+                        "name":"User",
+                        "type":"User"
+                    },
                   "name": this.props.nick
-               }
-           }
+                },
+                "userAgent": {
+                    "userAgent": data.userAgent
+                }
+            }
         };
         this.getChanUpdates().events.push(sayEvent);
         this.messageBuffer.push({
