@@ -17,19 +17,25 @@ var ChatApp = React.createClass({
     getInitialState: function() {
         this.sentMessageIDToEvent = [];
         var initialState = {
-            channel: this.props.chanID,
+            channel: this.props.chanName,
+            chanID: this.props.chanID,
             chanList: [{ name: this.props.chanName }], // show at start up time before getting the real data
             chanUpdates: {}
         };
-        // show at start up time before getting the real data
-        initialState.chanUpdates[this.props.chanID] = {
-            events: [],
-            userList: [{ name: this.props.nick }]
-        };
+        if (!this.props.chanUpdates) {
+            // show at start up time before getting the real data
+            initialState.chanUpdates[this.props.chanID] = {
+                events: [],
+                userList: [{ name: this.props.nick }]
+            };
+        }
+        else {
+            // received static data
+            initialState.chanUpdates = this.props.chanUpdates;
+        }
         return initialState;
     },
     render: function() {
-        // var chanUpdates = this.props.data.chanUpdates[0].events;
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
