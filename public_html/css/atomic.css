@@ -30,10 +30,12 @@
 }
 
 .as-c {
+    -webkit-align-self: center;
     align-self: center;
 }
 
 .jc-c {
+    -webkit-justify-content: center;
     justify-content: center;
 }
 
@@ -74,5 +76,11 @@
 }
 
 .f-n {
+    -webkit-flex: none;
     flex: none;
+}
+
+.f-1-0-0 {
+    -webkit-flex: 1 0 0px;
+    flex: 1 0 0px;
 }

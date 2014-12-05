@@ -15,7 +15,6 @@ body {
 
 .item {
     height: 100%;
-    flex: 1 0 0px;
     border-right: 1px solid darkgray;
 }
 

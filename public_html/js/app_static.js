@@ -1139,11 +1139,11 @@ var App = React.createClass({
     render: function() {
         return (
             <div className="d-f fd-r w-100 h-100">
-                <div className="item">
+                <div className="item f-1-0-0">
                     <LoginForm status="Could not login" error="some html error"/>
                 </div>
-                <div className="item"><ChatApp chanUpdates={data.chanUpdates} nick="atn" chanName="Elysium" chanID={1} ref="chat"></ChatApp></div>
-                <div className="item"><ChatApp></ChatApp></div>
+                <div className="item f-1-0-0"><ChatApp chanUpdates={data.chanUpdates} nick="atn" chanName="Elysium" chanID={1} ref="chat"></ChatApp></div>
+                <div className="item f-1-0-0"><ChatApp></ChatApp></div>
             </div>
         );
     }
