@@ -10,7 +10,7 @@ var JoinLeaveLine = React.createClass({
         var eventName = typeID === EventTypes.Join? "Join": "Leave";
         return (
             <div>
-                <span className="line clickable">
+                <span className="line event clickable">
                     {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
                 </span>
             </div>

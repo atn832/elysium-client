@@ -25,6 +25,46 @@ var data = {
             "chanID": 1,
             "events": [
                 {
+                    "ID": 451067,
+                    "eventType": {
+                        "ID": 1,
+                        "name": "Channel Join",
+                        "type": "Join"
+                    },
+                    "source": {
+                        "connection": {
+                            "ID": 1,
+                            "IP": {
+                                "ID": 1,
+                                "IP": "66.228.162.48"
+                            },
+                            "hostname": {
+                                "ID": 1,
+                                "hostname": "66.228.162.48"
+                            }
+                        },
+                        "datetime": "2014-12-05T17:24:43",
+                        "entity": {
+                            "ID": 2,
+                            "entityType": {
+                                "ID": 2,
+                                "name": "User",
+                                "type": "User"
+                            },
+                            "name": "atn"
+                        },
+                        "location": null,
+                        "timeZone": {
+                            "ID": 1,
+                            "timeZone": "America/Los_Angeles"
+                        },
+                        "userAgent": {
+                            "ID": 1,
+                            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36"
+                        }
+                    }
+                },
+                {
                     "ID": 451068,
                     "content": "mais ce soir ==> c'est la misère, http://fc04.deviantart.net/fs70/f/2013/314/d/e/banner_website_v03_by_davedonut-d6tpi0q.swf",
                     "eventType": {
