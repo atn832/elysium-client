@@ -192,9 +192,12 @@ var ChatApp = React.createClass({
                     var currOneChanUpdate = this.getChanUpdates(oneChanUpdate.chanID);
                     // add events
                     if (!isLog) {
-                        Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
-                        if (oneChanUpdate.events.length > 0)
-                            this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                        if (oneChanUpdate.events.length > 0) {
+                            if (this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
+                                Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
+                                this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                            }
+                        }
                     }
                     else {
                         Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
