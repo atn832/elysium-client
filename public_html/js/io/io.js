@@ -1,4 +1,4 @@
-import setSourceInformation from "./source";
+import Source from "./source";
 
 function submitLoginInfoError(jqXHR) {
     return {
@@ -36,7 +36,7 @@ var IO = {
             "user.name": login
         };
         
-        setSourceInformation(data);
+        Source.setSourceInformation(data);
 
         $.getJSON(IO.host + "login.action", data)
                 .success(function(data, textStatus, jqXHR) { callback(submitLoginInfoSuccess(data)); })

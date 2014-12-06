@@ -3,7 +3,7 @@ import Toolbar from "./toolbar";
 import MessageView from "./messageview";
 import LineInput from "./lineinput";
 import Status from "./status";
-import setSourceInformation from "../io/source";
+import Source from "../io/source";
 import GetMoreButton from "./getmorebutton";
 
 var MaxMessageToRetrieveCount = 1000;
@@ -126,7 +126,7 @@ var ChatApp = React.createClass({
             token: this.props.token,
             userID: this.props.userID
         }
-        setSourceInformation(data);
+        Source.setSourceInformation(data);
         
         data.log = isLog;
         data.lastEventID = vLastEventID;
@@ -264,7 +264,7 @@ var ChatApp = React.createClass({
             return;
         }
         var data = {};
-        setSourceInformation(data);
+        Source.setSourceInformation(data);
 
         var sayEvent = {
             "status": "sending",
@@ -311,7 +311,7 @@ var ChatApp = React.createClass({
             userID: this.props.userID,
             clientMessageID: clientMessageID++
         }
-        setSourceInformation(data);
+        Source.setSourceInformation(data);
         
         data.destinationID = this.state.chanID;
         data.content = message.text;

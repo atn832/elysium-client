@@ -1,4 +1,4 @@
-var timeZone = jstz.determine().name();
+import Source from "../../../io/source";
 var timeFormat = "HH:mm";
 
 var DateRenderer = {
@@ -7,7 +7,7 @@ var DateRenderer = {
             return "xx:xx";
         
         var someUTCDate = new Date(source.datetime);
-        var localTime = moment.utc(source.datetime).tz(timeZone);
+        var localTime = moment.utc(source.datetime).tz(Source.getTimeZone());
 
         var remoteTime = !source.timeZone || !source.timeZone.timeZone? null: moment.utc(source.datetime).tz(source.timeZone.timeZone);
         

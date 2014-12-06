@@ -1,3 +1,5 @@
+require("script!../lib/jstz-1.0.4.min");
+
 /*
  * Initialize geolocation tracking
  */
@@ -10,8 +12,12 @@ if (navigator.geolocation) {
     var wpid = navigator.geolocation.watchPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
 
+function getTimeZone() {
+    return jstz.determine().name();
+}
+
 function setSourceInformation(data) {
-    data.timeZone = jstz.determine().name();
+    data.timeZone = getTimeZone();
     data.userAgent = navigator.userAgent;
 
     function storeIfNumeric(data, property, value) {
@@ -30,4 +36,8 @@ function setSourceInformation(data) {
     return data;
 }
 
-export default setSourceInformation;
+var Source = {
+    setSourceInformation: setSourceInformation,
+    getTimeZone: getTimeZone
+};
+export default Source;

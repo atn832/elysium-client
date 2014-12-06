@@ -3,7 +3,6 @@
 
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
-import setSourceInformation from "./io/source";
 
 var data = {
     "chanList": [
