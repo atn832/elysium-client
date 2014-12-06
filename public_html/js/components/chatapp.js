@@ -113,8 +113,8 @@ var ChatApp = React.createClass({
     },
     getMessages: function(isLog, vLastEventID, vNumMessages) {
         // do not try several getLatestMessages at once
-        if (this.isGettingNonLogMessage && !isLog)
-            return;
+//        if (this.isGettingNonLogMessage && !isLog)
+//            return;
         
         if (!isLog)
             this.isGettingNonLogMessage = true;
