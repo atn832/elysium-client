@@ -1,6 +1,9 @@
 ./build.sh prod
-scp -r build/* root@m.wafrat.com:/var/www/html/E2
-#tar -zcvf e2.tar.gz public_html/
-#scp e2.tar.gz atn@m.wafrat.com:~/
-#ssh -t atn@m.wafrat.com 'sudo ./deploy2.sh'
 
+if [ "$1" == "pub" ]; then
+    tar -zcvf e.tar.gz -C build .
+    scp -r e.tar.gz root@s.wafrat.com:/root/
+    ssh root@s.wafrat.com "tar -zxvf /root/e.tar.gz -C /var/www/html/Elysium"
+else
+    scp -r build/* root@m.wafrat.com:/var/www/html/E2
+fi

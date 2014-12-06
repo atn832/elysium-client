@@ -8,4 +8,3 @@ elif [ "$1" == "dev" ]; then
 else
     webpack built_jsx/app_static.js
 fi
-
