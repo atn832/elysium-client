@@ -54,6 +54,11 @@
     overflow-y: scroll;
 }
 
+/* html needed to override fa */
+html .fz-l {
+    font-size: 17px;
+}
+
 /* flex */
 .d-f {
     display: -webkit-flex;
