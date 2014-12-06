@@ -22,7 +22,7 @@ var clientMessageID = 0;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
-        this.sentMessageIDToEvent = [];
+        this.sentMessageIDToEvent = {};
         var initialState = {
             channel: this.props.chanName,
             chanID: this.props.chanID,
@@ -191,26 +191,35 @@ var ChatApp = React.createClass({
                     //merge
                     var currOneChanUpdate = this.getChanUpdates(oneChanUpdate.chanID);
                     // add events
-                    oneChanUpdate.events.forEach(function(event, index) {
-                        if (this.sentMessageIDToEvent[event.ID]) {
-                            // replace the old one by the new one
-                            currOneChanUpdate.events.splice(currOneChanUpdate.events.indexOf(this.sentMessageIDToEvent[event.ID]), 1, event);
+                    if (!isLog) {
+                        Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
+                        if (oneChanUpdate.events.length > 0)
+                            this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                    }
+                    else {
+                        Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
+                        if (oneChanUpdate.events.length > 0)
+                            this.oldestEventID = oneChanUpdate.events[0].ID;
+                    }
+                    
+                    var validatedSentMessages = [];
+                    for (var id in this.sentMessageIDToEvent) {
+                        // replace the old one by the new one
+                        var index = currOneChanUpdate.events.indexOf(this.sentMessageIDToEvent[id]);
+                        if (index >= 0) {
+                            // remove
+                            currOneChanUpdate.events.splice(index, 1);
+                            validatedSentMessages.push(id);
                         }
-                        else {
-                            currOneChanUpdate.events.push(event);
-                        }
-                        if (event.ID > this.newestEventID)
-                            this.newestEventID = event.ID;
-                        if (this.oldestEventID === -1 || event.ID < this.oldestEventID)
-                            this.oldestEventID = event.ID;
+                    }
+                    validatedSentMessages.forEach(function(id) {
+                        delete this.sentMessageIDToEvent[id];
                     }.bind(this));
+                    
                     // update userlist
                     if (oneChanUpdate.userListUpdated) {
                         currOneChanUpdate.userList = oneChanUpdate.userList;
                     }
-                    currOneChanUpdate.events.sort(function(e1, e2) {
-                        return Math.sign(e1.ID - e2.ID);
-                    });
                 }
             }.bind(this));
             if (this.isScrolledToBottom())
