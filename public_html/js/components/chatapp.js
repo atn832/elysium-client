@@ -1,4 +1,8 @@
 /** @jsx React.DOM */
+require("../../../public_html/css/atomic.css");
+require("../../../public_html/css/style.css");
+require("font-awesome-webpack");
+
 require("script!../../bower_components/moment/min/moment.min");
 require("script!../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min");
 
