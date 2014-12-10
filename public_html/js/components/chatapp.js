@@ -177,6 +177,10 @@ var ChatApp = React.createClass({
         this.checkLoginState(data); // updates loggedin flag
         if (this.state.loggedin && data.chanUpdates) {
             data.chanUpdates.forEach(function(oneChanUpdate) {
+                oneChanUpdate.events.forEach(function(event) {
+                    // convert datetime string to moment instance
+                    event.source.datetime = moment.utc(event.source.datetime);
+                });
                 if (this.getChanUpdates(oneChanUpdate.chanID).events.length === 0) {
                     // set. it should be merge or we could lose sent messages before the initial getMessages()
                     this.setChanUpdates(oneChanUpdate.chanID, oneChanUpdate);
@@ -294,7 +298,7 @@ var ChatApp = React.createClass({
                "type":"Message"
             },
             "source":{
-                "datetime": moment.utc().format(),
+                "datetime": moment.utc(),
                 "entity":{
                     "entityType": {
                         "ID": this.props.userID,

@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 "use strict";
+require("script!../bower_components/moment/min/moment.min");
+require("script!../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min");
 
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
@@ -1173,6 +1175,14 @@ var data = {
     "userID": 4,
     "validResponse": true
 };
+
+for (var k in data.chanUpdates) {
+    var oneChanUpdate = data.chanUpdates[k];
+    oneChanUpdate.events.forEach(function(event) {
+        if (event.source && event.source.datetime)
+            event.source.datetime = moment.utc(event.source.datetime);
+    });
+}
 
 var App = React.createClass({
     render: function() {
