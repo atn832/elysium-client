@@ -2,19 +2,22 @@
 import Cookie from "../io/cookie";
 
 var LastUserNickKey = "lastUserNick";
+var LastChannelKey = "lastChannel";
 
 var LoginForm = React.createClass({
     getInitialState: function() {
-        // restore last user nick
+        // restore latest settings
+        var lastChannel = Cookie.getCookie(LastChannelKey);
         var lastUserNick = Cookie.getCookie(LastUserNickKey);
         return {
-            channel: "Elysium",
+            channel: lastChannel || "Elysium",
             password: "",
             login: lastUserNick
         };
     },
     handleChange: function() {
         this.setState({
+            channel: this.refs.channel.getDOMNode().value,
             login: this.refs.login.getDOMNode().value
         });
     },
@@ -27,8 +30,8 @@ var LoginForm = React.createClass({
           return;
         }
 
-        var typedUserNick = login;
         Cookie.setCookie(LastUserNickKey, login, 365);
+        Cookie.setCookie(LastChannelKey, channel, 365);
         
         this.props.onLogin(channel, password, login);
     },
@@ -37,10 +40,10 @@ var LoginForm = React.createClass({
             <div className="d-f fd-c h-100 w-100 pos-r jc-c">
                 <form className="login d-f fd-c jc-c" onSubmit={this.handleSubmit}>
                     <h1 className="as-c">Elysium</h1>
-                    <input type="hidden" className="d-b as-c w-75" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
-                    <input type="hidden" className="d-b as-c w-75" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>
-                    <input type="text" className="d-b as-c w-75" placeholder="Login" ref="login" value={this.state.login} onChange={this.handleChange} autoFocus/>
-                    <input type="submit" className="button as-c" value="login" onClick={this.onSubmit}/>
+                    <input type="text" className="d-b as-c w-75 lh-2 mb-12" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
+                    <input type="hidden" className="d-b as-c w-75 lh-2 mb-12" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>
+                    <input type="text" className="d-b as-c w-75 lh-2 mb-12" placeholder="Login" ref="login" value={this.state.login} onChange={this.handleChange} autoFocus/>
+                    <input type="submit" className="button as-c w-75" value="Sign in" onClick={this.onSubmit}/>
                     <a href={"?chanName=" + this.state.channel + "&nick=" + this.state.login} className="d-b as-c link">bookmark this link for direct login</a>
                 </form>
                 {this.props.status? <div className="mt-30">{this.props.status}</div>: null}
