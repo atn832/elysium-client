@@ -5,7 +5,7 @@ var GetMoreButton = React.createClass({
     },
     render: function() {
         return (
-            <input type="button" value="get more" onClick={this.handleClick} disabled={this.props.isGettingLogs} />
+            <input type="button" className="button m-4" value="See more messages" onClick={this.handleClick} disabled={this.props.isGettingLogs} />
         );
     }
 });

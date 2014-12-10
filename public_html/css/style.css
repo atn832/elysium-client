@@ -113,10 +113,6 @@ body {
     cursor:default;
 }
 
-.tabbar {
-    padding:4px;
-}
-
 a.tab {
     border: 1px solid #C8D1DB;
     cursor: default;
