@@ -4,12 +4,7 @@ var ConnectionRenderer = {
     render: function(source) {
         var additionalInfo = [];
         var connection = null;
-        if (source.connection) {
-            if (source.connection.hostmask && source.connection.hostmask.hostmask)
-                connection = source.connection.hostmask.hostmask;
-            else if (source.connection.IP && source.connection.IP.IP)
-                connection = source.connection.IP.IP;
-        }
+
         if (connection)
             additionalInfo.push(connection);
         if (source.location && source.location.locationName && source.location.locationName.name)
