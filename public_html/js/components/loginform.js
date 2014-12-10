@@ -40,9 +40,9 @@ var LoginForm = React.createClass({
             <div className="d-f fd-c h-100 w-100 pos-r jc-c">
                 <form className="login d-f fd-c jc-c" onSubmit={this.handleSubmit}>
                     <h1 className="as-c">Elysium</h1>
-                    <input type="text" className="d-b as-c w-75 lh-2 px-8 mb-12" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
-                    <input type="hidden" className="d-b as-c w-75 lh-2 px-8 mb-12" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>
-                    <input type="text" className="d-b as-c w-75 lh-2 px-8 mb-12" placeholder="Login" ref="login" value={this.state.login} onChange={this.handleChange} autoFocus/>
+                    <input type="text" className="d-b as-c w-75 lh-2 px-8 mb-12 bz-bb" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
+                    <input type="hidden" className="d-b as-c w-75 lh-2 px-8 mb-12 bz-bb" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>
+                    <input type="text" className="d-b as-c w-75 lh-2 px-8 mb-12 bz-bb" placeholder="Login" ref="login" value={this.state.login} onChange={this.handleChange} autoFocus/>
                     <input type="submit" className="button as-c w-75 mb-12" value="Sign in" onClick={this.onSubmit}/>
                     <a href={"?chanName=" + this.state.channel + "&nick=" + this.state.login} className="d-b as-c link">bookmark this link for direct login</a>
                 </form>
