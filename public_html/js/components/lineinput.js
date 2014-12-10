@@ -28,9 +28,9 @@ var LineInput = React.createClass({
     },
     render: function() {
         return (
-            <form className="d-f fd-r w-100" onSubmit={this.sendMessage}>
-                <input type="text" className="txtBox fg-1" ref="message" value={this.state.message} onChange={this.handleChange} />
-                <input className="sendButton" type="submit" onClick={this.sendMessage} value="send" />
+            <form className="d-f fd-r w-100 bgc-lg bz-bb btc-g p-4" onSubmit={this.sendMessage}>
+                <input type="text" className="txtBox fg-1 px-8 lh-2" ref="message" value={this.state.message} onChange={this.handleChange} />
+                <input className="sendButton button ml-4" type="submit" onClick={this.sendMessage} value="send" />
             </form>
         );
     }

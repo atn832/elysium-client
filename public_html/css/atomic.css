@@ -56,6 +56,14 @@
     padding-right: 8px;
 }
 
+.p-4 {
+    padding: 4px;
+}
+
+.ml-4 {
+    margin-left: 4px;
+}
+
 .mb-12 {
     margin-bottom: 12px;
 }
@@ -65,6 +73,18 @@
 }
 .ov-y-s {
     overflow-y: scroll;
+}
+
+.bgc-lg {
+    background-color: #f1f1f1;
+}
+
+.bz-bb {
+    box-sizing: border-box;
+}
+
+.btc-g {
+    border-top: 1px solid darkgray;
 }
 
 /* html needed to override fa */
