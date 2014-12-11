@@ -16,15 +16,9 @@ function initializeMaps(lat, lng, element) {
 
 var MapRenderer = React.createClass({
     render: function() {
-        var divStyle = {};
-        if (this.isLocationValid()) {
-            divStyle = {
-                width:"50%",
-                height: "300px"
-            };
-        }
         return (
-            <div ref="map" style={divStyle}>
+            <div className="respContainer expand pos-r">
+                <div ref="map" className="w-100 r-16-9" />
             </div>
         );
     },
@@ -32,7 +26,10 @@ var MapRenderer = React.createClass({
         var source = this.props.source;
         if (this.isLocationValid()) {
             var loc = source.location;
-            initializeMaps(loc.latitude, loc.longitude, this.refs.map.getDOMNode());
+            // TODO: use animation end instead
+            setTimeout(function() {
+                initializeMaps(loc.latitude, loc.longitude, this.refs.map.getDOMNode());
+            }.bind(this), 350);
         }
     },
     isLocationValid: function() {

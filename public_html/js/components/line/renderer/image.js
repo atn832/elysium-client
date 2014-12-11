@@ -8,13 +8,9 @@ var ImageRenderer = React.createClass({
         var url = this.props.src;
         var image = "";
         if (this.state && this.state.expanded) {
-            var style = {
-                "display": "inline-block",
-                "vertical-align": "top"
-            };
-            image = <span style={style}><a href={url} target="_blank">{url}<br/><img src={url} /></a></span>;
+            image = <div className="respContainer pos-r"><img className="expand w-100" src={url} /></div>;
         }
-        return <span><button onClick={this.onClick}>{this.state && this.state.expanded?"Hide": "Show " + url }</button>{image}</span>;
+        return <span><a href={url} target="_blank">{url}</a> <button onClick={this.onClick}>{this.state && this.state.expanded?"Hide": "Show"}</button>{image}</span>;
     }
 });
 
