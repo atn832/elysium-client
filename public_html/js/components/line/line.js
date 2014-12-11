@@ -26,7 +26,7 @@ var Line = React.createClass({
                 status = "failed";
                 break;
         }
-        var classes = "d-b line " + status;
+        var classes = "d-b line tr " + status;
         return (
             <span className={classes}>
                 {DateRenderer.render(event.source)} <span className="clickable" onClick={this.onClick}>{DeviceRenderer.render(event.source)} {event.source.entity.name}</span>&gt; <Content content={event.content} /> {expandedInfo}
