@@ -99,8 +99,7 @@ var ChatApp = React.createClass({
     },
     getMissedMessages: function() {
         this.setState({
-            isGettingLogs: true,
-            status: "getting missed logs"
+            isGettingLogs: true
         });
         this.getMessages(true, this.oldestEventID, -1);
     },
