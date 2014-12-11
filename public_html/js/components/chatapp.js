@@ -106,8 +106,7 @@ var ChatApp = React.createClass({
     },
     getLogs: function() {
         this.setState({
-            isGettingLogs: true,
-            status: "getting " + this.numMessagesToRetrieve + " messages"
+            isGettingLogs: true
         });
         this.getMessages(true, this.oldestEventID, this.numMessagesToRetrieve);
         this.numMessagesToRetrieve *= 4;
@@ -313,10 +312,13 @@ var ChatApp = React.createClass({
             }
         };
         this.getChanUpdates().events.push(sayEvent);
-        this.messageBuffer.push({
-            text: message,
-            event: sayEvent
-        });
+        // ignore in static mode
+        if (this.messageBuffer) {
+            this.messageBuffer.push({
+                text: message,
+                event: sayEvent
+            });
+        }
     },
     dequeueMessageBuffer: function() {
         if (!this.bufferedMessageSent) {

@@ -7,6 +7,8 @@ import { getEventTypeID } from "../data/eventtype";
 import EventTypes from "../data/eventtype";
 import formatTitle from "./line/formattitle";
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 function isNotPauseResumeEvent(event) {
     var typeID = getEventTypeID(event);
     return typeID != EventTypes.SessionPause  && typeID != EventTypes.SessionResume;

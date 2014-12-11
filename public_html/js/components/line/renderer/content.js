@@ -73,7 +73,7 @@ var Content = React.createClass({
     render: function() {
         var processedText = processLinks(this.props.content);
         var textWithHTMLLinks = processedText.text;
-        return <span>{textWithHTMLLinks}</span>;
+        return textWithHTMLLinks;
     }
 });
 

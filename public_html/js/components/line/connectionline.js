@@ -17,11 +17,9 @@ var ConnectionLine = React.createClass({
                 break;
         }
         return (
-            <div>
-                <span className="line clickable event error">
-                    {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
-                </span>
-            </div>
+            <span className="d-b line event error">
+                {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
+            </span>
         );
     }
 });

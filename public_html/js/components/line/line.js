@@ -26,13 +26,11 @@ var Line = React.createClass({
                 status = "failed";
                 break;
         }
-        var classes = "line clickable " + status;
+        var classes = "d-b line " + status;
         return (
-            <div>
-                <span className={classes} onClick={this.onClick}>
-                    {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; <Content content={event.content} /> {expandedInfo}
-                </span>
-            </div>
+            <span className={classes}>
+                {DateRenderer.render(event.source)} <span className="clickable" onClick={this.onClick}>{DeviceRenderer.render(event.source)} {event.source.entity.name}</span>&gt; <Content content={event.content} /> {expandedInfo}
+            </span>
         );
     }
 });
