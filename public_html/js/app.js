@@ -33,7 +33,7 @@ var App = React.createClass({
     },
     submitLoginInfo: function(channel, password, login) {
         this.setState({
-            status: "logging in",
+            isSigningIn: true,
             chanName: channel
         });
 
@@ -43,6 +43,7 @@ var App = React.createClass({
     submitLoginInfoCallback: function(data) {
         if (data.loggedin) {
             this.setState({
+                isSigningIn: false,
                 status: "",
                 userID: data.userID,
                 token: data.token,
@@ -54,6 +55,7 @@ var App = React.createClass({
         }
         else {
             this.setState({
+                isSigningIn: false,
                 status: "Could not login:" + data.reason,
                 error: data.error
             });
@@ -69,7 +71,7 @@ var App = React.createClass({
             <div className="w-100 h-100">
             {this.state.loggedin?
                 <ChatApp host={this.props.host} chanName={this.state.chanName} chanID={this.state.chanID} userID={this.state.userID} nick={this.state.nick} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
-                <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} />
+                <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} isSigningIn={this.state.isSigningIn} />
             }<i className="fa fa-mobile pos-a v-h t-0"/>{/* preload icon font */}
             </div>
         );

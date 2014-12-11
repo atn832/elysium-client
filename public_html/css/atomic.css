@@ -1,6 +1,7 @@
 .pos-a {
     position: absolute;
 }
+
 .pos-r {
     position: relative;
 }
@@ -66,6 +67,10 @@
     padding-right: 4px;
 }
 
+.ml-4 {
+    margin-left: 4px;
+}
+
 .m-4 {
     margin: 4px;
 }
@@ -83,6 +88,11 @@
 }
 .ov-y-s {
     overflow-y: scroll;
+}
+
+.tr {
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
 }
 
 .bgc-lg {

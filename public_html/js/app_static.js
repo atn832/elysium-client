@@ -1192,7 +1192,6 @@ var App = React.createClass({
                     <LoginForm status="Could not login" error="some html error"/>
                 </div>
                 <div className="item f-1-0-0"><ChatApp chanUpdates={data.chanUpdates} nick="atn" chanName="Elysium" chanID={1} ref="chat"></ChatApp></div>
-                <div className="item f-1-0-0"><ChatApp></ChatApp></div>
             </div>
         );
     }

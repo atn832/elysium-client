@@ -23,7 +23,7 @@ body {
     font-weight: bold;
 }
 
-.login input {
+.mw-400 {
     max-width: 400px;
 }
 
@@ -65,6 +65,24 @@ body {
     100% { opacity:1; }
 }
 
+.fade-enter {
+  opacity: 0;
+  transition: opacity .5s ease-in;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0;
+}
+
 /* login */
 .button {
     padding-left: 8px;
@@ -83,6 +101,10 @@ body {
     background-image: -ms-linear-gradient(top,#4d90fe,#4787ed);
     background-image: -o-linear-gradient(top,#4d90fe,#4787ed);
     background-image: linear-gradient(top,#4d90fe,#4787ed);
+}
+
+.button[disabled=true] {
+    opacity: .7;
 }
 
 .pageLoadTime{
@@ -136,6 +158,45 @@ a.tab {
     color: #BBBBBB;
 }
 
+@media (min-width: 1200px) {
+    .respContainer {
+        width: 600px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .respContainer {
+        width: 100%;
+    }
+}
+
+.expand {
+    -webkit-animation: expand .2s ease-out;
+    animation: expand .2s ease-out;
+}
+
+@-webkit-keyframes expand {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes expand {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.r-16-9 {
+    padding-bottom: 56.25%;
+}
+
 /* topic and other objects styles */
 
 /* conversation lines style */
@@ -160,7 +221,8 @@ a.tab {
 }
 
 .unverified {
-    font-style: italic;
+/*    font-style: italic;*/
+    opacity: .6;
 }
 
 .failed {

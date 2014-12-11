@@ -2,6 +2,6 @@
 import App from "./app";
 
 React.renderComponent(
-    <App host="http://localhost:8084/Elysium/" />,
+    <App host="http://localhost:8080/Elysium/" />,
     document.body
 );
