@@ -2,10 +2,10 @@
 var UserList = React.createClass({
   render: function() {
     var users = this.props.users.map(function(user) {
-        return <a className="tab tab-unselected">{user.name}</a>
-    });
+        return user.name;
+    }).join(", ");
     return (
-      <span className="tabbar">
+      <span className="ml-8">
         {users}
       </span>
     );

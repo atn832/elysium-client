@@ -43,7 +43,7 @@ var LoginForm = React.createClass({
                     <input type="text" className="d-b as-c w-75 mw-400 lh-2 px-8 mb-12 bz-bb" placeholder="Channel" ref="channel" value={this.state.channel} onChange={this.handleChange}/>
                     <input type="hidden" className="d-b as-c w-75 mw-400 lh-2 px-8 mb-12 bz-bb" placeholder="Password" ref="password" value={this.state.password} onChange={this.handleChange}/>
                     <input type="text" className="d-b as-c w-75 mw-400 lh-2 px-8 mb-12 bz-bb" placeholder="Login" ref="login" value={this.state.login} onChange={this.handleChange} autoFocus/>
-                    <button type="submit" className="button as-c w-75 mw-400 mb-12 tr" onClick={this.onSubmit} disabled={this.props.isSigningIn}>
+                    <button type="submit" className="button as-c w-75 mw-400 lh-2 mb-12 tr" onClick={this.onSubmit} disabled={this.props.isSigningIn}>
                         {this.props.isSigningIn? "Signing in": "Sign in"}
                         {this.props.isSigningIn? <i className="ml-8 fa fa-spinner fa-spin"></i>: null}
                     </button>
