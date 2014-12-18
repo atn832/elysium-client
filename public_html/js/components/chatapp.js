@@ -47,9 +47,11 @@ var ChatApp = React.createClass({
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList} channel={this.state.channel} />
-                    <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                 </div>
-                <MessageView events={this.getChanUpdates().events} onClick={this.onMessageViewClick} ref="messages" />
+                <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb">
+                    <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
+                    <MessageView events={this.getChanUpdates().events} onClick={this.onMessageViewClick} ref="messages" />
+                </div>
                 <div className="f-n">    
                     <LineInput app={this} ref="input" />
                 </div>
