@@ -107,6 +107,10 @@
     border-top: 1px solid darkgray;
 }
 
+.o-n {
+    outline: none;
+}
+
 /* html needed to override fa */
 html .fz-l {
     font-size: 17px;
