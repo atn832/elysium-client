@@ -40,7 +40,7 @@ var MessageView = React.createClass({
             document.title = formatTitle(lastEvent);
         }
         return (
-            <div className="fg-1 w-100 ov-x-h ov-y-s" ref="conversationElement" onClick={this.props.onClick} >
+            <div className="fg-1 w-100 ov-x-h ov-y-s px-4 bz-bb" ref="conversationElement" onClick={this.props.onClick} >
                 {lines}
             </div>
         );
