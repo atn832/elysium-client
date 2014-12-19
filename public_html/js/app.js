@@ -1,10 +1,14 @@
 /** @jsx React.DOM */
 "use strict";
 
+import Cookie from "./io/cookie";
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
 import IO from "./io/io";
 import { getURLParameter } from "./util";
+
+var LastUserNickKey = "lastUserNick";
+var LastChannelKey = "lastChannel";
 
 var App = React.createClass({
     getInitialState: function() {
@@ -18,18 +22,23 @@ var App = React.createClass({
         
         IO.host = this.props.host;
         
-        this.attemptAutoLogin();
-
-        return {};
+        // restore latest settings
+        var cookieChannel = Cookie.getCookie(LastChannelKey);
+        var cookieLogin = Cookie.getCookie(LastUserNickKey);
+        var urlChannel = getURLParameter("chanName");
+        var urlPassword = getURLParameter("chanPass");
+        var urlLogin = getURLParameter("nick");
+        
+        return {
+            channel: cookieChannel || urlChannel || "Elysium",
+            password: "",
+            login: cookieLogin || urlLogin || "",
+            attemptLogin: urlChannel && urlLogin
+        };
     },
-    attemptAutoLogin: function() {
-        var chanName = getURLParameter("chanName");
-        var chanPass = getURLParameter("chanPass");
-        var nick = getURLParameter("nick");
-        if (!nick)
-            return;
-
-        this.submitLoginInfo(chanName, chanPass, nick);
+    componentDidMount: function() {
+        if (this.state.attemptLogin)
+            this.refs.loginForm.handleSubmit();
     },
     exitFunction: function() {
         var data = getSourceInformation();
@@ -45,6 +54,9 @@ var App = React.createClass({
             chanName: channel
         });
 
+        Cookie.setCookie(LastUserNickKey, login, 365);
+        Cookie.setCookie(LastChannelKey, channel, 365);
+        
         IO.login(channel, password, login,
                 this.submitLoginInfoCallback.bind(this));
     },
@@ -79,7 +91,7 @@ var App = React.createClass({
             <div className="w-100 h-100">
             {this.state.loggedin?
                 <ChatApp host={this.props.host} chanName={this.state.chanName} chanID={this.state.chanID} userID={this.state.userID} nick={this.state.nick} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
-                <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} isSigningIn={this.state.isSigningIn} />
+                <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} isSigningIn={this.state.isSigningIn} ref="loginForm" channel={this.state.channel} password={this.state.password} login={this.state.login} />
             }<i className="fa fa-mobile pos-a v-h t-0"/>{/* preload icon font */}
             </div>
         );

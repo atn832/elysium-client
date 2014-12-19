@@ -1,18 +1,10 @@
 /** @jsx React.DOM */
-import Cookie from "../io/cookie";
-
-var LastUserNickKey = "lastUserNick";
-var LastChannelKey = "lastChannel";
-
 var LoginForm = React.createClass({
     getInitialState: function() {
-        // restore latest settings
-        var lastChannel = Cookie.getCookie(LastChannelKey);
-        var lastUserNick = Cookie.getCookie(LastUserNickKey);
         return {
-            channel: lastChannel || "Elysium",
-            password: "",
-            login: lastUserNick
+            channel: this.props.channel,
+            password: this.props.password,
+            login: this.props.login
         };
     },
     handleChange: function() {
@@ -22,7 +14,8 @@ var LoginForm = React.createClass({
         });
     },
     handleSubmit: function(e) {
-        e.preventDefault();
+        if (e)
+            e.preventDefault();
         var channel = this.state.channel;
         var password = this.state.password;
         var login = this.state.login;
@@ -30,9 +23,6 @@ var LoginForm = React.createClass({
           return;
         }
 
-        Cookie.setCookie(LastUserNickKey, login, 365);
-        Cookie.setCookie(LastChannelKey, channel, 365);
-        
         this.props.onLogin(channel, password, login);
     },
     render: function() {
