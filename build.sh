@@ -15,3 +15,5 @@ fi
 
 rm -rf build/bower_components/moment
 rm -rf build/bower_components/moment-timezone
+rm build/bower_components/react/JSXTransformer.js
+rm build/bower_components/react/react.*
