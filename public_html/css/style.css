@@ -129,6 +129,7 @@ body {
 /* chan and user list */
 
 .topmenu {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     background-color: #F0F7FF;
     border-bottom:1px solid #C3D2E0;
     cursor:default;

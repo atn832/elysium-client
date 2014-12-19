@@ -40,7 +40,7 @@ var MessageView = React.createClass({
             document.title = formatTitle(lastEvent);
         }
         return (
-            <div className="" ref="conversationElement" onClick={this.props.onClick} >
+            <div className="" onClick={this.props.onClick} >
                 {lines}
             </div>
         );
@@ -56,11 +56,11 @@ var MessageView = React.createClass({
             this.scrollAtNextUpdate = true;
             return;
         }
-        var scrollObj = this.refs.conversationElement.getDOMNode();
+        var scrollObj = this.props.conversationElement.getDOMNode();
         $(scrollObj).animate({ scrollTop: scrollObj.scrollHeight }, 500);
     },
     isScrolledToBottom: function() {
-        var scrollObj = this.refs.conversationElement.getDOMNode();
+        var scrollObj = this.props.conversationElement.getDOMNode();
         return (scrollObj.scrollHeight - scrollObj.scrollTop) === scrollObj.clientHeight;
     }
 });
