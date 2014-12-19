@@ -36,7 +36,7 @@ var Bubble = React.createClass({
                 <div className="mb-4">
                     {DateRenderer.render(event.source)} <span className="clickable" onClick={this.onClick}>{DeviceRenderer.render(event.source)} {event.source.entity.name}</span>&gt;{expandedInfo}
                 </div>
-                <div className="arrow_box p-6 mb-4"><div className="ov-h">{contents}</div></div>
+                <div className="arrow_box p-6 mb-4 d-ib"><div className="ov-h">{contents}</div></div>
             </div>
         );
     }
