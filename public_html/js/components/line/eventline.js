@@ -6,7 +6,7 @@ var EventLine = React.createClass({
     render: function() {
         var event = this.props.event;
         return (
-            <div className="commentBox">
+            <div className="commentBox mb-8">
                 {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {event.content}
             </div>
         );

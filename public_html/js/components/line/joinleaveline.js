@@ -9,7 +9,7 @@ var JoinLeaveLine = React.createClass({
         var typeID = event.eventType.ID;
         var eventName = typeID === EventTypes.Join? "Join": "Leave";
         return (
-            <span className="d-b line event">
+            <span className="d-b line event mb-8">
                 {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
             </span>
         );

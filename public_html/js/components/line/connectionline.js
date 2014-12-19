@@ -17,7 +17,7 @@ var ConnectionLine = React.createClass({
                 break;
         }
         return (
-            <span className="d-b line event error">
+            <span className="d-b line event error mb-8">
                 {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
             </span>
         );

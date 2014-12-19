@@ -24,7 +24,7 @@ var SessionEventLine = React.createClass({
         }
         return (
             <div>
-                <span className="line event">
+                <span className="line event mb-8">
                     {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
                 </span>
             </div>

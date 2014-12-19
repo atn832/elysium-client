@@ -30,6 +30,10 @@
     text-align: center;
 }
 
+.ta-r {
+    text-align: right;
+}
+
 .as-c {
     -webkit-align-self: center;
     align-self: center;
@@ -83,6 +87,14 @@
     margin-left: 4px;
 }
 
+.ml-6 {
+    margin-left: 6px;
+}
+
+.mr-4 {
+    margin-right: 4px;
+}
+
 .m-4 {
     margin: 4px;
 }
@@ -92,12 +104,20 @@
     margin-bottom: 4px;
 }
 
+.mt-4 {
+    margin-top: 4px;
+}
+
 .mb-4 {
     margin-bottom: 4px;
 }
 
 .ml-8 {
     margin-left: 8px;
+}
+
+.mb-8 {
+    margin-bottom: 8px;
 }
 
 .mb-12 {
@@ -137,6 +157,22 @@
     outline: none;
 }
 
+.bgc-g {
+    background-color: #4caf50;
+}
+
+.c-w {
+    color:#fff;
+}
+
+.c-g {
+    color: lightgray;
+}
+
+.bdr-3 {
+    border-radius: 3px;
+}
+
 /* html needed to override fa */
 html .fz-l {
     font-size: 17px;
@@ -171,4 +207,9 @@ html .fz-l {
 .f-1-0-0 {
     -webkit-flex: 1 0 0px;
     flex: 1 0 0px;
+}
+
+.ai-fe {
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
 }

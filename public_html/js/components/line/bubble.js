@@ -5,6 +5,7 @@ import DeviceRenderer from "./renderer/devicerenderer";
 import ConnectionRenderer from "./renderer/connectionrenderer";
 import MapRenderer from "./renderer/maprenderer";
 import Content from "./renderer/content";
+import Tag from "./renderer/tag";
 import IO from "../../io/io.js";
 
 var Bubble = React.createClass({
@@ -32,11 +33,15 @@ var Bubble = React.createClass({
             return <span className={classes}><Content content={line.content} /></span>;
         });
         return (
-            <div>
-                <div className="mb-4">
-                    {DateRenderer.render(event.source)} <span className="clickable" onClick={this.onClick}>{DeviceRenderer.render(event.source)} {event.source.entity.name}</span>&gt;{expandedInfo}
+            <div className="mb-8 d-f fd-r ai-fe">
+                <div className="square mr-4">
+                    <span className="clickable" onClick={this.onClick}><Tag source={event.source} /></span>
                 </div>
-                <div className="arrow_box p-6 mb-4 d-ib"><div className="ov-h">{contents}</div></div>
+                <div className="arrow_box p-6 ml-6 d-ib bdr-3">
+                    <div className="ov-h">{contents}</div>
+                    <div className="ta-r c-g">{event.source.entity.name} sent from {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
+                </div>
+                {expandedInfo}
             </div>
         );
     }

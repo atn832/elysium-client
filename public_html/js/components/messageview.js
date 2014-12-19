@@ -59,6 +59,11 @@ var MessageView = React.createClass({
             }
             prevEvent = event;
         });
+        if (lines.length > 0) {
+            //render bubble
+            displayItems.push(<Bubble lines={lines} />);
+            lines = [];
+        }
         if (displayedEvents.length > 0) {
             var lastEvent = displayedEvents[displayedEvents.length - 1];
             document.title = formatTitle(lastEvent);
