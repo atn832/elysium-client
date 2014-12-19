@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 import Line from "./line/line";
+import Bubble from "./line/bubble";
 import JoinLeaveLine from "./line/joinleaveline";
 import ConnectionLine from "./line/connectionline";
 import SessionEventLine from "./line/sessioneventline";
@@ -31,17 +32,40 @@ function getEventRenderer(event) {
 var MessageView = React.createClass({
     render: function() {
         var displayedEvents = this.props.events && this.props.events.filter(isNotPauseResumeEvent) || [];
-        var lines = displayedEvents.map(function(event) {
-            var Renderer = getEventRenderer(event);
-            return <Renderer event={event} />;
-        }) || "";
+        var lines = [];
+        var prevEvent;
+        var displayItems = [];
+        displayedEvents.forEach(function(event) {
+            var typeID = getEventTypeID(event);
+            if (typeID === EventTypes.Message) {
+                if (!prevEvent || lines.length === 0 || event.source.entity.ID === prevEvent.source.entity.ID) {
+                    //just add
+                } else {
+                    // new bubble
+                    displayItems.push(<Bubble lines={lines} />);
+                    lines = [];
+                }
+                lines.push(event);
+            } else {
+                if (lines.length > 0) {
+                    //render bubble
+                    displayItems.push(<Bubble lines={lines} />);
+                    lines = [];
+                }
+                else {
+                    var Renderer = getEventRenderer(event);
+                    displayItems.push(<Renderer event={event} />);
+                }
+            }
+            prevEvent = event;
+        });
         if (displayedEvents.length > 0) {
             var lastEvent = displayedEvents[displayedEvents.length - 1];
             document.title = formatTitle(lastEvent);
         }
         return (
             <div className="" onClick={this.props.onClick} >
-                {lines}
+                {displayItems}
             </div>
         );
     },
