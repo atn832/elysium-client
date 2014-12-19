@@ -11,12 +11,12 @@ import IO from "../../io/io.js";
 var Bubble = React.createClass({
     onClick: function() {
         // only if event is from server
-        var event = this.props.lines[0];
+        var event = this.props.lines[this.props.lines.length - 1];
         if (!event.status)
             this.setState({expanded: !(this.state && this.state.expanded)});
     },
     render: function() {
-        var event = this.props.lines[0];
+        var event = this.props.lines[this.props.lines.length - 1];
         var expanded = this.state && this.state.expanded;
         var expandedInfo = expanded? <span>{ConnectionRenderer.render(event.source)} <MapRenderer source={event.source} /></span>: "";
         var contents = this.props.lines.map(function(line) {
@@ -33,13 +33,15 @@ var Bubble = React.createClass({
             return <span className={classes}><Content content={line.content} /></span>;
         });
         return (
-            <div className="mb-8 d-f fd-r ai-fe">
-                <div className="square mr-4">
-                    <span className="clickable" onClick={this.onClick}><Tag source={event.source} /></span>
-                </div>
-                <div className="arrow_box p-6 ml-6 d-ib bdr-3">
-                    <div className="ov-h">{contents}</div>
-                    <div className="ta-r c-g">{event.source.entity.name} sent from {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
+            <div>
+                <div className="mb-8 d-f fd-r ai-fe">
+                    <div className="square mr-4">
+                        <span className="clickable" onClick={this.onClick}><Tag source={event.source} /></span>
+                    </div>
+                    <div className="arrow_box p-6 ml-6 d-ib bdr-3">
+                        <div className="ov-h mb-4">{contents}</div>
+                        <div className="ta-r c-g">{event.source.entity.name} sent from {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
+                    </div>
                 </div>
                 {expandedInfo}
             </div>

@@ -263,7 +263,7 @@ a.tab {
 }
 
 .event {
-    font-weight:bold;
+    color: darkgray;
 }
 
 .error {

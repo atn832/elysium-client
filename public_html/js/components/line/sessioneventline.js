@@ -10,10 +10,10 @@ var SessionEventLine = React.createClass({
         var eventName;
         switch (typeID) {
             case EventTypes.SessionStart:
-                eventName = "Session Start";
+                eventName = "connected";
                 break;
             case EventTypes.SessionStop:
-                eventName = "Session Stop";
+                eventName = "disconnected";
                 break;
             case EventTypes.SessionPause:
                 eventName = "Session Pause";
@@ -23,10 +23,8 @@ var SessionEventLine = React.createClass({
                 break;
         }
         return (
-            <div>
-                <span className="line event mb-8">
-                    {DateRenderer.render(event.source)} {DeviceRenderer.render(event.source)} {event.source.entity.name}&gt; {eventName}
-                </span>
+            <div className="line event mb-8">
+                {event.source.entity.name} has {eventName} from {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}
             </div>
         );
     }

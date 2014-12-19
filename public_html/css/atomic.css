@@ -112,6 +112,10 @@
     margin-bottom: 4px;
 }
 
+.mb-6 {
+    margin-bottom: 6px;
+}
+
 .ml-8 {
     margin-left: 8px;
 }
@@ -166,7 +170,7 @@
 }
 
 .c-g {
-    color: lightgray;
+    color: darkgray;
 }
 
 .bdr-3 {

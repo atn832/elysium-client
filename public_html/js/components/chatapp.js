@@ -301,11 +301,11 @@ var ChatApp = React.createClass({
                 "datetime": moment.utc(),
                 "entity":{
                     "entityType": {
-                        "ID": this.props.userID,
                         "name":"User",
                         "type":"User"
                     },
-                  "name": this.props.nick
+                    "ID": this.props.userID,
+                    "name": this.props.nick
                 },
                 "userAgent": {
                     "userAgent": data.userAgent

@@ -52,10 +52,8 @@ var MessageView = React.createClass({
                     displayItems.push(<Bubble lines={lines} />);
                     lines = [];
                 }
-                else {
-                    var Renderer = getEventRenderer(event);
-                    displayItems.push(<Renderer event={event} />);
-                }
+                var Renderer = getEventRenderer(event);
+                displayItems.push(<Renderer event={event} />);
             }
             prevEvent = event;
         });
