@@ -18,7 +18,6 @@ var Bubble = React.createClass({
     render: function() {
         var event = this.props.lines[this.props.lines.length - 1];
         var expanded = this.state && this.state.expanded;
-        var expandedInfo = expanded? <span>{ConnectionRenderer.render(event.source)} <MapRenderer source={event.source} /></span>: "";
         var contents = this.props.lines.map(function(line) {
             var status = "";
             switch (line.status) {
@@ -40,10 +39,10 @@ var Bubble = React.createClass({
                     </div>
                     <div className="arrow_box p-6 ml-6 d-ib bdr-3">
                         <div className="ov-h mb-4">{contents}</div>
-                        <div className="ta-r c-g">{event.source.entity.name} sent from {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
+                        <div className="ta-r c-g">{event.source.entity.name} sent {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
                     </div>
                 </div>
-                {expandedInfo}
+                {expanded? <MapRenderer source={event.source} />: ""}
             </div>
         );
     }

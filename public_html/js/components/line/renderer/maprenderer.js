@@ -17,7 +17,7 @@ function initializeMaps(lat, lng, element) {
 var MapRenderer = React.createClass({
     render: function() {
         return (
-            <div className="respContainer expand pos-r">
+            <div className="respContainer expand pos-r mb-8">
                 <div ref="map" className="w-100 r-16-9" />
             </div>
         );

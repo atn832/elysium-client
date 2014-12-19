@@ -38,7 +38,8 @@ var MessageView = React.createClass({
         displayedEvents.forEach(function(event) {
             var typeID = getEventTypeID(event);
             if (typeID === EventTypes.Message) {
-                if (!prevEvent || lines.length === 0 || event.source.entity.ID === prevEvent.source.entity.ID) {
+                if (!prevEvent || lines.length === 0 || (event.source.entity.ID === prevEvent.source.entity.ID &&
+                    event.source.datetime.diff(prevEvent.source.datetime) < 10 * 60 * 1000)) {
                     //just add
                 } else {
                     // new bubble
