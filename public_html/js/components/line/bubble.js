@@ -39,7 +39,7 @@ var Bubble = React.createClass({
                     </div>
                     <div className="arrow_box p-6 ml-6 d-ib bdr-3">
                         <div className="ov-h mb-4">{contents}</div>
-                        <div className="ta-r c-g">{event.source.entity.name} sent {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
+                        <div className="ta-r c-g ml-20 whs-nw">{event.source.entity.name} sent {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
                     </div>
                 </div>
                 {expanded? <MapRenderer source={event.source} />: ""}

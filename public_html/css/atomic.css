@@ -128,6 +128,10 @@
     margin-bottom: 12px;
 }
 
+.ml-20 {
+    margin-left: 20px;
+}
+
 .ov-h {
     overflow: hidden;
 }
@@ -171,6 +175,10 @@
 
 .bdr-3 {
     border-radius: 3px;
+}
+
+.whs-nw {
+    white-space: nowrap;
 }
 
 /* html needed to override fa */
