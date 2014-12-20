@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-import Line from "./line/line";
 import Bubble from "./line/bubble";
 import JoinLeaveLine from "./line/joinleaveline";
 import ConnectionLine from "./line/connectionline";
@@ -21,7 +20,7 @@ function getEventRenderer(event) {
     }
     var typeID = getEventTypeID(event);
     if (typeID === EventTypes.Message)
-      return Line;
+      throw new "Should be rendered by Bubble"
     else if (typeID === EventTypes.Join || typeID === EventTypes.Leave)
       return JoinLeaveLine;
     else if (typeID === EventTypes.LostConnection || typeID === EventTypes.FoundConnection)
