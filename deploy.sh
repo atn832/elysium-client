@@ -5,5 +5,5 @@ if [ "$1" == "pub" ]; then
     ssh root@s.wafrat.com "tar -zxvf /root/e.tar.gz -C /var/www/html/Elysium"
 else
     ./build.sh prod
-    scp -r build/* root@m.wafrat.com:/var/www/html/E2
+    scp -r build/* root@m.wafrat.com:/var/www/html/E
 fi

@@ -2,6 +2,6 @@
 import App from "./app";
 
 React.renderComponent(
-    <App host="/E/" gaID="UA-57373600-1"/>,
+    <App host="/Elysium/" gaID="UA-57373600-1"/>,
     document.body
 );
