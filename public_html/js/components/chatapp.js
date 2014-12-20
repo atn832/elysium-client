@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 require("../../../public_html/css/atomic.css");
+require("../../../temp/material.css");
 require("../../../public_html/css/style.css");
 require("font-awesome-webpack");
 

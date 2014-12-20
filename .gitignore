@@ -2,4 +2,5 @@ node_modules
 built_jsx
 public_html/bower_components/
 build
+temp
 e.tar.gz

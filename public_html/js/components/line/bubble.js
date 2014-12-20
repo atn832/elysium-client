@@ -37,7 +37,7 @@ var Bubble = React.createClass({
                     <div className="square mr-4">
                         <span className="clickable" onClick={this.onClick}><Tag source={event.source} /></span>
                     </div>
-                    <div className="arrow_box p-6 ml-6 d-ib bdr-3">
+                    <div className={"arrow_box p-6 ml-6 d-ib bdr-3 c-" + (event.source.entity.ID % 5)}>
                         <div className="ov-h mb-4">{contents}</div>
                         <div className="ta-r c-g ml-20 whs-nw">{event.source.entity.name} sent {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
                     </div>
