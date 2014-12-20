@@ -320,6 +320,8 @@ var ChatApp = React.createClass({
                 event: sayEvent
             });
         }
+
+        this.refs.input.focus();
     },
     dequeueMessageBuffer: function() {
         if (!this.bufferedMessageSent) {
