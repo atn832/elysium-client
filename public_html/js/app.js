@@ -7,8 +7,8 @@ import ChatApp from './components/chatapp';
 import IO from "./io/io";
 import { getURLParameter } from "./util";
 
-var LastUserNickKey = "lastUserNick";
-var LastChannelKey = "lastChannel";
+var LastUserNickKey = "username";
+var LastChannelKey = "channel";
 
 var App = React.createClass({
     getInitialState: function() {
@@ -25,14 +25,14 @@ var App = React.createClass({
         // restore latest settings
         var cookieChannel = Cookie.getCookie(LastChannelKey);
         var cookieLogin = Cookie.getCookie(LastUserNickKey);
-        var urlChannel = getURLParameter("chanName");
-        var urlPassword = getURLParameter("chanPass");
-        var urlLogin = getURLParameter("nick");
+        var urlChannel = getURLParameter("channel") || getURLParameter("chanName");
+        var urlPassword = getURLParameter("password");
+        var urlLogin = getURLParameter("username") || getURLParameter("nick");
         
         return {
-            channel: cookieChannel || urlChannel || "Elysium",
+            channel: urlChannel || cookieChannel || "Elysium",
             password: "",
-            login: cookieLogin || urlLogin || "",
+            login: urlLogin || cookieLogin || "",
             attemptLogin: urlChannel && urlLogin
         };
     },
