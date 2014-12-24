@@ -33,7 +33,8 @@ var App = React.createClass({
             channel: urlChannel || cookieChannel || "Elysium",
             password: "",
             login: urlLogin || cookieLogin || "",
-            attemptLogin: urlChannel && urlLogin
+            attemptLogin: urlChannel && urlLogin,
+            debug: getURLParameter("debug")
         };
     },
     componentDidMount: function() {
@@ -76,7 +77,7 @@ var App = React.createClass({
         else {
             this.setState({
                 isSigningIn: false,
-                status: "Could not login:" + data.reason,
+                status: "Could not login: " + data.reason,
                 error: data.error
             });
         }
@@ -91,7 +92,7 @@ var App = React.createClass({
             <div className="w-100 h-100">
             {this.state.loggedin?
                 <ChatApp host={this.props.host} chanName={this.state.chanName} chanID={this.state.chanID} userID={this.state.userID} nick={this.state.nick} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
-                <LoginForm onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} isSigningIn={this.state.isSigningIn} ref="loginForm" channel={this.state.channel} password={this.state.password} login={this.state.login} />
+                <LoginForm debug={this.state.debug} onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} isSigningIn={this.state.isSigningIn} ref="loginForm" channel={this.state.channel} password={this.state.password} login={this.state.login} />
             }<i className="fa fa-mobile pos-a v-h t-0"/>{/* preload icon font */}
             </div>
         );
