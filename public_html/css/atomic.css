@@ -34,6 +34,10 @@
     text-align: right;
 }
 
+.td-n {
+    text-decoration: none;
+}
+
 .as-c {
     -webkit-align-self: center;
     align-self: center;
@@ -184,6 +188,10 @@
 /* html needed to override fa */
 html .fz-l {
     font-size: 17px;
+}
+
+.fz-m {
+    font-size: 13px;
 }
 
 /* flex */
