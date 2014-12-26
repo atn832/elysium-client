@@ -7,8 +7,6 @@ import { getEventTypeID } from "../data/eventtype";
 import EventTypes from "../data/eventtype";
 import formatTitle from "./line/formattitle";
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 function isNotPauseResumeEvent(event) {
     var typeID = getEventTypeID(event);
     return typeID != EventTypes.SessionPause  && typeID != EventTypes.SessionResume;
@@ -79,7 +77,7 @@ var MessageView = React.createClass({
         }
     },
     scrollToBottom: function(atNextUpdate) {
-        if (atNextUpdate) {
+        if (!this.props.conversationElement || atNextUpdate) {
             this.scrollAtNextUpdate = true;
             return;
         }
@@ -87,6 +85,9 @@ var MessageView = React.createClass({
         $(scrollObj).animate({ scrollTop: scrollObj.scrollHeight }, 500);
     },
     isScrolledToBottom: function() {
+        // conversationElement is undefined on first ChatApp render
+        if (!this.props.conversationElement)
+            return true;
         var scrollObj = this.props.conversationElement.getDOMNode();
         return (scrollObj.scrollHeight - scrollObj.scrollTop) === scrollObj.clientHeight;
     }

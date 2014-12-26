@@ -21,8 +21,8 @@ var data = {
             "name": "Elysium"
         }
     ],
-    "chanUpdates": {
-        "1": {
+    "chanUpdates": [
+        {
             "chanID": 1,
             "events": [
                 {
@@ -1040,7 +1040,7 @@ var data = {
             ],
             "userListUpdated": true
         },
-        "2": {
+        {
             "chanID": 2,
             "events": [
                 {
@@ -1102,7 +1102,7 @@ var data = {
             ],
             "userListUpdated": true
         },
-        "3": {
+        {
             "chanID": 3,
             "events": [
                 {
@@ -1164,7 +1164,7 @@ var data = {
             ],
             "userListUpdated": true
         }
-    },
+    ],
     "lastEventID": -1,
     "numMessages": -1,
     "token": "170135039",
@@ -1187,7 +1187,7 @@ var App = React.createClass({
                 <div className="item f-1-0-0">
                     <LoginForm status="Could not login" error="some html error"/>
                 </div>
-                <div className="item f-1-0-0"><ChatApp chanUpdates={data.chanUpdates} nick="atn" chanName="Elysium" chanID={1} ref="chat"></ChatApp></div>
+                <div className="item f-1-0-0"><ChatApp staticData={data} nick="atn" chanName="Elysium" chanID={1} ref="chat"></ChatApp></div>
             </div>
         );
     }

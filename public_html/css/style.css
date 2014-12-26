@@ -200,6 +200,10 @@ a.tab {
     background:none repeat scroll 0 0 #d3e2f0 !important;
 }
 
+.tab-disabled {
+    color: #aaa;
+}
+
 .tab-online {
 
 }

@@ -23,23 +23,28 @@ var clientMessageID = 0;
 
 var ChatApp = React.createClass({
     getInitialState: function() {
+        this.messageBuffer = [];
+        this.sidToIsLog = {};
         this.sentMessageIDToEvent = {};
         var initialState = {
             channel: this.props.chanName,
             chanID: this.props.chanID,
-            chanList: [{ name: this.props.chanName }], // show at start up time before getting the real data
+            chanList: [{ name: this.props.chanName, ID: this.props.chanID }], // show at start up time before getting the real data
             chanUpdates: {}
         };
-        if (!this.props.chanUpdates) {
+//        if (!this.props.chanUpdates) {
             // show at start up time before getting the real data
             initialState.chanUpdates[this.props.chanID] = {
                 events: [],
                 userList: [{ name: this.props.nick }]
             };
-        }
-        else {
+//        }
+        if (this.props.staticData) {
             // received static data
-            initialState.chanUpdates = this.props.chanUpdates;
+            initialState.loggedin = true;
+            setTimeout(function() {
+                this.getMessagesSuccess(this.props.staticData);
+            }.bind(this), 1000);
         }
         return initialState;
     },
@@ -47,7 +52,8 @@ var ChatApp = React.createClass({
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
-                    <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList} channel={this.state.channel} />
+                    <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
+                        currentChanID={this.state.chanID} />
                 </div>
                 <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb" ref="conversationElement">
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
@@ -69,7 +75,6 @@ var ChatApp = React.createClass({
         this.newestEventID = -1;
         this.numMessagesToRetrieve = 1000;
         
-        this.messageBuffer = [];
         this.bufferedMessageSent = null;
 
         this.setState({
@@ -82,6 +87,7 @@ var ChatApp = React.createClass({
 //        var newestEventID = -1;
 //        var numMessagesToRetrieve = 100;
 
+        this.messageBuffer = [];
         this.sidToIsLog = {};
 
         this.getMissedMessages();
