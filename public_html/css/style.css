@@ -222,6 +222,10 @@ a.tab {
     .respContainer {
         width: 100%;
     }
+
+    .d-n-mobile {
+        display: none;
+    }
 }
 
 .expand {

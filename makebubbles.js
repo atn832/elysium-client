@@ -1,5 +1,4 @@
 var colors = require("material-colors");
-console.log(colors);
 var wantedColors = ["green", "deepOrange", "deepPurple", "pink", "cyan"];
 //50: bg, 100: bd, 500: bg
 

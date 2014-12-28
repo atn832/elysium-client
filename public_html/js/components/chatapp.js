@@ -13,6 +13,7 @@ import LineInput from "./lineinput";
 import Status from "./status";
 import Source from "../io/source";
 import GetMoreButton from "./getmorebutton";
+import GlobalMap from "./line/renderer/globalmap";
 
 var MaxMessageToRetrieveCount = 1000;
 var ServerTimeoutDuration = 60; // seconds
@@ -26,6 +27,14 @@ var ChatApp = React.createClass({
         this.messageBuffer = [];
         this.sidToIsLog = {};
         this.sentMessageIDToEvent = {};
+        this.oldestEventID = -1; // should really be infinity, but BE does not support it yet
+        this.newestEventID = -1;
+        this.isGettingNonLogMessage = false;
+        
+        this.numMessagesToRetrieve = 1000;
+        
+        this.bufferedMessageSent = null;
+
         var initialState = {
             channel: this.props.chanName,
             chanID: this.props.chanID,
@@ -49,11 +58,22 @@ var ChatApp = React.createClass({
         return initialState;
     },
     render: function() {
+        var locatedUsers = this.getChanUpdates().userList.map(function(user) {
+            var location = user.source && user.source.location || {};
+            return {
+                name: user.name,
+                lng: user.lng,
+                lat: user.lat
+            }
+        });
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
+                </div>
+                <div className="f-n d-n-mobile expand z-1 pos-a r-0 w-50 tr">
+                    <GlobalMap users={locatedUsers} />
                 </div>
                 <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb" ref="conversationElement">
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
@@ -69,27 +89,10 @@ var ChatApp = React.createClass({
         this.refs.input.focus();
     },
     loadChatClient: function() {
-        this.isGettingNonLogMessage = false;
-        
-        this.oldestEventID = -1; // should really be infinity, but BE does not support it yet
-        this.newestEventID = -1;
-        this.numMessagesToRetrieve = 1000;
-        
-        this.bufferedMessageSent = null;
-
         this.setState({
             loggedin: true,
             chanID: this.props.chanID
         });
-
-        // for logs (get more button)
-//        var oldestEventID = -1;
-//        var newestEventID = -1;
-//        var numMessagesToRetrieve = 100;
-
-        this.messageBuffer = [];
-        this.sidToIsLog = {};
-
         this.getMissedMessages();
         this.refs.input.focus();
     },
@@ -184,56 +187,68 @@ var ChatApp = React.createClass({
         this.checkLoginState(data); // updates loggedin flag
         if (this.state.loggedin && data.chanUpdates) {
             data.chanUpdates.forEach(function(oneChanUpdate) {
+                // convert datetime string to moment instance
                 oneChanUpdate.events.forEach(function(event) {
-                    // convert datetime string to moment instance
                     event.source.datetime = moment.utc(event.source.datetime);
                 });
-                if (this.getChanUpdates(oneChanUpdate.chanID).events.length === 0) {
-                    // set. it should be merge or we could lose sent messages before the initial getMessages()
-                    this.setChanUpdates(oneChanUpdate.chanID, oneChanUpdate);
-                    oneChanUpdate.events.forEach(function(event) {
-                        if (event.ID > this.newestEventID)
-                            this.newestEventID = event.ID;
-                        if (this.oldestEventID === -1 || event.ID < this.oldestEventID)
-                            this.oldestEventID = event.ID;
-                    }.bind(this));
+                
+                //merge
+                var currOneChanUpdate = this.getChanUpdates(oneChanUpdate.chanID);
+                // add events
+                if (!isLog) {
+                    if (oneChanUpdate.events.length > 0) {
+                        if (this.newestEventID === -1 ||
+                                this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
+                            Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
+                            this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                        }
+                    }
                 }
                 else {
-                    //merge
-                    var currOneChanUpdate = this.getChanUpdates(oneChanUpdate.chanID);
-                    // add events
-                    if (!isLog) {
-                        if (oneChanUpdate.events.length > 0) {
-                            if (this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
-                                Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
-                                this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
-                            }
+                    Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
+                    if (oneChanUpdate.events.length > 0)
+                        this.oldestEventID = oneChanUpdate.events[0].ID;
+                }
+
+                var validatedSentMessages = [];
+                for (var id in this.sentMessageIDToEvent) {
+                    // replace the old one by the new one
+                    var index = currOneChanUpdate.events.indexOf(this.sentMessageIDToEvent[id]);
+                    if (index >= 0) {
+                        // remove
+                        currOneChanUpdate.events.splice(index, 1);
+                        validatedSentMessages.push(id);
+                    }
+                }
+                validatedSentMessages.forEach(function(id) {
+                    delete this.sentMessageIDToEvent[id];
+                }.bind(this));
+
+                // update userlist
+                if (oneChanUpdate.userListUpdated) {
+                    currOneChanUpdate.userList = oneChanUpdate.userList;
+                }
+
+                var userLocated = {},
+                    idToUser = {},
+                    locatedUsers = 0,
+                    index = currOneChanUpdate.events.length - 1;
+                currOneChanUpdate.userList.forEach(function(user) {
+                    userLocated[user.ID] = false;
+                    idToUser[user.ID] = user;
+                });
+                while (index >= 0 && locatedUsers < currOneChanUpdate.userList.length) {
+                    var event = currOneChanUpdate.events[index];
+                    if (event.source && event.source.entity && event.source.entity.ID) {
+                        var id = event.source.entity.ID;
+                        if (!userLocated[id]) {
+                            idToUser[id].lat = event.source.location && event.source.location.latitude;
+                            idToUser[id].lng = event.source.location && event.source.location.longitude;
+                            userLocated[id] = true;
+                            locatedUsers++;
                         }
                     }
-                    else {
-                        Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
-                        if (oneChanUpdate.events.length > 0)
-                            this.oldestEventID = oneChanUpdate.events[0].ID;
-                    }
-                    
-                    var validatedSentMessages = [];
-                    for (var id in this.sentMessageIDToEvent) {
-                        // replace the old one by the new one
-                        var index = currOneChanUpdate.events.indexOf(this.sentMessageIDToEvent[id]);
-                        if (index >= 0) {
-                            // remove
-                            currOneChanUpdate.events.splice(index, 1);
-                            validatedSentMessages.push(id);
-                        }
-                    }
-                    validatedSentMessages.forEach(function(id) {
-                        delete this.sentMessageIDToEvent[id];
-                    }.bind(this));
-                    
-                    // update userlist
-                    if (oneChanUpdate.userListUpdated) {
-                        currOneChanUpdate.userList = oneChanUpdate.userList;
-                    }
+                    index--;
                 }
             }.bind(this));
             if (this.isScrolledToBottom())
