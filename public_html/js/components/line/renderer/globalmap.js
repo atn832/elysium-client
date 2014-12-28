@@ -35,18 +35,19 @@ function initializeMaps(element, users) {
 }
 
 var GlobalMap = React.createClass({
-    updateMap: function() {
-        var validUsers = this.props.users.filter(function(user) {
+    getValidUsers: function() {
+        return this.props.users.filter(function(user) {
             return user.lat && user.lng;
         });
-        initializeMaps(this.refs.map.getDOMNode(), validUsers);
+    },
+    updateMap: function() {
+        if (this.refs.map && this.refs.map.getDOMNode())
+            initializeMaps(this.refs.map.getDOMNode(), this.getValidUsers());
     },
     render: function() {
-        if (this.mounted)
+        if (this.mounted && this.getValidUsers().length > 1)
             this.updateMap();
-        return (
-            <div ref="map" className="w-100 r-16-9" />
-        );
+        return <div ref="map" className="w-100 r-16-9" />
     },
     componentDidMount: function() {
         this.mounted = true;

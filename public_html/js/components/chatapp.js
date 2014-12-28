@@ -39,7 +39,8 @@ var ChatApp = React.createClass({
             channel: this.props.chanName,
             chanID: this.props.chanID,
             chanList: [{ name: this.props.chanName, ID: this.props.chanID }], // show at start up time before getting the real data
-            chanUpdates: {}
+            chanUpdates: {},
+            globalMapVisible: true
         };
 //        if (!this.props.chanUpdates) {
             // show at start up time before getting the real data
@@ -72,8 +73,12 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
-                <div className="f-n d-n-mobile expand z-1 pos-a r-0 w-50 tr">
+                <div className={"f-n d-n-mobile expand z-1 pos-a r-0 tr bg-dimmed " + (this.state.globalMapVisible? "w-25" : "w-0")}>
+                    <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
                     <GlobalMap users={locatedUsers} />
+                    <button className="button pos-a t-0 r-0" onClick={this.toggleGlobalMap}>
+                        <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
+                    </button>
                 </div>
                 <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb" ref="conversationElement">
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
@@ -84,6 +89,11 @@ var ChatApp = React.createClass({
                 </div>
             </div>
         );
+    },
+    toggleGlobalMap: function() {
+        this.setState({
+            globalMapVisible: !this.state.globalMapVisible
+        });
     },
     onMessageViewClick: function() {
         this.refs.input.focus();
@@ -401,15 +411,16 @@ var ChatApp = React.createClass({
                 sayEvent.status = ""; // not sending nor error
                 sayEvent.ID = data.eventID;
                 this.sentMessageIDToEvent[sayEvent.ID] = sayEvent;
+                
+                // mark as ready for next message in queue
+                this.bufferedMessageSent = null;
+                this.forceUpdate();
             }
             else {
                 this.bufferedMessageSent.status = "error";
                 // resend. put it back, at the beginning of the list
                 this.messageBuffer.unshift(this.bufferedMessageSent);
             }
-            // mark as ready for next message in queue
-            this.bufferedMessageSent = null;
-            this.forceUpdate();
         }
     },
     // Goes back to login page if the  server sent a not_logged_in message
