@@ -229,8 +229,8 @@ html .arrow_box:after, html .arrow_box:before {
 }
 
 .expand {
-    -webkit-animation: expand 20s ease-out;
-    animation: expand 20s ease-out;
+    -webkit-animation: expand .2s ease-out;
+    animation: expand .2s ease-out;
 }
 
 @-webkit-keyframes expand {

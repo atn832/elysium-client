@@ -422,6 +422,7 @@ var ChatApp = React.createClass({
                 this.bufferedMessageSent.status = "error";
                 // resend. put it back, at the beginning of the list
                 this.messageBuffer.unshift(this.bufferedMessageSent);
+                this.bufferedMessageSent = null;
             }
         }
     },

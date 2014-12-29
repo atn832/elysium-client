@@ -3,21 +3,13 @@
 import DateRenderer from "./renderer/daterenderer";
 import DeviceRenderer from "./renderer/devicerenderer";
 import ConnectionRenderer from "./renderer/connectionrenderer";
-import MapRenderer from "./renderer/maprenderer";
 import Content from "./renderer/content";
 import Tag from "./renderer/tag";
 import IO from "../../io/io.js";
 
 var Bubble = React.createClass({
-    onClick: function() {
-        // only if event is from server
-        var event = this.props.lines[this.props.lines.length - 1];
-        if (!event.status)
-            this.setState({expanded: !(this.state && this.state.expanded)});
-    },
     render: function() {
         var event = this.props.lines[this.props.lines.length - 1];
-        var expanded = this.state && this.state.expanded;
         var contents = this.props.lines.map(function(line) {
             var status = "";
             switch (line.status) {
@@ -35,14 +27,13 @@ var Bubble = React.createClass({
             <div>
                 <div className="mb-8 d-f fd-r ai-fe">
                     <div className="square mr-4">
-                        <span className="clickable" onClick={this.onClick}><Tag source={event.source} /></span>
+                        <Tag source={event.source} />
                     </div>
                     <div className={"arrow_box p-6 ml-6 d-ib bdr-3 c-" + (event.source.entity.ID % 5)}>
                         <div className="ov-h mb-4">{contents}</div>
                         <div className="ta-r c-g ml-20 whs-nw">{event.source.entity.name} sent {DeviceRenderer.render(event.source)} at {DateRenderer.render(event.source)}</div>
                     </div>
                 </div>
-                {expanded? <MapRenderer source={event.source} />: ""}
             </div>
         );
     }
