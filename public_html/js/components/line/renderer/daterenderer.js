@@ -1,6 +1,6 @@
 import Source from "../../../io/source";
 
-var timeFormat = "HH:mm";
+var timeFormat = "hh:mm A";
 
 var DateRenderer = {
     render: function(source) {
@@ -12,7 +12,7 @@ var DateRenderer = {
         var remoteTime = source.timeZone && source.timeZone.timeZone && source.datetime.tz(source.timeZone.timeZone).format(timeFormat);
         
         var displayTime = !remoteTime || localTime == remoteTime ? localTime: localTime + "/" + remoteTime;
-        return displayTime;
+        return source.datetime.tz(Source.getTimeZone()).calendar() + (remoteTime && localTime !== remoteTime ? " (" + remoteTime + ")" : "");
     }
 };
 

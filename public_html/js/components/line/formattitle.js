@@ -1,9 +1,9 @@
 import Source from "../../io/source";
-var timeFormat = "HH:mm";
+var timeFormat = "hh:mm A";
 
 function getTime(datetime) {
     if (!datetime)
-        return "xx:xx";
+        return "xx:xx xx";
 
     var someUTCDate = new Date(datetime);
     var localTime = moment.utc(datetime).tz(Source.getTimeZone());

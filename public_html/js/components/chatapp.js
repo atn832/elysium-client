@@ -7,6 +7,17 @@ require("font-awesome-webpack");
 require("script!../../bower_components/moment/min/moment.min");
 require("script!../../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min");
 
+moment.locale('en', {
+    calendar : {
+        lastDay : '[yesterday at] LT',
+        sameDay : '[at] LT',
+        nextDay : '[tomorrow at] LT',
+        lastWeek : '[last] dddd [at] LT',
+        nextWeek : 'on dddd [at] LT',
+        sameElse : 'on L [at] LT'
+    }
+});
+
 import Toolbar from "./toolbar";
 import MessageView from "./messageview";
 import LineInput from "./lineinput";
@@ -158,7 +169,7 @@ var ChatApp = React.createClass({
         Source.setSourceInformation(data);
         
         data.log = isLog;
-        data.lastEventID = vLastEventID;
+        data.lastEventID = vLastEventID === undefined? -1 : vLastEventID;
         data.numMessages = vNumMessages;
         $.getJSON(this.props.host + "getmessages.action", data)
             .success(function(data, textStatus, jqXHR) { this.getMessagesSuccess(data, r); }.bind(this))
