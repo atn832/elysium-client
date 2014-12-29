@@ -1031,11 +1031,97 @@ var data = {
             "userList": [
                 {
                     "ID": 4,
-                    "name": "atn"
+                    "name": "atn",
+                    "on": true,
+                    "latestSource": {
+                        "connection": {
+                            "ID": 61309,
+                            "IP": {
+                                "ID": 1363,
+                                "IP": "108.254.148.84"
+                            },
+                            "hostname": {
+                                "ID": 1040,
+                                "hostname": "108.254.148.84"
+                            }
+                        },
+                        "datetime": "2014-05-22T05:53:51",
+                        "entity": {
+                            "ID": 4,
+                            "entityType": {
+                                "ID": 2,
+                                "name": "User",
+                                "type": "User"
+                            },
+                            "name": "atn"
+                        },
+                        "location": {
+                            "ID": 43690,
+                            "accuracy": 32,
+                            "altitude": null,
+                            "altitudeAccuracy": null,
+                            "heading": null,
+                            "latitude": 37.7928502,
+                            "locationName": null,
+                            "longitude": -122.4239971,
+                            "speed": null
+                        },
+                        "timeZone": {
+                            "ID": 4,
+                            "timeZone": "America/Los_Angeles"
+                        },
+                        "userAgent": {
+                            "ID": 59,
+                            "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 4 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
+                        }
+                    }
                 },
                 {
                     "ID": 5,
-                    "name": "frun"
+                    "name": "frun",
+                    "on": false,
+                    "latestSource": {
+                        "connection": {
+                            "ID": 61310,
+                            "IP": {
+                                "ID": 169,
+                                "IP": "202.89.121.17"
+                            },
+                            "hostname": {
+                                "ID": 441,
+                                "hostname": "202.89.121.17"
+                            }
+                        },
+                        "datetime": "2014-05-22T06:12:18",
+                        "entity": {
+                            "ID": 5,
+                            "entityType": {
+                                "ID": 2,
+                                "name": "User",
+                                "type": "User"
+                            },
+                            "name": "frun"
+                        },
+                        "location": {
+                            "ID": 43691,
+                            "accuracy": 79,
+                            "altitude": null,
+                            "altitudeAccuracy": null,
+                            "heading": null,
+                            "latitude": 25.0576845,
+                            "locationName": null,
+                            "longitude": 121.61428,
+                            "speed": null
+                        },
+                        "timeZone": {
+                            "ID": 3,
+                            "timeZone": "Asia/Shanghai"
+                        },
+                        "userAgent": {
+                            "ID": 64,
+                            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36"
+                        }
+                    }
                 }
             ],
             "userListUpdated": true

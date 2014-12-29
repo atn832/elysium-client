@@ -46,7 +46,7 @@ var ChatApp = React.createClass({
             // show at start up time before getting the real data
             initialState.chanUpdates[this.props.chanID] = {
                 events: [],
-                userList: [{ name: this.props.nick }]
+                userList: [{ name: this.props.nick, on: true }]
             };
 //        }
         if (this.props.staticData) {

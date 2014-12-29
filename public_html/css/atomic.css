@@ -94,6 +94,10 @@
     padding-bottom: 8px;
 }
 
+.pt-8 {
+    padding-top: 8px;
+}
+
 .px-4 {
     padding-left: 4px;
     padding-right: 4px;
