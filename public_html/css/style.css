@@ -180,24 +180,24 @@ html .arrow_box:after, html .arrow_box:before {
 
 .topmenu {
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-    background-color: #F0F7FF;
-    border-bottom:1px solid #C3D2E0;
+    background-color: #E3F2FD;
+    border-bottom:1px solid #ccc;
     cursor:default;
 }
 
 .tab {
-    border: 1px solid #C8D1DB;
+    border: 1px solid #90CAF9;
     cursor: default;
     margin-right: 4px;
     padding: 2px;
-    background-color: #E3EFFA;
+    background-color: #E3F2FD;
     padding-left: 7px;
     padding-right: 7px;
     border-radius: 3px;
 }
 
-.tab-selected {
-    background: #d3e2f0 !important;
+.tab.tab-selected {
+    background: #BBDEFB;
 }
 
 .tab-disabled {
