@@ -27,8 +27,8 @@ var ChatApp = React.createClass({
         this.messageBuffer = [];
         this.sidToIsLog = {};
         this.sentMessageIDToEvent = {};
-        this.oldestEventID = -1; // should really be infinity, but BE does not support it yet
-        this.newestEventID = -1;
+        this.oldestEventID = {}; // should really be infinity, but BE does not support it yet
+        this.newestEventID = {};
         this.isGettingNonLogMessage = false;
         
         this.numMessagesToRetrieve = 1000;
@@ -125,20 +125,20 @@ var ChatApp = React.createClass({
         this.setState({
             isGettingLogs: true
         });
-        this.getMessages(true, this.oldestEventID, -1);
+        this.getMessages(true, this.oldestEventID[this.state.chanID], -1);
     },
     getLogs: function() {
         this.setState({
             isGettingLogs: true
         });
-        this.getMessages(true, this.oldestEventID, this.numMessagesToRetrieve);
+        this.getMessages(true, this.oldestEventID[this.state.chanID], this.numMessagesToRetrieve);
         this.numMessagesToRetrieve *= 4;
         if (this.numMessagesToRetrieve > MaxMessageToRetrieveCount)
             this.numMessagesToRetrieve = MaxMessageToRetrieveCount;
     },
     //checks for new messages regularly
     getLatestMessages: function(isLog) {
-        this.getMessages(isLog, this.newestEventID, -1);
+        this.getMessages(isLog, this.newestEventID[this.state.chanID], -1);
     },
     getMessages: function(isLog, vLastEventID, vNumMessages) {
         // do not try several getLatestMessages at once
@@ -209,25 +209,20 @@ var ChatApp = React.createClass({
                 // add events
                 if (!isLog) {
                     if (oneChanUpdate.events.length > 0) {
-                        if (this.newestEventID === -1 || this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
+                        if (this.newestEventID[oneChanUpdate.chanID] === undefined ||
+                                this.newestEventID[oneChanUpdate.chanID] < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
                             Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
-                            this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                            this.newestEventID[oneChanUpdate.chanID] = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
                         }
-//                        else if (this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
-//                            var newEvents = oneChanUpdate.events.filter(function(event) {
-//                                return this.newestEventID < event.ID;
-//                            });
-//                            Array.prototype.push.apply(currOneChanUpdate.events, newEvents);
-//                            this.newestEventID = newEvents[newEvents.length - 1].ID;
-//                        }
                     }
                 }
                 else {
                     if (oneChanUpdate.events.length > 0 &&
-                            (this.oldestEventID === -1 || this.oldestEventID > oneChanUpdate.events[0].ID)) {
+                            (this.oldestEventID[oneChanUpdate.chanID] === undefined ||
+                             this.oldestEventID[oneChanUpdate.chanID] > oneChanUpdate.events[0].ID)) {
                         Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
-                        this.oldestEventID = oneChanUpdate.events[0].ID;
-                        this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                        this.oldestEventID[oneChanUpdate.chanID] = oneChanUpdate.events[0].ID;
+                        this.newestEventID[oneChanUpdate.chanID] = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
                     }
                 }
 
@@ -323,7 +318,7 @@ var ChatApp = React.createClass({
             // clear the conversation div
             this.getChanUpdates().events = [];
             // reset the oldest event received
-            this.oldestEventID = -1;
+            this.oldestEventID = {};
             this.numMessagesToRetrieve = 1000;
             
             this.forceUpdate();
@@ -454,8 +449,8 @@ var ChatApp = React.createClass({
             $(txtLogin).focus();
 
             // reset initial values
-            this.oldestEventID = -1;
-            this.newestEventID = -1;
+            this.oldestEventID = {};
+            this.newestEventID = {};
             this.numMessagesToRetrieve = 1000;
 
             nick = null;
