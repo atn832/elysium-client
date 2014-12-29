@@ -197,7 +197,7 @@ html .arrow_box:after, html .arrow_box:before {
 }
 
 .tab-selected {
-    background:none repeat scroll 0 0 #d3e2f0 !important;
+    background: #d3e2f0 !important;
 }
 
 .tab-disabled {
@@ -262,27 +262,19 @@ html .arrow_box:after, html .arrow_box:before {
     cursor: pointer;
 }
 
-.log {
-    font-style: italic;
-}
-
-.self {
-    color: #0080FF;
-}
-
 .event {
     color: darkgray;
 }
 
 .error {
-    color: #FF0000;
+    color: #f00;
 }
 
 .unverified {
-    color: #888888;
+    color: #888;
 }
 
 .failed {
     font-style: italic;
-    color: #FF0000;
+    color: #f00;
 }
