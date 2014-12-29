@@ -39,23 +39,41 @@ var GlobalMap = React.createClass({
         this.updateMap(users);
     },
     updateMap: function(users) {
-        // delete old markers
-        if (this.markers) {
-            this.markers.forEach(function(marker) {
-                marker.setMap(null);
-            });
+        if (!this.idToMarkers)
+            this.idToMarkers = {};
+        
+        // mark all markers as invisible
+        var unusedMarkers = {};
+        for (var id in this.idToMarkers) {
+            unusedMarkers[id] = true;
         }
-        // create new markers
-        this.markers = users.map(function(user) {
+        // create new or reuse markers
+        var markers = users.map(function(user) {
+            var id = user.ID;
             var latlng = new google.maps.LatLng(user.lat, user.lng);
-            return new google.maps.Marker({
-                position: latlng,
-                map: this.map,
-                title: user.name
-            });
+            
+            if (!this.idToMarkers[id]) {
+                this.idToMarkers[id] = new google.maps.Marker({
+                    position: latlng,
+                    map: this.map,
+                    title: user.name
+                });
+            }
+            else {
+                this.idToMarkers[id].setPosition(latlng);
+                unusedMarkers[id] = false;
+            }
+            return this.idToMarkers[id];
         }.bind(this));
+
+        //hide unused markers
+        for (var id in unusedMarkers) {
+            if (unusedMarkers[id])
+                this.idToMarkers[id].setMap(null);
+        }
+
         var bounds = new google.maps.LatLngBounds();
-        this.markers.forEach(function(marker) {
+        markers.forEach(function(marker) {
             bounds.extend(marker.getPosition());
         });
         this.map.fitBounds(bounds);

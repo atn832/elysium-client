@@ -64,6 +64,7 @@ var ChatApp = React.createClass({
         }).map(function(user) {
             return {
                 name: user.name,
+                ID: user.ID,
                 lng: user.latestSource.location.longitude,
                 lat: user.latestSource.location.latitude
             }
