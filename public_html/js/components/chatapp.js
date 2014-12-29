@@ -59,12 +59,13 @@ var ChatApp = React.createClass({
         return initialState;
     },
     render: function() {
-        var locatedUsers = this.getChanUpdates().userList.map(function(user) {
-            var location = user.source && user.source.location || {};
+        var locatedUsers = this.getChanUpdates().userList.filter(function(user) {
+            return user.latestSource && user.latestSource.location;
+        }).map(function(user) {
             return {
                 name: user.name,
-                lng: user.lng,
-                lat: user.lat
+                lng: user.latestSource.location.longitude,
+                lat: user.latestSource.location.latitude
             }
         });
         return (
@@ -73,13 +74,13 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
-                {/*<div className={"f-n d-n-mobile expand z-1 pos-a r-0 tr bg-dimmed " + (this.state.globalMapVisible? "w-25" : "w-0")}>
+                <div className={"f-n d-n-mobile expand z-1 pos-a r-0 tr bg-dimmed " + (this.state.globalMapVisible? "w-25" : "w-0")}>
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
                     <GlobalMap users={locatedUsers} />
                     <button className="button pos-a t-0 r-0" onClick={this.toggleGlobalMap}>
                         <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
                     </button>
-                </div>*/}
+                </div>
                 <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb" ref="conversationElement">
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                     <MessageView events={this.getChanUpdates().events} onClick={this.onMessageViewClick} ref="messages" conversationElement={this.refs.conversationElement} />
@@ -238,7 +239,7 @@ var ChatApp = React.createClass({
                 if (oneChanUpdate.userListUpdated) {
                     currOneChanUpdate.userList = oneChanUpdate.userList;
                 }
-
+/*
                 var userLocated = {},
                     idToUser = {},
                     locatedUsers = 0,
@@ -259,7 +260,7 @@ var ChatApp = React.createClass({
                         }
                     }
                     index--;
-                }
+                }*/
             }.bind(this));
             if (this.isScrolledToBottom())
                 this.scrollToBottom(true);

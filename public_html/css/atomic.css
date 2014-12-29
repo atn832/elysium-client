@@ -228,6 +228,10 @@ html .fz-l {
     font-size: 13px;
 }
 
+.op-0 {
+    opacity: 0;
+}
+
 /* flex */
 .d-f {
     display: -webkit-flex;
