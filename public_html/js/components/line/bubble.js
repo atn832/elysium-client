@@ -2,7 +2,6 @@
 
 import DateRenderer from "./renderer/daterenderer";
 import DeviceRenderer from "./renderer/devicerenderer";
-import ConnectionRenderer from "./renderer/connectionrenderer";
 import Content from "./renderer/content";
 import Tag from "./renderer/tag";
 import IO from "../../io/io.js";

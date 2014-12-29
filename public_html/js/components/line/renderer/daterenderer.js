@@ -12,7 +12,7 @@ var DateRenderer = {
         var remoteTime = source.timeZone && source.timeZone.timeZone && source.datetime.tz(source.timeZone.timeZone).format(timeFormat);
         
         var displayTime = !remoteTime || localTime == remoteTime ? localTime: localTime + "/" + remoteTime;
-        return source.datetime.tz(Source.getTimeZone()).calendar() + (remoteTime && localTime !== remoteTime ? " (" + remoteTime + ")" : "");
+        return <span className="whs-nw">{source.datetime.tz(Source.getTimeZone()).calendar() + (remoteTime && localTime !== remoteTime ? " (" + remoteTime + ")" : "")}</span>;
     }
 };
 
