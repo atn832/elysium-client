@@ -209,17 +209,26 @@ var ChatApp = React.createClass({
                 // add events
                 if (!isLog) {
                     if (oneChanUpdate.events.length > 0) {
-                        if (this.newestEventID === -1 ||
-                                this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
+                        if (this.newestEventID === -1 || this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
                             Array.prototype.push.apply(currOneChanUpdate.events, oneChanUpdate.events);
                             this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
                         }
+//                        else if (this.newestEventID < oneChanUpdate.events[oneChanUpdate.events.length - 1].ID) {
+//                            var newEvents = oneChanUpdate.events.filter(function(event) {
+//                                return this.newestEventID < event.ID;
+//                            });
+//                            Array.prototype.push.apply(currOneChanUpdate.events, newEvents);
+//                            this.newestEventID = newEvents[newEvents.length - 1].ID;
+//                        }
                     }
                 }
                 else {
-                    Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
-                    if (oneChanUpdate.events.length > 0)
+                    if (oneChanUpdate.events.length > 0 &&
+                            (this.oldestEventID === -1 || this.oldestEventID > oneChanUpdate.events[0].ID)) {
+                        Array.prototype.unshift.apply(currOneChanUpdate.events, oneChanUpdate.events);
                         this.oldestEventID = oneChanUpdate.events[0].ID;
+                        this.newestEventID = oneChanUpdate.events[oneChanUpdate.events.length - 1].ID;
+                    }
                 }
 
                 var validatedSentMessages = [];
