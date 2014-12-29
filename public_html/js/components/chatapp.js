@@ -75,7 +75,7 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
-                <div className={"f-n d-n-mobile expand z-1 pos-a r-0 tr bg-dimmed " + (this.state.globalMapVisible? "w-25" : "w-0")}>
+                <div className={"f-n d-n-mobile z-1 pos-a r-0 tr bg-dimmed " + (this.state.globalMapVisible? "w-25" : "w-0")}>
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
                     <GlobalMap users={locatedUsers} />
                     <button className="button pos-a t-0 r-0" onClick={this.toggleGlobalMap}>

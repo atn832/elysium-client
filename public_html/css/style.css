@@ -185,7 +185,7 @@ html .arrow_box:after, html .arrow_box:before {
     cursor:default;
 }
 
-a.tab {
+.tab {
     border: 1px solid #C8D1DB;
     cursor: default;
     margin-right: 4px;
@@ -229,8 +229,8 @@ a.tab {
 }
 
 .expand {
-    -webkit-animation: expand .2s ease-out;
-    animation: expand .2s ease-out;
+    -webkit-animation: expand 20s ease-out;
+    animation: expand 20s ease-out;
 }
 
 @-webkit-keyframes expand {
