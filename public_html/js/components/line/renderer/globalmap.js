@@ -33,7 +33,8 @@ var GlobalMap = React.createClass({
             zoom: 11,
             center: latlng,
             mapTypeId: 'roadmap',
-            mapTypeControl: false
+            mapTypeControl: false,
+            streetViewControl: false
         }
         this.map = new google.maps.Map(element, mapOptions);
         this.updateMap(users);
