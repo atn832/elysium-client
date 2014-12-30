@@ -12,6 +12,11 @@ function isNotPauseResumeEvent(event) {
     return typeID != EventTypes.SessionPause  && typeID != EventTypes.SessionResume;
 }
 
+function isNotConnectionEvent(event) {
+    var typeID = getEventTypeID(event);
+    return typeID != EventTypes.SessionStop  && typeID != EventTypes.SessionStart;
+}
+
 function getEventRenderer(event) {
     if (!isNotPauseResumeEvent(event)) {
       return null;
@@ -28,7 +33,7 @@ function getEventRenderer(event) {
 
 var MessageView = React.createClass({
     render: function() {
-        var displayedEvents = this.props.events && this.props.events.filter(isNotPauseResumeEvent) || [];
+        var displayedEvents = this.props.events && this.props.events.filter(isNotPauseResumeEvent).filter(isNotConnectionEvent) || [];
         var lines = [];
         var prevEvent;
         var displayItems = [];
