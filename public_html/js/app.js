@@ -22,19 +22,20 @@ var App = React.createClass({
         
         IO.host = this.props.host;
         
+        $(window).unload(this.exitFunction.bind(this));
+        
         // restore latest settings
         var cookieChannel = Cookie.getCookie(LastChannelKey);
         var cookieLogin = Cookie.getCookie(LastUserNickKey);
         var urlChannel = getURLParameter("channel") || getURLParameter("chanName");
         var urlPassword = getURLParameter("password");
         var urlLogin = getURLParameter("username") || getURLParameter("nick");
-        
         return {
-            channel: urlChannel || cookieChannel || "Elysium",
+            channel: urlChannel || cookieChannel || "",
             password: "",
             login: urlLogin || cookieLogin || "",
             attemptLogin: urlChannel && urlLogin,
-            debug: getURLParameter("debug")
+            debug: getURLParameter("debug") !== null
         };
     },
     componentDidMount: function() {
@@ -42,12 +43,7 @@ var App = React.createClass({
             this.refs.loginForm.handleSubmit();
     },
     exitFunction: function() {
-        var data = getSourceInformation();
-        $.ajax({
-            url: this.props.host + "logout.action",
-            data: data,
-            async: false
-        });
+        IO.logout(this.state.token, this.state.userID);
     },
     submitLoginInfo: function(channel, password, login) {
         this.setState({

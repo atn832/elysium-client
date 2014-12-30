@@ -41,6 +41,18 @@ var IO = {
         $.getJSON(IO.host + "login.action", data)
                 .success(function(data, textStatus, jqXHR) { callback(submitLoginInfoSuccess(data)); })
                 .error(function(jqXHR, status, error) { callback(submitLoginInfoError(jqXHR)); });
+    },
+    logout: function(token, userID) {
+        var data = {
+            token: token,
+            userID: userID
+        };
+        Source.setSourceInformation(data);
+        $.ajax({
+            url: IO.host + "logout.action",
+            data: data,
+            async: false
+        });
     }
 };
 
