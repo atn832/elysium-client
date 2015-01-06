@@ -216,6 +216,15 @@ html .arrow_box:after, html .arrow_box:before {
     .respContainer {
         width: 600px;
     }
+    
+    .global-map {
+        position: absolute;
+        width: 0%;
+    }
+
+    .global-map.map-visible {
+        width: 25%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -223,8 +232,20 @@ html .arrow_box:after, html .arrow_box:before {
         width: 100%;
     }
 
-    .d-n-mobile {
-        display: none;
+    .global-map {
+        position: relative;
+        left: 100%;
+        width: 0%;
+    }
+    
+    .global-map.map-visible {
+        width: 100%;
+        left: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    }
+    
+    .global-map-button {
+        right: 0 !important;
     }
 }
 

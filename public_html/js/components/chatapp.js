@@ -80,19 +80,22 @@ var ChatApp = React.createClass({
                 lat: user.latestSource.location.latitude
             }
         });
+        var scrollbarWidth = this.refs.conversationElement && this.refs.conversationElement.getDOMNode() &&
+            (this.refs.conversationElement.getDOMNode().offsetWidth - this.refs.conversationElement.getDOMNode().clientWidth) || 0;
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
-                <div className={"f-n d-n-mobile z-1 pos-a r-0 ov-h tr bg-dimmed " + (this.state.globalMapVisible? "w-25" : "w-0")}>
+                <button className="global-map-button f-n z-2 pos-a button" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
+                    <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
+                </button>
+                <div className={"global-map f-n z-1 ov-h tr bg-dimmed" + (this.state.globalMapVisible? " map-visible" : "")}
+                    style={{ right: scrollbarWidth + "px" }}>
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
                     <GlobalMap users={locatedUsers} />
                 </div>
-                <button className="f-n d-n-mobile z-1 pos-a r-0 button" onClick={this.toggleGlobalMap}>
-                    <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
-                </button>
                 <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb" ref="conversationElement">
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
                     <MessageView events={this.getChanUpdates().events} onClick={this.onMessageViewClick} ref="messages" conversationElement={this.refs.conversationElement} />

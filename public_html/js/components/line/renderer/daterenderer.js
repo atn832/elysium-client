@@ -1,3 +1,5 @@
+/** @jsx React.DOM */
+
 import Source from "../../../io/source";
 
 var timeFormat = "hh:mm A";
