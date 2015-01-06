@@ -232,6 +232,10 @@ html .arrow_box:after, html .arrow_box:before {
         width: 100%;
     }
 
+    .d-n-mobile {
+        display: none;
+    }
+    
     .global-map {
         position: relative;
         left: 100%;
