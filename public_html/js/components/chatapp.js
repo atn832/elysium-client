@@ -65,6 +65,7 @@ var ChatApp = React.createClass({
             initialState.loggedin = true;
             setTimeout(function() {
                 this.getMessagesSuccess(this.props.staticData);
+                this.refs.globalMap.getDOMNode().focus();
             }.bind(this), 1000);
         }
         return initialState;
@@ -88,11 +89,13 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
-                <button className="global-map-button f-n z-2 pos-a button" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
+                <button className="global-map-button f-n z-2 pos-a button square-s" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
                     <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
                 </button>
                 <div className={"global-map f-n z-1 ov-h tr bg-dimmed" + (this.state.globalMapVisible? " map-visible" : "")}
-                    style={{ right: scrollbarWidth + "px" }}>
+                    style={{ right: scrollbarWidth + "px" }}
+                    onBlur={this.onGlobalMapBlur}
+                    ref="globalMap">
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
                     <GlobalMap users={locatedUsers} />
                 </div>
@@ -105,6 +108,9 @@ var ChatApp = React.createClass({
                 </div>
             </div>
         );
+    },
+    onGlobalMapBlur: function() {
+        alert("blur");
     },
     toggleGlobalMap: function() {
         this.setState({
@@ -120,7 +126,8 @@ var ChatApp = React.createClass({
             chanID: this.props.chanID
         });
         this.getMissedMessages();
-        this.refs.input.focus();
+//        this.refs.input.focus();
+        this.refs.globalMap.getDOMNode().focus();
     },
     reduceTimeout: function() {
         this.serverTimeout--;

@@ -9,7 +9,7 @@ var GlobalMap = React.createClass({
         var validUserCount = this.getValidUsers().length;
         if (this.mounted && validUserCount > 1)
             this.updateMap(this.getValidUsers());
-        return <div ref="map" className={"w-100 r-16-9" + (validUserCount? "": " op-0")} />
+        return <div ref="map" className={"w-100 r-16-9 tr" + (validUserCount > 1? "": " op-0")} />
     },
     componentDidMount: function() {
         setTimeout(function() {
