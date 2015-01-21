@@ -126,6 +126,11 @@ body {
     width:100%;
 }
 
+.square-s {
+    width: 28px;
+    height: 28px;
+}
+
 .square {
     width: 36px;
     height: 36px;
