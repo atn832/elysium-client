@@ -51,7 +51,7 @@ var ChatApp = React.createClass({
             chanID: this.props.chanID,
             chanList: [{ name: this.props.chanName, ID: this.props.chanID }], // show at start up time before getting the real data
             chanUpdates: {},
-            globalMapVisible: true
+            globalMapVisible: document.body.scrollWidth > 600
         };
 //        if (!this.props.chanUpdates) {
             // show at start up time before getting the real data
@@ -89,7 +89,7 @@ var ChatApp = React.createClass({
                     <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
-                <button className="global-map-button f-n z-2 pos-a button square-s" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
+                <button className="global-map-button f-n z-2 pos-a button p-0 square-s" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
                     <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
                 </button>
                 <div className={"global-map f-n z-1 ov-h tr bg-dimmed" + (this.state.globalMapVisible? " map-visible" : "")}
@@ -97,7 +97,7 @@ var ChatApp = React.createClass({
                     onBlur={this.onGlobalMapBlur}
                     ref="globalMap">
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
-                    <GlobalMap users={locatedUsers} />
+                    <GlobalMap users={locatedUsers} ref="globalMap"/>
                 </div>
                 <div className="fg-1 w-100 ov-x-h ov-y-s px-4 pt-4 bz-bb" ref="conversationElement">
                     <GetMoreButton app={this} isGettingLogs={this.state.isGettingLogs} /><Status status={this.state.status} />
@@ -116,6 +116,7 @@ var ChatApp = React.createClass({
         this.setState({
             globalMapVisible: !this.state.globalMapVisible
         });
+        this.refs.globalMap.forceUpdate();
     },
     onMessageViewClick: function() {
         this.refs.input.focus();
