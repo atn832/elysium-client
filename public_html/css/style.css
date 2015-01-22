@@ -85,8 +85,6 @@ body {
 
 /* login */
 .button {
-    padding-left: 8px;
-    padding-right: 8px;
     font-weight: bold;
     border-radius: 2px;
     
@@ -124,11 +122,6 @@ body {
 
 #errordiv {
     width:100%;
-}
-
-.square-s {
-    width: 28px;
-    height: 28px;
 }
 
 .square {
@@ -230,6 +223,11 @@ html .arrow_box:after, html .arrow_box:before {
     .global-map.map-visible {
         width: 25%;
     }
+
+    .square-s {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -255,6 +253,11 @@ html .arrow_box:after, html .arrow_box:before {
     
     .global-map-button {
         right: 0 !important;
+    }
+
+    .square-s {
+        width: 28px;
+        height: 28px;
     }
 }
 
