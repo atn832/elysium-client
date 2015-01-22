@@ -7,14 +7,23 @@ var GlobalMap = React.createClass({
     },
     render: function() {
         var validUserCount = this.getValidUsers().length;
-        if (this.mounted && validUserCount > 1)
-            this.updateMap(this.getValidUsers());
         return <div ref="map" className={"w-100 r-16-9 tr" + (validUserCount > 1? "": " op-0")} />
     },
     componentDidMount: function() {
         setTimeout(function() {
             this.initializeMaps(this.refs.map.getDOMNode(), this.getValidUsers());
             this.mounted = true;
+        }.bind(this), 350);
+    },
+    componentDidUpdate: function() {
+        setTimeout(function() {
+            if (!this.map)
+                return;
+            google.maps.event.trigger(this.map, "resize");
+            
+            var validUserCount = this.getValidUsers().length;
+            if (this.mounted && validUserCount > 1)
+                this.updateMap(this.getValidUsers());
         }.bind(this), 350);
     },
     /**
