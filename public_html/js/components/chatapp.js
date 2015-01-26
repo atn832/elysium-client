@@ -65,7 +65,6 @@ var ChatApp = React.createClass({
             initialState.loggedin = true;
             setTimeout(function() {
                 this.getMessagesSuccess(this.props.staticData);
-                this.refs.globalMap.getDOMNode().focus();
             }.bind(this), 1000);
         }
         return initialState;
@@ -127,8 +126,7 @@ var ChatApp = React.createClass({
             chanID: this.props.chanID
         });
         this.getMissedMessages();
-//        this.refs.input.focus();
-        this.refs.globalMap.getDOMNode().focus();
+        this.refs.input.focus();
     },
     reduceTimeout: function() {
         this.serverTimeout--;
