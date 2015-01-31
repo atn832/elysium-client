@@ -87,7 +87,7 @@ var App = React.createClass({
         return (
             <div className="w-100 h-100">
             {this.state.loggedin?
-                <ChatApp host={this.props.host} chanName={this.state.chanName} chanID={this.state.chanID} userID={this.state.userID} nick={this.state.nick} token={this.state.token} ref="chat" onLogOut={this.onLogOut} /> : 
+                <ChatApp host={this.props.host} chanName={this.state.chanName} chanID={this.state.chanID} userID={this.state.userID} nick={this.state.nick} token={this.state.token} ref="chat" onLogOut={this.onLogOut} submitLoginInfo={this.submitLoginInfo} /> : 
                 <LoginForm debug={this.state.debug} onLogin={this.submitLoginInfo} status={this.state.status} error={this.state.error} isSigningIn={this.state.isSigningIn} ref="loginForm" channel={this.state.channel} password={this.state.password} login={this.state.login} />
             }<i className="fa fa-mobile pos-a v-h t-0"/>{/* preload icon font */}
             </div>

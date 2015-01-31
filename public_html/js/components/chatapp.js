@@ -85,7 +85,7 @@ var ChatApp = React.createClass({
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
-                    <Toolbar chanList={this.state.chanList} userList={this.getChanUpdates().userList}
+                    <Toolbar chatApp={this} chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
                 <button className="global-map-button f-n z-2 pos-a button p-0 square-s" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
@@ -495,6 +495,49 @@ var ChatApp = React.createClass({
     },
     setChanUpdates: function(chanID, updates) {
         this.state.chanUpdates[chanID] = updates;
+    },
+    leave: function(chanID) {
+        var data = {
+            sid: Math.random(), // for IE
+            token: this.props.token,
+            userID: this.props.userID,
+            chanID: chanID
+        }
+        Source.setSourceInformation(data);
+        
+        $.getJSON(this.props.host + "leave.action", data)
+            .success(function(data, textStatus, jqXHR) {
+                if (chanID === this.state.chanID) {
+                    // load previous/next channel
+                    var currChanIndex = this.state.chanList.map(function(chan) { return chan.ID; }).indexOf(chanID);
+                    if (currChanIndex < this.state.chanList.length - 1) {
+                        // if not the last one, log into the next one
+                        this.logInto(this.state.chanList[currChanIndex + 1]);
+                    }
+                    else if (currChanIndex > 0) {
+                        // if the last one, log into the previous one
+                        this.logInto(this.state.chanList[currChanIndex - 1]);
+                    }
+                    else {
+                        // unless there is nothing else to display,
+                        // then log into the sign in screen
+                        this.logInto(null);
+                    }
+                }
+                else {
+                    // nothing. the list of chans will be updated at the next getMessages
+                }
+            }.bind(this))
+            .error(function(jqXHR, status, error) {
+                console.log("Could not leave channel", error);
+            }.bind(this));
+    },
+    logInto: function(channel) {
+        if (channel) {
+            this.props.submitLoginInfo(channel.name, "", this.props.nick);
+        } else {
+            this.props.onLogOut();
+        }
     }
 });
 

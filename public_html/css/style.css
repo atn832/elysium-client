@@ -210,6 +210,14 @@ html .arrow_box:after, html .arrow_box:before {
     color: #BBBBBB;
 }
 
+html .tab:hover .fa {
+    display: inline-block;
+}
+
+.c-b\:h:hover {
+    color: #3079ed;
+}
+
 @media (min-width: 600px) {
     .respContainer {
         width: 600px;

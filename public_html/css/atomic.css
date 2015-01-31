@@ -6,6 +6,11 @@
     position: relative;
 }
 
+/* stronger than fa */
+html .d-n {
+    display: none;
+}
+
 .v-h {
     visibility: hidden;
 }
