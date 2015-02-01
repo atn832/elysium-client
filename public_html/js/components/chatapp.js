@@ -85,7 +85,7 @@ var ChatApp = React.createClass({
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
-                    <Toolbar chatApp={this} chanList={this.state.chanList} userList={this.getChanUpdates().userList}
+                    <Toolbar ref="toolbar" chatApp={this} chanList={this.state.chanList} userList={this.getChanUpdates().userList}
                         currentChanID={this.state.chanID} />
                 </div>
                 <button className="global-map-button f-n z-2 pos-a button p-0 square-s" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
@@ -505,11 +505,16 @@ var ChatApp = React.createClass({
         }
         Source.setSourceInformation(data);
         
+        // mark it as pending leave
+        var currChanIndex = this.state.chanList.map(function(chan) { return chan.ID; }).indexOf(chanID);
+        this.state.chanList[currChanIndex].isLeaving = true;
+        this.refs.toolbar.forceUpdate();
+        
         $.getJSON(this.props.host + "leave.action", data)
             .success(function(data, textStatus, jqXHR) {
                 if (chanID === this.state.chanID) {
                     // load previous/next channel
-                    var currChanIndex = this.state.chanList.map(function(chan) { return chan.ID; }).indexOf(chanID);
+                    
                     if (currChanIndex < this.state.chanList.length - 1) {
                         // if not the last one, log into the next one
                         this.logInto(this.state.chanList[currChanIndex + 1]);

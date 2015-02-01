@@ -232,7 +232,7 @@ html .tab:hover .fa {
     border: 1px solid transparent;
 }
 
-.border-highlight:hover {
+.border-highlight\:h:hover {
     border: 1px solid #3079ed;
 }
 

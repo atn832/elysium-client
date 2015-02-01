@@ -258,6 +258,10 @@ html .fz-xs {
     opacity: 0;
 }
 
+.op-50 {
+    opacity: .5;
+}
+
 /* flex */
 .d-f {
     display: -webkit-flex;
