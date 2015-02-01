@@ -185,6 +185,10 @@ html .d-n {
     overflow-y: scroll;
 }
 
+.va-s {
+    vertical-align: super;
+}
+
 .va-c {
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -243,6 +247,11 @@ html .fz-l {
 
 .fz-m {
     font-size: 13px;
+}
+
+/* override font awesome's font size */
+html .fz-xs {
+    font-size: 9px;
 }
 
 .op-0 {
