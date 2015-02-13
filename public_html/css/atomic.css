@@ -177,6 +177,10 @@ html .d-n {
     overflow: hidden;
 }
 
+.ov-s {
+    overflow: scroll;
+}
+
 .ov-x-h {
     overflow-x:hidden;
 }

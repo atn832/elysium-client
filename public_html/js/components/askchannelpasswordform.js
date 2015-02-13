@@ -30,7 +30,7 @@ var Form = React.createClass({
     },
     render: function() {
         return (
-            <div className="d-f fd-c h-100 w-100 pos-r jc-c">
+            <div className="d-f fd-c h-100 w-100 pos-a jc-c">
                 <form className="d-f fd-c jc-c" onSubmit={this.handleSubmit}>
                     <h1 className="as-c">Join {this.props.chanName}</h1>
                     {this.props.status? <div className="as-c w-75 mw-400 mb-12">{this.props.status}</div>: null}

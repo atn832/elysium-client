@@ -1270,15 +1270,22 @@ for (var k in data.chanUpdates) {
 var App = React.createClass({
     render: function() {
         return (
-            <div className="d-f fd-r w-100 h-100">
-                <div className="item f-1-0-0">
-                    <LoginForm status="Could not login" error="some html error"/>
+            <div className="d-f fd-c w-100 h-100">
+                <div className="d-f fd-r f-1-0-0">
+                    <div className="item f-1-0-0 pos-r">
+                        <LoginForm status="Could not login" error="some html error"/>
+                    </div>
+                    <div className="item f-1-0-0 pos-r">
+                        <AskChannelPasswordForm chanName="Elysium"/>
+                    </div>
+                    <div className="item f-1-0-0 pos-r ov-s">
+                        <ChatApp staticData={data} nick="atn" chanName="Elysium" chanID={1} ref="chat"/>
+                    </div>
                 </div>
-                <div className="item f-1-0-0">
-                    <AskChannelPasswordForm chanName="Elysium"/>
-                </div>
-                <div className="item f-1-0-0">
-                    <ChatApp staticData={data} nick="atn" chanName="Elysium" chanID={1} ref="chat"/>
+                <div className="d-f fd-r f-1-0-0">
+                    <div className="item f-1-0-0 pos-r ov-s">
+                        <ChatApp staticData={data} nick="atn" chanName="Elysium" chanID={1} ref="chat"/>
+                    </div>
                 </div>
             </div>
         );
