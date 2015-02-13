@@ -4,6 +4,7 @@ require("script!../bower_components/moment/min/moment.min");
 require("script!../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min");
 
 import LoginForm from './components/loginform';
+import AskChannelPasswordForm from './components/askchannelpasswordform';
 import ChatApp from './components/chatapp';
 
 var data = {
@@ -1273,7 +1274,12 @@ var App = React.createClass({
                 <div className="item f-1-0-0">
                     <LoginForm status="Could not login" error="some html error"/>
                 </div>
-                <div className="item f-1-0-0"><ChatApp staticData={data} nick="atn" chanName="Elysium" chanID={1} ref="chat"></ChatApp></div>
+                <div className="item f-1-0-0">
+                    <AskChannelPasswordForm chanName="Elysium"/>
+                </div>
+                <div className="item f-1-0-0">
+                    <ChatApp staticData={data} nick="atn" chanName="Elysium" chanID={1} ref="chat"/>
+                </div>
             </div>
         );
     }
