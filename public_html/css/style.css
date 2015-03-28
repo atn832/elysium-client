@@ -261,7 +261,8 @@ html .tab:hover .fa {
         width: 100%;
     }
 
-    .d-n-mobile {
+    /* override .fa */
+    html .d-n-mobile {
         display: none;
     }
     

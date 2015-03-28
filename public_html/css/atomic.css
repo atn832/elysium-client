@@ -89,12 +89,21 @@ html .d-n {
     line-height: 2em;
 }
 
+.lh-2-5 {
+    line-height: 2.5em;
+}
+
 .p-0 {
     padding: 0;
 }
 
 .p-6 {
     padding: 6px;
+}
+
+.px-6 {
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .px-8 {
@@ -130,6 +139,10 @@ html .d-n {
 
 .mr-4 {
     margin-right: 4px;
+}
+
+.m-0 {
+    margin: 0;
 }
 
 .m-4 {
@@ -232,6 +245,14 @@ html .d-n {
     color: darkgray;
 }
 
+.bd-0 {
+    border: 0;
+}
+
+html .bdr-0 {
+    border-radius: 0;
+}
+
 .bdr-3 {
     border-radius: 3px;
 }
@@ -241,6 +262,10 @@ html .d-n {
 }
 
 /* html needed to override fa */
+html .fz-xl {
+    font-size: 23px;
+}
+
 html .fz-l {
     font-size: 17px;
 }
