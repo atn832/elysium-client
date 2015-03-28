@@ -89,7 +89,7 @@ var ChatApp = React.createClass({
                         currentChanID={this.state.chanID} />
                 </div>
                 <button className="global-map-button f-n z-2 pos-a button p-0 square-s" style={{ right: scrollbarWidth + "px" }} onClick={this.toggleGlobalMap}>
-                    <i className={"fa " + (this.state.globalMapVisible? "fa-compress" : "fa-expand")} />
+                    <i className="fa fa-globe fz-xl" />
                 </button>
                 <div className={"global-map f-n z-1 ov-h tr bg-dimmed" + (this.state.globalMapVisible? " map-visible" : "")}
                     style={{ right: scrollbarWidth + "px" }}
