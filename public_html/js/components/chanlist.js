@@ -7,7 +7,7 @@ var ChanList = React.createClass({
                     onClick={channel.ID !== this.props.currentChanID? this.logInto.bind(this, channel) : null}>
                     {channel.name}
                 </span>
-                <i className={"d-n-mobile fa fa-times fz-xs va-s border-highlight bdr-3 " + (!channel.isLeaving? "border-highlight:h ": " ") + (channel.ID !== this.props.currentChanID? "c-g " + (!channel.isLeaving? "c-b:h": ""): "c-b")}
+                <i className={"d-n-mobile fa fa-times fz-xs va-s border-highlight bdr-3 ml-4 " + (!channel.isLeaving? "border-highlight:h ": " ") + (channel.ID !== this.props.currentChanID? "c-g " + (!channel.isLeaving? "c-b:h": ""): "c-b")}
                     onClick={this.onLeaveClick.bind(this, channel)} />
             </a>
         }.bind(this));

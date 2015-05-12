@@ -92,7 +92,7 @@ var ChatApp = React.createClass({
                     <i className="fa fa-globe fz-xl" />
                 </button>
                 <div className={"global-map f-n z-1 ov-h tr bg-dimmed" + (this.state.globalMapVisible? " map-visible" : "")}
-                    style={{ right: scrollbarWidth + "px" }}
+                    style={{ right: scrollbarWidth, "border-bottom-left-radius": 3 }}
                     onBlur={this.onGlobalMapBlur}
                     ref="globalMap">
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>

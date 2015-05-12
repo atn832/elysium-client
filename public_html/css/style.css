@@ -10,7 +10,7 @@ body {
     padding: 0;
     border: 0;
     height: 100%;
-    font-family: arial, sans-serif;
+    font-family: roboto,arial,sans-serif;
 }
 
 .item {
@@ -251,8 +251,8 @@ html .tab:hover .fa {
     }
 
     .square-s {
-        width: 24px;
-        height: 24px;
+        width: 34px;
+        height: 34px;
     }
 }
 
