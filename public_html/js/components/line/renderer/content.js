@@ -61,7 +61,7 @@ function processLinks(text) {
         result.push(link);
         lastIndex = matches.index + matches[0].length;
     }
-    result.push(text.substring(lastIndex));
+    result.push(text && text.substring(lastIndex) || "");
     result = React.DOM.span.apply(null, result);
     return {
         containsLinks: containsLinks,
