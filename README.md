@@ -13,6 +13,17 @@ npm install -g bower
 Then from public_html:
 `bower install`
 
+For some reason you need to change the first line of `public_html/bower_components/react-dropzone` from
+```
+var React = require("react");
+```
+
+to
+
+```
+/** @jsx React.DOM */
+```
+
 Run
 ===
 
