@@ -2,7 +2,7 @@
 cp -rf public_html/* build
 rm -rf build/js/*
 
-jsx public_html/ built_jsx/
+jsx --non-strict-es6module public_html/ built_jsx/
 node makebubbles.js
 
 if [ "$1" == "prod" ]; then
