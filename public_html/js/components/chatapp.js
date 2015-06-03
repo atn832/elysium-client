@@ -379,7 +379,7 @@ var ChatApp = React.createClass({
             });
         }
 
-        this.refs.input.focus();
+        this.refs.input && this.refs.input.focus();
     },
     dequeueMessageBuffer: function() {
         if (!this.bufferedMessageSent) {

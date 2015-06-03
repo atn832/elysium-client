@@ -13,7 +13,10 @@ var LineInput = React.createClass({
         });
     },
 	sendMessage: function(e) {
-		e.preventDefault();
+		if (e) {
+            e.preventDefault();
+        }
+
         var message = this.state.message;
 	    if (message === "")
 	    	return;
@@ -30,6 +33,32 @@ var LineInput = React.createClass({
     },
     onDrop: function (files) {
         console.log('Received files: ', files);
+        this.upload(files[0]);
+    },
+    // from https://github.com/paulrouget/miniuploader/blob/gh-pages/index.html
+    upload: function (file) {
+        /* Is the file an image? */
+        if (!file || !file.type.match(/image.*/)) return;
+        /* It is! */
+        // document.body.className = "uploading";
+        /* Lets build a FormData object*/
+        var fd = new FormData(); // I wrote about it: https://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
+        fd.append("image", file); // Append the file
+        var xhr = new XMLHttpRequest(); // Create the XHR (Cross-Domain XHR FTW!!!) Thank you sooooo much imgur.com
+        xhr.open("POST", "https://api.imgur.com/3/image.json"); // Boooom!
+        xhr.onload = function() {
+            var url = JSON.parse(xhr.responseText).data.link;
+            this.setState({
+                message: url
+            }, this.sendMessage.bind(this));
+            // document.body.className = "uploaded";
+        }.bind(this);
+        
+        xhr.setRequestHeader('Authorization', 'Client-ID 8517b6b3225c78a'); // Get your own key http://api.imgur.com/
+        
+        // Ok, I don't handle the errors. An exercise for the reader.
+        /* And now, we send the formdata */
+        xhr.send(fd);
     },
     render: function() {
         return (
