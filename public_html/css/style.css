@@ -40,6 +40,16 @@ body {
     -ms-animation-iteration-count: 1;
 }
 
+.dropzone {
+    background-color: #fff;
+    padding-right: 4px;
+    border: 2px solid transparent;
+}
+
+.dropzone.active {
+    border: 2px solid #3079ed;
+}
+
 @keyframes animationFrames {
     0% { opacity:0; }
     100% { opacity:1; }

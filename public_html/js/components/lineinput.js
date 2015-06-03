@@ -1,10 +1,11 @@
 /** @jsx React.DOM */
-var Dropzone = require('react-dropzone');
+var Dropzone = require('../../bower_components/react-dropzone/index');
 
 var LineInput = React.createClass({
     getInitialState: function() {
         return {
-            message: ""
+            message: "",
+            uploading: false
         };
     },
     handleChange: function() {
@@ -40,7 +41,9 @@ var LineInput = React.createClass({
         /* Is the file an image? */
         if (!file || !file.type.match(/image.*/)) return;
         /* It is! */
-        // document.body.className = "uploading";
+        this.setState({
+            uploading: true
+        });
         /* Lets build a FormData object*/
         var fd = new FormData(); // I wrote about it: https://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
         fd.append("image", file); // Append the file
@@ -49,7 +52,8 @@ var LineInput = React.createClass({
         xhr.onload = function() {
             var url = JSON.parse(xhr.responseText).data.link;
             this.setState({
-                message: url
+                message: url,
+                uploading: false
             }, this.sendMessage.bind(this));
             // document.body.className = "uploaded";
         }.bind(this);
@@ -63,8 +67,11 @@ var LineInput = React.createClass({
     render: function() {
         return (
             <form className="d-f fd-r w-100 bgc-lg bz-bb btc-g" onSubmit={this.sendMessage}>
-                <Dropzone onDrop={this.onDrop} size=" ">
-                    <div>Try dropping</div>
+                <Dropzone onDrop={this.onDrop} style={{}}>
+                    {this.state.uploading?
+                        <i className="fa fa-spinner fa-spin px-14 py-5" /> :
+                        <i className="fa fa-camera px-14 pt-5" />
+                    }
                 </Dropzone>
                 <input type="text" className="fg-1 px-8 lh-2-5 o-n bd-0 m-0" ref="message" value={this.state.message} onChange={this.handleChange} />
                 <button className="sendButton button bdr-0 m-0" type="submit" onClick={this.sendMessage}><i className="fa fa-send px-6" /></button>

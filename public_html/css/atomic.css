@@ -111,6 +111,11 @@ html .d-n {
     padding-right: 8px;
 }
 
+.px-14 {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
 .py-8 {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -123,6 +128,15 @@ html .d-n {
 .px-4 {
     padding-left: 4px;
     padding-right: 4px;
+}
+
+.py-4 {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.pt-5 {
+    padding-top: 5px;
 }
 
 .pt-4 {
