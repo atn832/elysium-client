@@ -93,6 +93,10 @@ html .d-n {
     line-height: 2.5em;
 }
 
+html .lh-25px {
+    line-height: 25px;
+}
+
 .p-0 {
     padding: 0;
 }

@@ -44,6 +44,7 @@ body {
     background-color: #fff;
     padding-right: 4px;
     border: 2px solid transparent;
+    position: relative;
 }
 
 .dropzone.active {

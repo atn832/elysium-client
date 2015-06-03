@@ -69,8 +69,8 @@ var LineInput = React.createClass({
             <form className="d-f fd-r w-100 bgc-lg bz-bb btc-g" onSubmit={this.sendMessage}>
                 <Dropzone onDrop={this.onDrop} style={{}}>
                     {this.state.uploading?
-                        <i className="fa fa-spinner fa-spin px-14 py-5" /> :
-                        <i className="fa fa-camera px-14 pt-5" />
+                        <i className="fa fa-spinner fa-spin px-14 pos-a va-c" /> :
+                        <i className="fa fa-camera px-14 lh-25px" />
                     }
                 </Dropzone>
                 <input type="text" className="fg-1 px-8 lh-2-5 o-n bd-0 m-0" ref="message" value={this.state.message} onChange={this.handleChange} />
