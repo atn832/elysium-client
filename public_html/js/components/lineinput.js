@@ -49,7 +49,7 @@ var LineInput = React.createClass({
         fd.append("image", file); // Append the file
         var xhr = new XMLHttpRequest(); // Create the XHR (Cross-Domain XHR FTW!!!) Thank you sooooo much imgur.com
         // xhr.open("POST", "https://api.imgur.com/3/image.json"); // Boooom!
-        xhr.open("POST", "http://m.wafrat.com:8081/imgur/"); // Boooom!
+        xhr.open("POST", "https://m.wafrat.com:8081/imgur/"); // Boooom!
         xhr.onload = function() {
             var url = JSON.parse(xhr.responseText).data.link;
             this.setState({
