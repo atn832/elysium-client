@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var GetMoreButton = React.createClass({
     handleClick: function() {
         this.props.app.getLogs();

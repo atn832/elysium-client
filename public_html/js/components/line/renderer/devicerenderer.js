@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 var Device = {
     Mobile: 0,

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 var ImageRenderer = React.createClass({
     onClick: function() {

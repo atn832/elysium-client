@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var ChanList = React.createClass({
     render: function() {
         var channels = this.props.channels.map(function(channel) {

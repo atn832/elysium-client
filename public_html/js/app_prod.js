@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 import App from "./app";
 
 React.render(

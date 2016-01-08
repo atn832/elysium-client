@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 import ChanList from './chanlist';
 import UserList from './userlist';
 

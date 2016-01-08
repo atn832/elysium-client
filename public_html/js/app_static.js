@@ -1,8 +1,5 @@
-/** @jsx React.DOM */
 "use strict";
-require("script!../bower_components/moment/min/moment.min");
-require("script!../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min");
-
+import moment from "moment";
 import LoginForm from './components/loginform';
 import ChatApp from './components/chatapp';
 

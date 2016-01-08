@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var Status = React.createClass({
   render: function() {
     return (

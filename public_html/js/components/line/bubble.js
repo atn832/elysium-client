@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 import DateRenderer from "./renderer/daterenderer";
 import DeviceRenderer from "./renderer/devicerenderer";

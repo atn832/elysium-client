@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 import Source from "../../../io/source";
 

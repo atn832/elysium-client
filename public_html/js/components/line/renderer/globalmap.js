@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var GlobalMap = React.createClass({
     getValidUsers: function() {
         return this.props.users.filter(function(user) {

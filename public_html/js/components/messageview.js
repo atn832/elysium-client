@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 import Bubble from "./line/bubble";
 import JoinLeaveLine from "./line/joinleaveline";
 import ConnectionLine from "./line/connectionline";

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 
 import DeviceRenderer from "./devicerenderer";
 

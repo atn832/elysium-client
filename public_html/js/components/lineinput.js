@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var Dropzone = require('../../bower_components/react-dropzone/index');
 
 var LineInput = React.createClass({

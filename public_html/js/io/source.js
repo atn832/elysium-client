@@ -1,4 +1,4 @@
-require("script!../lib/jstz-1.0.4.min");
+import jstz from "jstz";
 
 /*
  * Initialize geolocation tracking

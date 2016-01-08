@@ -1,4 +1,5 @@
-/** @jsx React.DOM */
+import moment from "moment-timezone";
+
 var UserList = React.createClass({
     render: function() {
         var users = this.props.users.map(function(user, index) {

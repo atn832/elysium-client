@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 "use strict";
 
 import Cookie from "./io/cookie";
