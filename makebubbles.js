@@ -29,12 +29,7 @@ var fs = require("fs");
 
 var css = bg + "\n" + bubbles;
 
-try {
-    fs.mkdirSync("temp");
-} catch (e) {
-    console.log(e);
-}
-fs.writeFile("temp/material.css", css, function (err) {
+fs.writeFile("src/css/material.css", css, function (err) {
     if (err) throw err;
     console.log('Material Palette has been saved!');
 });
