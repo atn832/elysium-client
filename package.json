@@ -3,13 +3,7 @@
   "description": "A web client for Elysium",
   "author": "Anh Tuan <atn832@gmail.com>",
   "dependencies": {
-    "compression": "^1.7.0",
-    "css-loader": "^0.9.1",
-    "express": "^4.15.4",
-    "file-loader": "^0.8.5",
     "font-awesome": "^4.7.0",
-    "font-awesome-webpack": "0.0.4",
-    "json-loader": "^0.5.7",
     "jstz": "^1.0.10",
     "less": "^2.7.2",
     "material-colors": "^1.2.5",

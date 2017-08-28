@@ -1,5 +1,6 @@
 /*global $*/
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Bubble from "./line/bubble";
 import JoinLeaveLine from "./line/joinleaveline";
 import ConnectionLine from "./line/connectionline";
@@ -87,14 +88,14 @@ var MessageView = React.createClass({
             this.scrollAtNextUpdate = true;
             return;
         }
-        var scrollObj = this.props.conversationElement.getDOMNode();
+        var scrollObj = ReactDOM.findDOMNode(this.props.conversationElement);
         $(scrollObj).animate({ scrollTop: scrollObj.scrollHeight }, 500);
     },
     isScrolledToBottom: function() {
         // conversationElement is undefined on first ChatApp render
         if (!this.props.conversationElement)
             return true;
-        var scrollObj = this.props.conversationElement.getDOMNode();
+        var scrollObj = ReactDOM.findDOMNode(this.props.conversationElement);
         return (scrollObj.scrollHeight - scrollObj.scrollTop) === scrollObj.clientHeight;
     }
 });

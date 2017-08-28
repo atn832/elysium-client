@@ -1,5 +1,6 @@
 /*global $*/
 import React from 'react';
+import 'font-awesome/css/font-awesome.css';
 import moment from "moment";
 import Toolbar from "./toolbar";
 import MessageView from "./messageview";
@@ -78,8 +79,8 @@ var ChatApp = React.createClass({
                 lat: user.latestSource.location.latitude
             }
         });
-        var scrollbarWidth = this.refs.conversationElement && this.refs.conversationElement.getDOMNode() &&
-            (this.refs.conversationElement.getDOMNode().offsetWidth - this.refs.conversationElement.getDOMNode().clientWidth) || 0;
+        var scrollbarWidth = this.refs.conversationElement &&
+            (this.refs.conversationElement.offsetWidth - this.refs.conversationElement.clientWidth) || 0;
         return (
             <div className="d-f fd-c h-100 w-100 pos-r">
                 <div className="f-n">
@@ -90,9 +91,7 @@ var ChatApp = React.createClass({
                     <i className="fa fa-globe fz-xl" />
                 </button>
                 <div className={"global-map f-n z-1 ov-h tr bg-dimmed" + (this.state.globalMapVisible? " map-visible" : "")}
-                    style={{ right: scrollbarWidth, "border-bottom-left-radius": 3 }}
-                    onBlur={this.onGlobalMapBlur}
-                    ref="globalMap">
+                    style={{ right: scrollbarWidth, "border-bottom-left-radius": 3 }}>
                     <div className="pos-a w-100 ta-c va-c">Map Unavailable</div>
                     <GlobalMap users={locatedUsers} ref="globalMap"/>
                 </div>
@@ -105,9 +104,6 @@ var ChatApp = React.createClass({
                 </div>
             </div>
         );
-    },
-    onGlobalMapBlur: function() {
-        alert("blur");
     },
     toggleGlobalMap: function() {
         this.setState({

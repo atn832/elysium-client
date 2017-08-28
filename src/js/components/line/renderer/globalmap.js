@@ -1,5 +1,6 @@
 /*global google*/
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 var GlobalMap = React.createClass({
     getValidUsers: function() {
@@ -13,7 +14,7 @@ var GlobalMap = React.createClass({
     },
     componentDidMount: function() {
         setTimeout(function() {
-            this.initializeMaps(this.refs.map.getDOMNode(), this.getValidUsers());
+            this.initializeMaps(ReactDOM.findDOMNode(this.refs.map), this.getValidUsers());
             this.mounted = true;
         }.bind(this), 350);
     },

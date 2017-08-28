@@ -9,8 +9,8 @@ var LoginForm = React.createClass({
     },
     handleChange: function() {
         this.setState({
-            channel: this.refs.channel.getDOMNode().value,
-            login: this.refs.login.getDOMNode().value
+            channel: this.refs.channel.value,
+            login: this.refs.login.value
         });
     },
     handleSubmit: function(e) {
@@ -27,7 +27,7 @@ var LoginForm = React.createClass({
     },
     onKeyUp: function(e) {
         if (e.keyCode === 13) {
-            var href = this.refs.signin.props.href;
+            var href = this.refs.signin.href;
             window.location.href = href;
         }
     },

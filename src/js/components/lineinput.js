@@ -10,7 +10,7 @@ var LineInput = React.createClass({
     },
     handleChange: function() {
         this.setState({
-            message: this.refs.message.getDOMNode().value
+            message: this.refs.message.value
         });
     },
 	sendMessage: function(e) {
@@ -30,7 +30,7 @@ var LineInput = React.createClass({
         // $(textBox).focus();
 	},
     focus: function() {
-        this.refs.message.getDOMNode().focus();
+        this.refs.message.focus();
     },
     onDrop: function (files) {
         console.log('Received files: ', files);
